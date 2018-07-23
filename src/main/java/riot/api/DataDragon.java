@@ -1,5 +1,7 @@
 package riot.api;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import riot.api.constant.Locale;
 import riot.api.constant.Platform;
 import riot.api.dto.champion.Champion;
@@ -38,7 +40,6 @@ public class DataDragon {
 
         return ChampionMethods.GetChampion(platform, locale, version, champion_key);
     }
-
 
     public static Item getItem(Platform platform, int item_id) {
 

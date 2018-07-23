@@ -10,22 +10,22 @@ import java.util.Map;
 @Generated("com.robohorse.robopojogenerator")
 public class Data {
 
-    private Map<String, ChampionList> championMap = new HashMap<>();
+    private Map<String, ChampionListName> championListNameMap = new HashMap<>();
 
     @JsonAnyGetter
-    public Map<String, ChampionList> any() {
-        return championMap;
+    public Map<String, ChampionListName> any() {
+        return championListNameMap;
     }
 
     @JsonAnySetter
-    public void set(final String name, final ChampionList championList) {
-        championMap.put(name, championList);
+    public void set(final String name, final ChampionListName championListName) {
+        championListNameMap.put(name, championListName);
     }
 
     @Override
     public String toString() {
         return "Data{" +
-                "championMap=" + championMap +
+                "championListNameMap=" + championListNameMap +
                 '}';
     }
 }

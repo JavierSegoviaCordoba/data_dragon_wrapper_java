@@ -8,7 +8,7 @@ import riot.api.constant.Platform;
 import riot.api.dto.champion.Champion;
 import riot.api.dto.champion.ChampionDto;
 import riot.api.dto.champion_list.ChampionList;
-import riot.api.dto.champion_list.ChampionListDto;
+import riot.api.dto.champion_list.ChampionListName;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +30,6 @@ public class ChampionMethods extends DataDragon {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -43,13 +42,13 @@ public class ChampionMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListDto championListDto = objectMapper.readValue(new URL(url), ChampionListDto.class);
-            Map<String, ChampionList> championListMap;
-            championListMap = championListDto.getData().any();
+            ChampionList championList = objectMapper.readValue(new URL(url), ChampionList.class);
+            Map<String, ChampionListName> championListNameMap;
+            championListNameMap = championList.getData().any();
 
-            for (String key : championListMap.keySet()) {
-                if (championListMap.get(key).getKey().equals(String.valueOf(champion_key))){
-                   return GetChampion(platform, championListMap.get(key).getName());
+            for (String key : championListNameMap.keySet()) {
+                if (championListNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
+                    return GetChampion(platform, championListNameMap.get(key).getName());
                 }
             }
 
@@ -84,13 +83,13 @@ public class ChampionMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListDto championListDto = objectMapper.readValue(new URL(url), ChampionListDto.class);
-            Map<String, ChampionList> championListMap;
-            championListMap = championListDto.getData().any();
+            ChampionList championList = objectMapper.readValue(new URL(url), ChampionList.class);
+            Map<String, ChampionListName> championListNameMap;
+            championListNameMap = championList.getData().any();
 
-            for (String key : championListMap.keySet()) {
-                if (championListMap.get(key).getKey().equals(String.valueOf(champion_key))){
-                    return GetChampion(platform, championListMap.get(key).getName());
+            for (String key : championListNameMap.keySet()) {
+                if (championListNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
+                    return GetChampion(platform, championListNameMap.get(key).getName());
                 }
             }
 
