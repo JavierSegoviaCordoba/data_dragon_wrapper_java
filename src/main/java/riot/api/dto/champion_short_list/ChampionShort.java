@@ -1,11 +1,11 @@
-package riot.api.dto.champion_list;
+package riot.api.dto.champion_short_list;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
-public class ChampionListName {
+public class ChampionShort {
 
 	@JsonProperty("image")
 	private Image image;

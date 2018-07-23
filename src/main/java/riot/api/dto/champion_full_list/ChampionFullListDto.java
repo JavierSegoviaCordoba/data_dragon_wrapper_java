@@ -1,13 +1,16 @@
-package riot.api.dto.champion_list;
+package riot.api.dto.champion_full_list;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
-public class ChampionList{
+public class ChampionFullListDto{
 
 	@JsonProperty("data")
-	private Data data;
+	private ChampionFullList data;
+
+	@JsonProperty("keys")
+	private Key key;
 
 	@JsonProperty("format")
 	private String format;
@@ -18,12 +21,20 @@ public class ChampionList{
 	@JsonProperty("version")
 	private String version;
 
-	public void setData(Data data){
-		this.data = data;
+	public ChampionFullList getChampionFullList() {
+		return data;
 	}
 
-	public Data getData(){
-		return data;
+	public void setChampionFullList(ChampionFullList championFullList) {
+		this.data = championFullList;
+	}
+
+	public void setKey(Key key){
+		this.key = key;
+	}
+
+	public Key getKey(){
+		return key;
 	}
 
 	public void setFormat(String format){
@@ -53,8 +64,9 @@ public class ChampionList{
 	@Override
  	public String toString(){
 		return 
-			"ChampionListDto{" + 
+			"ChampionFullListDto{" + 
 			"data = '" + data + '\'' + 
+			",keys = '" + key + '\'' +
 			",format = '" + format + '\'' + 
 			",type = '" + type + '\'' + 
 			",version = '" + version + '\'' + 

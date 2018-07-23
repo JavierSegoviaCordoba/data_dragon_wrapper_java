@@ -1,4 +1,4 @@
-package riot.api.dto.champion_list;
+package riot.api.dto.champion_full_list;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.annotation.Generated;
