@@ -93,7 +93,7 @@ public enum Platform {
         return cdn;
     }
 
-    public String getHostCustom(Locale locale, String version) {
+    public String getHost(Locale locale, String version) {
 
         String cdn = "https://ddragon.leagueoflegends.com/cdn";
 
@@ -102,7 +102,7 @@ public enum Platform {
         return cdn;
     }
 
-    public String getPlatformVersion () {
+    public String getVersion () {
         return Objects.requireNonNull(getRealm()).getV();
     }
 
