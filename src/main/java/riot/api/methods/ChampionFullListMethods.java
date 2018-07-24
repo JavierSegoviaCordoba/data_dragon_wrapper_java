@@ -5,14 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import riot.api.DataDragon;
 import riot.api.constant.Locale;
 import riot.api.constant.Platform;
-import riot.api.dto.champion.Champion;
-import riot.api.dto.champion.ChampionDto;
 import riot.api.dto.champion_full_list.ChampionFull;
 import riot.api.dto.champion_full_list.ChampionFullListDto;
-import riot.api.dto.champion_full_list.ChampionKeyId;
-import riot.api.dto.champion_short_list.ChampionListDto;
-import riot.api.dto.champion_short_list.ChampionShort;
-import riot.api.utils.MapUtils;
 
 import java.io.IOException;
 import java.net.URL;

@@ -2,6 +2,7 @@ package riot.api.constant;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import riot.api.dto.realm.Realm;
 
 import java.io.IOException;
@@ -56,13 +57,13 @@ public enum Platform {
     }
 
     public Realm getRealm() {
-        String realmS = "https://ddragon.leagueoflegends.com/realms/" + getName() + ".json";
+        String realm = "https://ddragon.leagueoflegends.com/realms/" + getName() + ".json";
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            return objectMapper.readValue(new URL(realmS), Realm.class);
+            return objectMapper.readValue(new URL(realm), Realm.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +94,7 @@ public enum Platform {
         return cdn;
     }
 
-    public String getHost(Locale locale, String version) {
+    public String getHost(@NotNull Locale locale, @NotNull String version) {
 
         String cdn = "https://ddragon.leagueoflegends.com/cdn";
 
@@ -102,7 +103,7 @@ public enum Platform {
         return cdn;
     }
 
-    public String getVersion () {
+    public String getVersion() {
         return Objects.requireNonNull(getRealm()).getV();
     }
 

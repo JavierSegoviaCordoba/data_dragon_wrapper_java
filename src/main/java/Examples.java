@@ -45,7 +45,7 @@ public class Examples {
         //Champion list (ChampionShort --> /champion.json has less info than Champion --> /champion/ChampionName.json).
         //Check original json files to see the difference.
         //Sort by name, here we get the first item, it should be Aatrox (0) when I wrote this file
-        List<ChampionShort> championShortList = DataDragon.getChampionList(Platform.NA);
+        List<ChampionShort> championShortList = DataDragon.getChampionShortList(Platform.NA);
         System.out.println("\nChampionName: " + championShortList.get(0).getId()
                 + "\nBlurb: " + championShortList.get(0).getBlurb());
 

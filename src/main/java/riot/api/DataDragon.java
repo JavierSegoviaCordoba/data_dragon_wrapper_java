@@ -6,6 +6,7 @@ import riot.api.dto.champion.Champion;
 import riot.api.dto.champion_full_list.ChampionFull;
 import riot.api.dto.champion_full_list.ChampionKeyId;
 import riot.api.dto.champion_short_list.ChampionShort;
+import riot.api.methods.ChampionShortListMethods;
 import riot.api.dto.item.Item;
 import riot.api.dto.language.Language;
 import riot.api.dto.map.Map;
@@ -44,12 +45,12 @@ public class DataDragon {
         return ChampionMethods.GetChampion(platform, locale, version, champion_key);
     }
 
-    public static List<ChampionShort> getChampionList(Platform platform) {
+    public static List<ChampionShort> getChampionShortList(Platform platform) {
 
         return ChampionShortListMethods.GetChampionShortList(platform);
     }
 
-    public static List<ChampionShort> getChampionList(Platform platform, Locale locale, String version) {
+    public static List<ChampionShort> getChampionShortList(Platform platform, Locale locale, String version) {
 
         return ChampionShortListMethods.GetChampionShortList(platform, locale, version);
     }
