@@ -1,0 +1,49 @@
+package data_dragon.endpoints.cdn.champion.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class VarsItem {
+
+    @JsonProperty("link")
+    private String link;
+
+    @JsonProperty("coeff")
+    private double coeff;
+
+    @JsonProperty("key")
+    private String key;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public double getCoeff() {
+        return coeff;
+    }
+
+    public void setCoeff(double coeff) {
+        this.coeff = coeff;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "VarsItem{" +
+                        "link = '" + link + '\'' +
+                        ",coeff = '" + coeff + '\'' +
+                        ",key = '" + key + '\'' +
+                        "}";
+    }
+}

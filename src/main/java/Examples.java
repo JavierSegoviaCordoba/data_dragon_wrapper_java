@@ -1,19 +1,22 @@
-import riot.api.DataDragon;
-import riot.api.constant.Locale;
-import riot.api.constant.Platform;
-import riot.api.dto.champion.Champion;
-import riot.api.dto.champion_full_list.ChampionFull;
-import riot.api.dto.champion_full_list.ChampionKeyId;
-import riot.api.dto.champion_short_list.ChampionShort;
-import riot.api.dto.item.Item;
-import riot.api.dto.language.Language;
-import riot.api.dto.map.Map;
-import riot.api.dto.profile_icon.ProfileIcon;
-import riot.api.dto.runes_reforged.Rune;
-import riot.api.dto.runes_reforged.RunesReforged;
-import riot.api.dto.sticker.Sticker;
-import riot.api.dto.summoner_spell.SummonerSpell;
+import data_dragon.DataDragon;
+import data_dragon.constant.Locale;
+import data_dragon.constant.Platform;
+import data_dragon.endpoints.api.versions.VersionMethods;
+import data_dragon.endpoints.cdn.champion.dto.Champion;
+import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
+import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
+import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
+import data_dragon.endpoints.cdn.item.dto.Item;
+import data_dragon.endpoints.cdn.language.dto.Language;
+import data_dragon.endpoints.cdn.languages.LanguagesMethods;
+import data_dragon.endpoints.cdn.map.dto.Map;
+import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIcon;
+import data_dragon.endpoints.cdn.runes_reforged.dto.Rune;
+import data_dragon.endpoints.cdn.runes_reforged.dto.RunesReforged;
+import data_dragon.endpoints.cdn.sticker.dto.Sticker;
+import data_dragon.endpoints.cdn.summoner_spell.dto.SummonerSpell;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Examples {
@@ -104,6 +107,14 @@ public class Examples {
         //SummonerSpell by string Id
         SummonerSpell summonerSpellBarrier = DataDragon.getSummonerSpell(Platform.NA, "SummonerBarrier");
         System.out.println("\nSummonerSpellSummonerBarrierDescription: " + summonerSpellBarrier.getDescription());
+
+        //List of languages
+        String[] languages = DataDragon.getLanguageList();
+        System.out.println("\nLanguages: " + Arrays.toString(languages));
+
+        //List of versions
+        String[] versions = DataDragon.getVersionList();
+        System.out.println("\nVersions: " + Arrays.toString(versions));
 
         long endTime = System.currentTimeMillis();
         System.out.println("\n\nTotal execution time: " + (endTime - startTime) + "ms");
