@@ -1,7 +1,7 @@
-#Data Dragon wrapper for java
+# Data Dragon wrapper for java
 This is a Riot Games Data Dragon wrapper for Java. You can get all the data from Data Dragon easily and use it in your Java or Android app.
-##Usage
-###Champions
+## Usage
+### Champions
 
 Get a champion by name
 
@@ -81,7 +81,7 @@ List<ChampionKeyId> championKeyIdList = DataDragon.getChampionKeyList(Platform.N
 System.out.println("\n" + championKeyIdList.get(0).toString());
 ````
 
-###Items
+### Items
 Item by Id (1001 = boots)
 ````
 Item item1001 = DataDragon.getItem(Platform.NA, 1001);
@@ -115,7 +115,7 @@ ProfileIcon profileIcon0 = DataDragon.getProfileIcon(Platform.NA, 0);
 System.out.println("\nProfileIconSprite: " + profileIcon0.getImage().getSprite());
 ````
 
-###Runes reforged
+### Runes reforged
 
 List of Runes Reforged.
 
@@ -134,7 +134,7 @@ Rune by Id (8120 = Ghost Poro).
 Rune rune8120 = DataDragon.getRune(Platform.NA, 8120);
 System.out.println("\nRuneName: " + rune8120.getName());
 ````
-###Stickers
+### Stickers
 
 Sticker by name.
 
@@ -143,7 +143,7 @@ Sticker stickerPoroAngry = DataDragon.getSticker(Platform.NA, "poro-angry");
 System.out.println("\nStickerSprite: " + stickerPoroAngry.getImage().getSprite());
 ````
 
-###SummonerSpell
+### SummonerSpell
 
 SummonerSpell by string Id.
 
