@@ -9,8 +9,14 @@ import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion.dto.ChampionDto;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
-import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionListShortDto;
+import data_dragon.endpoints.cdn.champion_short_list.ChampionShortListMethodsInterface;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
+import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +36,7 @@ public class ChampionMethods extends DataDragon {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -57,9 +64,9 @@ public class ChampionMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListShortDto championListShortDto = objectMapper.readValue(new URL(url), ChampionListShortDto.class);
+            ChampionShortListDto championShortListDto = objectMapper.readValue(new URL(url), ChampionShortListDto.class);
 
-            Map<String, ChampionShort> championNameMap = championListShortDto.getData().any();
+            Map<String, ChampionShort> championNameMap = championShortListDto.getData().any();
 
             for (String key : championNameMap.keySet()) {
                 if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
@@ -82,7 +89,7 @@ public class ChampionMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListShortDto championListShortDto = objectMapper.readValue(new URL(url), ChampionListShortDto.class);
+            ChampionShortListDto championListShortDto = objectMapper.readValue(new URL(url), ChampionShortListDto.class);
 
             Map<String, ChampionShort> championShortMap = championListShortDto.getData().any();
 
@@ -177,5 +184,165 @@ public class ChampionMethods extends DataDragon {
         return null;
     }
 
+    //Asynchronous methods
+    public static void GetChampion(Platform platform, String champion_name, ChampionInterface championInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionMethodsInterface championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+
+        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+
+        championCall.enqueue(new Callback<ChampionDto>() {
+            @Override
+            public void onResponse(Call<ChampionDto> call, Response<ChampionDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        championInterface.onSuccess(response.body().getData().any().get(champion_name));
+                    }
+                } else {
+                    championInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionDto> call, Throwable t) {
+                championInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampion(Platform platform, Locale locale, String version, String champion_name,
+                                   ChampionInterface championInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionMethodsInterface championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+
+        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+
+        championCall.enqueue(new Callback<ChampionDto>() {
+            @Override
+            public void onResponse(Call<ChampionDto> call, Response<ChampionDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        championInterface.onSuccess(response.body().getData().any().get(champion_name));
+                    }
+                } else {
+                    championInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionDto> call, Throwable t) {
+                championInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampion(Platform platform, int champion_key, ChampionInterface championInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
+                .create(ChampionShortListMethodsInterface.class);
+
+        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+
+        championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
+            @Override
+            public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Map<String, ChampionShort> championNameMap = response.body().getData().any();
+
+                        for (String key : championNameMap.keySet()) {
+                            if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
+                                GetChampion(platform, championNameMap.get(key).getName(), new ChampionInterface() {
+                                    @Override
+                                    public void onSuccess(Champion champion) {
+                                        championInterface.onSuccess(champion);
+                                    }
+
+                                    @Override
+                                    public void onError(int code) {
+                                        championInterface.onError(code);
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        championInterface.onError(t);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    championInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionShortListDto> call, Throwable t) {
+                championInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampion(Platform platform, Locale locale, String version, int champion_key,
+                                   ChampionInterface championInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
+                .create(ChampionShortListMethodsInterface.class);
+
+        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+
+        championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
+            @Override
+            public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Map<String, ChampionShort> championNameMap = response.body().getData().any();
+
+                        for (String key : championNameMap.keySet()) {
+                            if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
+                                GetChampion(platform, championNameMap.get(key).getName(), new ChampionInterface() {
+                                    @Override
+                                    public void onSuccess(Champion champion) {
+                                        championInterface.onSuccess(champion);
+                                    }
+
+                                    @Override
+                                    public void onError(int code) {
+                                        championInterface.onError(code);
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        championInterface.onError(t);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    championInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionShortListDto> call, Throwable t) {
+                championInterface.onError(t);
+            }
+        });
+    }
 
 }

@@ -1,15 +1,19 @@
 package data_dragon.endpoints.cdn.champion.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 public class VarsItem {
 
     @JsonProperty("link")
     private String link;
 
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty("coeff")
-    private double coeff;
+    private List<Double> coeff = null;
 
     @JsonProperty("key")
     private String key;
@@ -22,11 +26,11 @@ public class VarsItem {
         this.link = link;
     }
 
-    public double getCoeff() {
+    public List<Double> getCoeff() {
         return coeff;
     }
 
-    public void setCoeff(double coeff) {
+    public void setCoeff(List<Double> coeff) {
         this.coeff = coeff;
     }
 

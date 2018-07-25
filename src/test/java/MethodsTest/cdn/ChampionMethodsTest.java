@@ -16,7 +16,8 @@ public class ChampionMethodsTest {
     public void main() {
 
         long startTime = System.currentTimeMillis();
-        Champion championGraves = DataDragon.getChampion(Platform.NA, "Graves");
+
+        Champion championGraves = DataDragon.getChampion(Platform.NA, "Gravses");
         System.out.println("\nChampionGraves: \n" + championGraves.toJson());
 
         Champion championGravesSpanish = DataDragon.getChampion(Platform.NA, Locale.ES_ES, Platform.EUW.getVersion(), "Ahri");
@@ -34,11 +35,10 @@ public class ChampionMethodsTest {
         String championIdKaisa = DataDragon.getChampionKey(Platform.NA, "Kaisa");
         System.out.println("\nchampionIdKaisa: \n" + championIdKaisa);
 
-        List<ChampionKeyId> championKeyIdList = DataDragon.getChampionKeyList(Platform.NA);
+        List<ChampionKeyId> championKeyIdList = DataDragon.getChampionKeyIdList(Platform.NA);
         System.out.println("\nchampionKeyIdList: \n" + new Gson().toJson(championKeyIdList));
 
         long endTime = System.currentTimeMillis();
         System.out.println("\nTotal execution time: " + (endTime - startTime) + "ms");
     }
-
 }

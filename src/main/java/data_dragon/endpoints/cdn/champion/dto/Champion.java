@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-
 public class Champion {
 
     @JsonProperty("id")
@@ -219,6 +218,6 @@ public class Champion {
     }
 
     public String toJson() {
-            return new Gson().toJson(this);
-        }
+        return new Gson().toJson(this);
+    }
 }

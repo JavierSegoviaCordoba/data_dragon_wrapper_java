@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import data_dragon.DataDragon;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionListShortDto;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
+import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +25,7 @@ public class ChampionShortListMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListShortDto championListShortDto = objectMapper.readValue(new URL(url), ChampionListShortDto.class);
+            ChampionShortListDto championListShortDto = objectMapper.readValue(new URL(url), ChampionShortListDto.class);
 
             Map<String, ChampionShort> championShortMap = championListShortDto.getData().any();
 
@@ -49,7 +49,7 @@ public class ChampionShortListMethods extends DataDragon {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            ChampionListShortDto championListShortDto = objectMapper.readValue(new URL(url), ChampionListShortDto.class);
+            ChampionShortListDto championListShortDto = objectMapper.readValue(new URL(url), ChampionShortListDto.class);
 
             Map<String, ChampionShort> championShortMap = championListShortDto.getData().any();
 

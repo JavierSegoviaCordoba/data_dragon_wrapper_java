@@ -2,7 +2,7 @@ package data_dragon.endpoints.cdn.champion_short_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChampionListShortDto {
+public class ChampionShortListDto {
 
     @JsonProperty("data")
     private Data data;
@@ -50,7 +50,7 @@ public class ChampionListShortDto {
 
     @Override
     public String toString() {
-        return "ChampionListShortDto{" +
+        return "ChampionShortListDto{" +
                 "data=" + data +
                 ", format='" + format + '\'' +
                 ", type='" + type + '\'' +

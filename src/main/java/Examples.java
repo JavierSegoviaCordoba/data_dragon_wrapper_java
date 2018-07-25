@@ -1,14 +1,12 @@
 import data_dragon.DataDragon;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.api.versions.VersionMethods;
 import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.item.dto.Item;
 import data_dragon.endpoints.cdn.language.dto.Language;
-import data_dragon.endpoints.cdn.languages.LanguagesMethods;
 import data_dragon.endpoints.cdn.map.dto.Map;
 import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIcon;
 import data_dragon.endpoints.cdn.runes_reforged.dto.Rune;
@@ -67,7 +65,7 @@ public class Examples {
         System.out.println("\nChampionKey: Kaisa = ChampionId: " + championIdKaisa);
 
         //Champion key-id pair list sort by key, the first item should be Annie (0) with the key 1 and the id Annie
-        List<ChampionKeyId> championKeyIdList = DataDragon.getChampionKeyList(Platform.NA);
+        List<ChampionKeyId> championKeyIdList = DataDragon.getChampionKeyIdList(Platform.NA);
         System.out.println("\n" + championKeyIdList.get(0).toString());
 
         //Item by Id (1001 = boots)

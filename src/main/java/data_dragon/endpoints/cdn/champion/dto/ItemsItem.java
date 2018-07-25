@@ -11,6 +11,9 @@ public class ItemsItem {
     @JsonProperty("count")
     private int count;
 
+    @JsonProperty("hidecount")
+    private boolean hidecount;
+
     @JsonProperty("hideCount")
     private boolean hideCount;
 
@@ -30,6 +33,14 @@ public class ItemsItem {
         this.count = count;
     }
 
+    public boolean isHidecount() {
+        return hidecount;
+    }
+
+    public void setHidecount(boolean hidecount) {
+        this.hidecount = hidecount;
+    }
+
     public boolean isHideCount() {
         return hideCount;
     }
@@ -40,6 +51,7 @@ public class ItemsItem {
 
     @Override
     public String toString() {
+
         return "items:{" +
                 "id='" + id + '\'' +
                 ", count=" + count +

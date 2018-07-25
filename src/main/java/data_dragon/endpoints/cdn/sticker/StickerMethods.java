@@ -1,7 +1,6 @@
 package data_dragon.endpoints.cdn.sticker;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import data_dragon.DataDragon;
@@ -25,7 +24,7 @@ public class StickerMethods extends DataDragon {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS , true);
+        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {

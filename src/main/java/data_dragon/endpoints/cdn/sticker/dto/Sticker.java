@@ -1,7 +1,6 @@
 package data_dragon.endpoints.cdn.sticker.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 public class Sticker {
 
