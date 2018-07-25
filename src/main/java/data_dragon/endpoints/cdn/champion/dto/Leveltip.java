@@ -1,25 +1,18 @@
 package data_dragon.endpoints.cdn.champion.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 
 public class Leveltip {
 
-    @JsonProperty("effect")
-    private List<String> effect;
-
     @JsonProperty("label")
     private List<String> label;
 
-    public List<String> getEffect() {
-        return effect;
-    }
-
-    public void setEffect(List<String> effect) {
-        this.effect = effect;
-    }
+    @JsonProperty("effect")
+    private List<String> effect;
 
     public List<String> getLabel() {
         return label;
@@ -29,12 +22,23 @@ public class Leveltip {
         this.label = label;
     }
 
+    public List<String> getEffect() {
+        return effect;
+    }
+
+    public void setEffect(List<String> effect) {
+        this.effect = effect;
+    }
+
     @Override
     public String toString() {
-        return
-                "Leveltip{" +
-                        "effect = '" + effect + '\'' +
-                        ",label = '" + label + '\'' +
-                        "}";
+        return "leveltip:{" +
+                "label=" + label +
+                ", effect=" + effect +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

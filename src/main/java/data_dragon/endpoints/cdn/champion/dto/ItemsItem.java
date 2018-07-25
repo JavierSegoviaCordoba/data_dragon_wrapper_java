@@ -1,8 +1,12 @@
 package data_dragon.endpoints.cdn.champion.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class ItemsItem {
+
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("count")
     private int count;
@@ -10,8 +14,13 @@ public class ItemsItem {
     @JsonProperty("hideCount")
     private boolean hideCount;
 
-    @JsonProperty("id")
-    private String id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getCount() {
         return count;
@@ -29,21 +38,16 @@ public class ItemsItem {
         this.hideCount = hideCount;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return
-                "ItemsItem{" +
-                        "count = '" + count + '\'' +
-                        ",hideCount = '" + hideCount + '\'' +
-                        ",id = '" + id + '\'' +
-                        "}";
+        return "items:{" +
+                "id='" + id + '\'' +
+                ", count=" + count +
+                ", hideCount=" + hideCount +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

@@ -1,7 +1,7 @@
 package data_dragon.endpoints.cdn.sticker.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 public class Sticker {
 
@@ -29,10 +29,9 @@ public class Sticker {
 
     @Override
     public String toString() {
-        return
-                "PoroAngry{" +
-                        "image = '" + image + '\'' +
-                        ",id = '" + id + '\'' +
-                        "}";
+        return "Sticker{" +
+                "image=" + image +
+                ", id=" + id +
+                '}';
     }
 }

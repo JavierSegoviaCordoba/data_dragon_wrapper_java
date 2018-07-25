@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.champion.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class VarsItem {
 
@@ -39,11 +40,14 @@ public class VarsItem {
 
     @Override
     public String toString() {
-        return
-                "VarsItem{" +
-                        "link = '" + link + '\'' +
-                        ",coeff = '" + coeff + '\'' +
-                        ",key = '" + key + '\'' +
-                        "}";
+        return "vars:{" +
+                "link='" + link + '\'' +
+                ", coeff=" + coeff +
+                ", key='" + key + '\'' +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

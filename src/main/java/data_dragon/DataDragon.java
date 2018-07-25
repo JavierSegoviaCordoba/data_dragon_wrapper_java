@@ -195,6 +195,17 @@ public class DataDragon {
     }
 
     //SummonerSpellMethods
+
+    public static List<SummonerSpell> getSummonerSpellList(Platform platform) {
+
+        return SummonerSpellMethods.GetSummonerSpellList(platform);
+    }
+
+    public static List<SummonerSpell> getSummonerSpellList(Platform platform, Locale locale, String version) {
+
+        return SummonerSpellMethods.GetSummonerSpellList(platform, locale, version);
+    }
+
     public static SummonerSpell getSummonerSpell(Platform platform, String summoner_spell_id) {
 
         return SummonerSpellMethods.GetSummonerSpell(platform, summoner_spell_id);

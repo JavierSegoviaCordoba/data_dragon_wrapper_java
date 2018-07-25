@@ -7,12 +7,15 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.runes_reforged.dto.Rune;
 import data_dragon.endpoints.cdn.runes_reforged.dto.RunesReforged;
+import data_dragon.endpoints.cdn.summoner_spell.dto.SummonerSpell;
+import data_dragon.endpoints.cdn.summoner_spell.dto.SummonerSpellDto;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class RunesReforgedMethods extends DataDragon {
 

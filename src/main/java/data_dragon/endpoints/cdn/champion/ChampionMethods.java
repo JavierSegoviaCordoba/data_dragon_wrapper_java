@@ -11,7 +11,6 @@ import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionListShortDto;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
-import data_dragon.utils.MapUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,8 +58,8 @@ public class ChampionMethods extends DataDragon {
 
         try {
             ChampionListShortDto championListShortDto = objectMapper.readValue(new URL(url), ChampionListShortDto.class);
-            Map<String, ChampionShort> championNameMap;
-            championNameMap = championListShortDto.getData().any();
+
+            Map<String, ChampionShort> championNameMap = championListShortDto.getData().any();
 
             for (String key : championNameMap.keySet()) {
                 if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
@@ -99,6 +98,28 @@ public class ChampionMethods extends DataDragon {
         return null;
     }
 
+    public static String GetChampionKey(Platform platform, String champion_id) {
+
+        String url = platform.getHostCdn() + "/championFull.json";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        try {
+            ChampionFullListDto championFullListDto = objectMapper.readValue(new URL(url), ChampionFullListDto.class);
+
+            Map<String, String> keysMap = championFullListDto.getKey().any();
+
+            return keysMap.entrySet().stream()
+                    .filter(entry -> Objects.equals(entry.getValue(), champion_id))
+                    .map(Map.Entry::getKey).findFirst().orElse(null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String GetChampionId(Platform platform, String champion_key) {
 
         String url = platform.getHostCdn() + "/championFull.json";
@@ -118,30 +139,6 @@ public class ChampionMethods extends DataDragon {
         }
         return null;
     }
-
-
-    public static String GetChampionKey(Platform platform, String champion_id) {
-
-        String url = platform.getHostCdn() + "/championFull.json";
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        try {
-            ChampionFullListDto championFullListDto = objectMapper.readValue(new URL(url), ChampionFullListDto.class);
-
-            Map<String, String> keysMap = championFullListDto.getKey().any();
-
-            Map<String, String> keysInvertedMap = MapUtils.inverseMap(keysMap);
-
-            return keysInvertedMap.get(champion_id);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     public static List<ChampionKeyId> GetChampionKeyList(Platform platform) {
 

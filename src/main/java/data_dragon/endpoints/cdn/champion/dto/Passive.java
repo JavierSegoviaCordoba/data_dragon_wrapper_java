@@ -4,22 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Passive {
 
-    @JsonProperty("image")
-    private Image image;
-
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("description")
     private String description;
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    @JsonProperty("image")
+    private Image image;
 
     public String getName() {
         return name;
@@ -37,13 +29,20 @@ public class Passive {
         this.description = description;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return
-                "Passive{" +
-                        "image = '" + image + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",description = '" + description + '\'' +
-                        "}";
+        return "passive:{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", image=" + image +
+                '}';
     }
 }

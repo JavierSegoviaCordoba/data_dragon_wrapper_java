@@ -251,30 +251,29 @@ public class SummonerSpell {
 
     @Override
     public String toString() {
-        return
-                "SummonerBarrier{" +
-                        "cooldownBurn = '" + cooldownBurn + '\'' +
-                        ",image = '" + image + '\'' +
-                        ",cost = '" + cost + '\'' +
-                        ",modes = '" + modes + '\'' +
-                        ",datavalues = '" + datavalues + '\'' +
-                        ",maxammo = '" + maxammo + '\'' +
-                        ",resource = '" + resource + '\'' +
-                        ",rangeBurn = '" + rangeBurn + '\'' +
-                        ",tooltip = '" + tooltip + '\'' +
-                        ",description = '" + description + '\'' +
-                        ",range = '" + range + '\'' +
-                        ",maxrank = '" + maxrank + '\'' +
-                        ",summonerLevel = '" + summonerLevel + '\'' +
-                        ",effect = '" + effect + '\'' +
-                        ",costType = '" + costType + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",cooldown = '" + cooldown + '\'' +
-                        ",id = '" + id + '\'' +
-                        ",costBurn = '" + costBurn + '\'' +
-                        ",vars = '" + vars + '\'' +
-                        ",effectBurn = '" + effectBurn + '\'' +
-                        ",key = '" + key + '\'' +
-                        "}";
+        return "SummonerSpell{" +
+                "cooldownBurn='" + cooldownBurn + '\'' +
+                ", image=" + image +
+                ", cost=" + cost +
+                ", modes=" + modes +
+                ", datavalues=" + datavalues +
+                ", maxammo='" + maxammo + '\'' +
+                ", resource='" + resource + '\'' +
+                ", rangeBurn='" + rangeBurn + '\'' +
+                ", tooltip='" + tooltip + '\'' +
+                ", description='" + description + '\'' +
+                ", range=" + range +
+                ", maxrank=" + maxrank +
+                ", summonerLevel=" + summonerLevel +
+                ", effect=" + effect +
+                ", costType='" + costType + '\'' +
+                ", name='" + name + '\'' +
+                ", cooldown=" + cooldown +
+                ", id='" + id + '\'' +
+                ", costBurn='" + costBurn + '\'' +
+                ", vars=" + vars +
+                ", effectBurn=" + effectBurn +
+                ", key='" + key + '\'' +
+                '}';
     }
 }
