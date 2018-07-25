@@ -31,9 +31,9 @@ public class Examples {
         System.out.println("\nChampionName: " + championGraves.getName() + "\nLore: " + championGraves.getLore());
 
         //You can set a custom Locale instead of using the generic Locale of EUW server, for example: es_ES
-        //Check the following link to get the versions: https://ddragon.leagueoflegends.com/cdn/languages.json
+        //Check the following link to get a list of languages: https://ddragon.leagueoflegends.com/cdn/languages.json
         //You can set a custom version instead of using the last version of EUW server, for example: "7.10.1"
-        //Check the following link to get the versions: https://ddragon.leagueoflegends.com/api/versions.json
+        //Check the following link to get a list of versions: https://ddragon.leagueoflegends.com/api/versions.json
         Champion championAhri = DataDragon.getChampion(Platform.NA, Locale.ES_ES, Platform.EUW.getVersion(), "Ahri");
         System.out.println("\nChampionName: " + championAhri.getName() + "\nLore: " + championAhri.getLore());
 
