@@ -1,12 +1,13 @@
 package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 
 public class SkinsItem {
 
-    @JsonProperty("chromas")
-    private boolean chromas;
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("num")
     private int num;
@@ -14,15 +15,15 @@ public class SkinsItem {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("chromas")
+    private boolean chromas;
 
-    public boolean isChromas() {
-        return chromas;
+    public String getId() {
+        return id;
     }
 
-    public void setChromas(boolean chromas) {
-        this.chromas = chromas;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getNum() {
@@ -41,22 +42,25 @@ public class SkinsItem {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
+    public boolean isChromas() {
+        return chromas;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setChromas(boolean chromas) {
+        this.chromas = chromas;
     }
 
     @Override
     public String toString() {
-        return
-                "SkinsItem{" +
-                        "chromas = '" + chromas + '\'' +
-                        ",num = '" + num + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",id = '" + id + '\'' +
-                        "}";
+        return "skins:{" +
+                "id='" + id + '\'' +
+                ", num=" + num +
+                ", name='" + name + '\'' +
+                ", chromas=" + chromas +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

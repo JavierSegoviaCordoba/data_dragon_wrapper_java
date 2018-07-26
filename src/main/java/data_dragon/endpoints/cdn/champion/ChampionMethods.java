@@ -7,6 +7,7 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion.dto.ChampionDto;
+import data_dragon.endpoints.cdn.champion_full_list.ChampionFullListMethodsInterface;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.ChampionShortListMethodsInterface;
@@ -127,7 +128,7 @@ public class ChampionMethods extends DataDragon {
         return null;
     }
 
-    public static String GetChampionId(Platform platform, String champion_key) {
+    public static String GetChampionId(Platform platform, int champion_key) {
 
         String url = platform.getHostCdn() + "/championFull.json";
 
@@ -139,7 +140,7 @@ public class ChampionMethods extends DataDragon {
 
             Map<String, String> keysMap = championFullListDto.getKey().any();
 
-            return keysMap.get(champion_key);
+            return keysMap.get(String.valueOf(champion_key));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,7 +148,7 @@ public class ChampionMethods extends DataDragon {
         return null;
     }
 
-    public static List<ChampionKeyId> GetChampionKeyList(Platform platform) {
+    public static List<ChampionKeyId> GetChampionKeyIdList(Platform platform) {
 
         String url = platform.getHostCdn() + "/championFull.json";
 
@@ -183,6 +184,7 @@ public class ChampionMethods extends DataDragon {
         }
         return null;
     }
+
 
     //Asynchronous methods
     public static void GetChampion(Platform platform, String champion_name, ChampionInterface championInterface) {
@@ -345,4 +347,161 @@ public class ChampionMethods extends DataDragon {
         });
     }
 
+    public static void GetChampionKey(Platform platform, String champion_id,
+                                      ChampionKeyInterface championKeyInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+
+        championFullListDtoCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Map<String, String> keysMap = response.body().getKey().any();
+
+                        String champion_key = keysMap.entrySet().stream()
+                                .filter(entry -> Objects.equals(entry.getValue(), champion_id))
+                                .map(Map.Entry::getKey).findFirst().orElse(null);
+                        if (champion_key != null) {
+                            championKeyInterface.onSuccess(Integer.parseInt(champion_key));
+                        } else {
+                            championKeyInterface.onError(response.code());
+                        }
+                    }
+                } else {
+                    championKeyInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championKeyInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampionId(Platform platform, int champion_key,
+                                     ChampionIdInterface championIdInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+
+        championFullListDtoCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Map<String, String> keysMap = response.body().getKey().any();
+
+                        String champion_id = keysMap.get(String.valueOf(champion_key));
+                        championIdInterface.onSuccess(champion_id);
+                    }
+                } else {
+                    championIdInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championIdInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampionKeyIdList(Platform platform, ChampionKeyIdListInterface championKeyIdListInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+
+        championFullListDtoCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Map<String, String> keysMap = response.body().getKey().any();
+
+                        List<ChampionKeyId> championKeyIdList = new ArrayList<>();
+
+                        Set set = keysMap.keySet();
+                        Object[] keys = set.toArray();
+
+                        Collection collection = keysMap.values();
+                        Object[] ids = collection.toArray();
+
+                        for (int i = 0; i < set.size(); i++) {
+                            ChampionKeyId championKeyId = new ChampionKeyId();
+                            championKeyId.setKey(Integer.valueOf(keys[i].toString()));
+                            championKeyId.setId(ids[i].toString());
+                            championKeyIdList.add(championKeyId);
+                        }
+
+                        championKeyIdList.sort(Comparator.comparing(ChampionKeyId::getKey));
+
+                        championKeyIdListInterface.onSuccess(championKeyIdList);
+                    }
+                } else {
+                    championKeyIdListInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championKeyIdListInterface.onError(t);
+            }
+        });
+    }
+
+
+    //Interfaces
+    public interface ChampionInterface {
+
+        void onSuccess(Champion champion);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
+
+    public interface ChampionKeyInterface {
+        void onSuccess(int champion_key);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
+
+    public interface ChampionIdInterface {
+        void onSuccess(String champion_id);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
+
+    public interface ChampionKeyIdListInterface {
+        void onSuccess(List<ChampionKeyId> championKeyIdList);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
 }

@@ -1,17 +1,39 @@
 package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 
 public class RecommendedItem {
 
+    @JsonProperty("champion")
+    private String champion;
+
+    @JsonProperty("title")
+    private String title;
+
+    @JsonProperty("map")
+    private String map;
+
     @JsonProperty("mode")
     private String mode;
 
+    @JsonProperty("type")
+    private String type;
+
+    @JsonProperty("customTag")
+    private String customTag;
+
+    @JsonProperty("sortrank")
+    private int sortrank;
+
     @JsonProperty("extensionPage")
     private boolean extensionPage;
+
+    @JsonProperty("useObviousCheckmark")
+    private boolean useObviousCheckmark;
 
     @JsonProperty("customPanel")
     private Object customPanel;
@@ -19,26 +41,29 @@ public class RecommendedItem {
     @JsonProperty("blocks")
     private List<BlocksItem> blocks;
 
-    @JsonProperty("customTag")
-    private String customTag;
+    public String getChampion() {
+        return champion;
+    }
 
-    @JsonProperty("title")
-    private String title;
+    public void setChampion(String champion) {
+        this.champion = champion;
+    }
 
-    @JsonProperty("type")
-    private String type;
+    public String getTitle() {
+        return title;
+    }
 
-    @JsonProperty("map")
-    private String map;
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    @JsonProperty("champion")
-    private String champion;
+    public String getMap() {
+        return map;
+    }
 
-    @JsonProperty("sortrank")
-    private int sortrank;
-
-    @JsonProperty("useObviousCheckmark")
-    private boolean useObviousCheckmark;
+    public void setMap(String map) {
+        this.map = map;
+    }
 
     public String getMode() {
         return mode;
@@ -48,12 +73,44 @@ public class RecommendedItem {
         this.mode = mode;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCustomTag() {
+        return customTag;
+    }
+
+    public void setCustomTag(String customTag) {
+        this.customTag = customTag;
+    }
+
+    public int getSortrank() {
+        return sortrank;
+    }
+
+    public void setSortrank(int sortrank) {
+        this.sortrank = sortrank;
+    }
+
     public boolean isExtensionPage() {
         return extensionPage;
     }
 
     public void setExtensionPage(boolean extensionPage) {
         this.extensionPage = extensionPage;
+    }
+
+    public boolean isUseObviousCheckmark() {
+        return useObviousCheckmark;
+    }
+
+    public void setUseObviousCheckmark(boolean useObviousCheckmark) {
+        this.useObviousCheckmark = useObviousCheckmark;
     }
 
     public Object getCustomPanel() {
@@ -72,77 +129,24 @@ public class RecommendedItem {
         this.blocks = blocks;
     }
 
-    public String getCustomTag() {
-        return customTag;
-    }
-
-    public void setCustomTag(String customTag) {
-        this.customTag = customTag;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
-    }
-
-    public String getChampion() {
-        return champion;
-    }
-
-    public void setChampion(String champion) {
-        this.champion = champion;
-    }
-
-    public int getSortrank() {
-        return sortrank;
-    }
-
-    public void setSortrank(int sortrank) {
-        this.sortrank = sortrank;
-    }
-
-    public boolean isUseObviousCheckmark() {
-        return useObviousCheckmark;
-    }
-
-    public void setUseObviousCheckmark(boolean useObviousCheckmark) {
-        this.useObviousCheckmark = useObviousCheckmark;
-    }
-
     @Override
     public String toString() {
-        return
-                "RecommendedItem{" +
-                        "mode = '" + mode + '\'' +
-                        ",extensionPage = '" + extensionPage + '\'' +
-                        ",customPanel = '" + customPanel + '\'' +
-                        ",blocks = '" + blocks + '\'' +
-                        ",customTag = '" + customTag + '\'' +
-                        ",title = '" + title + '\'' +
-                        ",type = '" + type + '\'' +
-                        ",map = '" + map + '\'' +
-                        ",champion = '" + champion + '\'' +
-                        ",sortrank = '" + sortrank + '\'' +
-                        ",useObviousCheckmark = '" + useObviousCheckmark + '\'' +
-                        "}";
+        return "recommended:{" +
+                "champion='" + champion + '\'' +
+                ", title='" + title + '\'' +
+                ", map='" + map + '\'' +
+                ", mode='" + mode + '\'' +
+                ", type='" + type + '\'' +
+                ", customTag='" + customTag + '\'' +
+                ", sortrank=" + sortrank +
+                ", extensionPage=" + extensionPage +
+                ", useObviousCheckmark=" + useObviousCheckmark +
+                ", customPanel=" + customPanel +
+                ", blocks=" + blocks +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

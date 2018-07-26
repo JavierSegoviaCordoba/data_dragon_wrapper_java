@@ -1,108 +1,76 @@
 package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.google.gson.Gson;
 
 public class Stats {
 
-    @JsonProperty("mpregen")
-    private int mpregen;
-
-    @JsonProperty("attackdamageperlevel")
-    private int attackdamageperlevel;
-
-    @JsonProperty("mp")
-    private int mp;
-
-    @JsonProperty("attackrange")
-    private int attackrange;
-
-    @JsonProperty("attackspeedoffset")
-    private double attackspeedoffset;
+    @JsonProperty("hp")
+    private double hp;
 
     @JsonProperty("hpperlevel")
     private int hpperlevel;
 
-    @JsonProperty("hp")
-    private int hp;
-
-    @JsonProperty("hpregen")
-    private int hpregen;
-
-    @JsonProperty("mpregenperlevel")
-    private int mpregenperlevel;
-
-    @JsonProperty("spellblock")
-    private double spellblock;
-
-    @JsonProperty("critperlevel")
-    private int critperlevel;
-
-    @JsonProperty("movespeed")
-    private int movespeed;
+    @JsonProperty("mp")
+    private double mp;
 
     @JsonProperty("mpperlevel")
     private int mpperlevel;
+
+    @JsonProperty("movespeed")
+    private int movespeed;
 
     @JsonProperty("armor")
     private int armor;
 
     @JsonProperty("armorperlevel")
-    private double armorperlevel;
+    private int armorperlevel;
 
-    @JsonProperty("crit")
-    private int crit;
-
-    @JsonProperty("attackdamage")
-    private int attackdamage;
+    @JsonProperty("spellblock")
+    private double spellblock;
 
     @JsonProperty("spellblockperlevel")
     private double spellblockperlevel;
 
-    @JsonProperty("attackspeedperlevel")
-    private double attackspeedperlevel;
+    @JsonProperty("attackrange")
+    private int attackrange;
+
+    @JsonProperty("hpregen")
+    private double hpregen;
 
     @JsonProperty("hpregenperlevel")
     private double hpregenperlevel;
 
-    public int getMpregen() {
-        return mpregen;
+    @JsonProperty("mpregen")
+    private double mpregen;
+
+    @JsonProperty("mpregenperlevel")
+    private double mpregenperlevel;
+
+    @JsonProperty("crit")
+    private int crit;
+
+    @JsonProperty("critperlevel")
+    private int critperlevel;
+
+    @JsonProperty("attackdamage")
+    private double attackdamage;
+
+    @JsonProperty("attackdamageperlevel")
+    private double attackdamageperlevel;
+
+    @JsonProperty("attackspeedoffset")
+    private double attackspeedoffset;
+
+    @JsonProperty("attackspeedperlevel")
+    private double attackspeedperlevel;
+
+    public double getHp() {
+        return hp;
     }
 
-    public void setMpregen(int mpregen) {
-        this.mpregen = mpregen;
-    }
-
-    public int getAttackdamageperlevel() {
-        return attackdamageperlevel;
-    }
-
-    public void setAttackdamageperlevel(int attackdamageperlevel) {
-        this.attackdamageperlevel = attackdamageperlevel;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public void setMp(int mp) {
-        this.mp = mp;
-    }
-
-    public int getAttackrange() {
-        return attackrange;
-    }
-
-    public void setAttackrange(int attackrange) {
-        this.attackrange = attackrange;
-    }
-
-    public double getAttackspeedoffset() {
-        return attackspeedoffset;
-    }
-
-    public void setAttackspeedoffset(double attackspeedoffset) {
-        this.attackspeedoffset = attackspeedoffset;
+    public void setHp(double hp) {
+        this.hp = hp;
     }
 
     public int getHpperlevel() {
@@ -113,52 +81,12 @@ public class Stats {
         this.hpperlevel = hpperlevel;
     }
 
-    public int getHp() {
-        return hp;
+    public double getMp() {
+        return mp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getHpregen() {
-        return hpregen;
-    }
-
-    public void setHpregen(int hpregen) {
-        this.hpregen = hpregen;
-    }
-
-    public int getMpregenperlevel() {
-        return mpregenperlevel;
-    }
-
-    public void setMpregenperlevel(int mpregenperlevel) {
-        this.mpregenperlevel = mpregenperlevel;
-    }
-
-    public double getSpellblock() {
-        return spellblock;
-    }
-
-    public void setSpellblock(double spellblock) {
-        this.spellblock = spellblock;
-    }
-
-    public int getCritperlevel() {
-        return critperlevel;
-    }
-
-    public void setCritperlevel(int critperlevel) {
-        this.critperlevel = critperlevel;
-    }
-
-    public int getMovespeed() {
-        return movespeed;
-    }
-
-    public void setMovespeed(int movespeed) {
-        this.movespeed = movespeed;
+    public void setMp(double mp) {
+        this.mp = mp;
     }
 
     public int getMpperlevel() {
@@ -169,6 +97,14 @@ public class Stats {
         this.mpperlevel = mpperlevel;
     }
 
+    public int getMovespeed() {
+        return movespeed;
+    }
+
+    public void setMovespeed(int movespeed) {
+        this.movespeed = movespeed;
+    }
+
     public int getArmor() {
         return armor;
     }
@@ -177,28 +113,20 @@ public class Stats {
         this.armor = armor;
     }
 
-    public double getArmorperlevel() {
+    public int getArmorperlevel() {
         return armorperlevel;
     }
 
-    public void setArmorperlevel(double armorperlevel) {
+    public void setArmorperlevel(int armorperlevel) {
         this.armorperlevel = armorperlevel;
     }
 
-    public int getCrit() {
-        return crit;
+    public double getSpellblock() {
+        return spellblock;
     }
 
-    public void setCrit(int crit) {
-        this.crit = crit;
-    }
-
-    public int getAttackdamage() {
-        return attackdamage;
-    }
-
-    public void setAttackdamage(int attackdamage) {
-        this.attackdamage = attackdamage;
+    public void setSpellblock(double spellblock) {
+        this.spellblock = spellblock;
     }
 
     public double getSpellblockperlevel() {
@@ -209,12 +137,20 @@ public class Stats {
         this.spellblockperlevel = spellblockperlevel;
     }
 
-    public double getAttackspeedperlevel() {
-        return attackspeedperlevel;
+    public int getAttackrange() {
+        return attackrange;
     }
 
-    public void setAttackspeedperlevel(double attackspeedperlevel) {
-        this.attackspeedperlevel = attackspeedperlevel;
+    public void setAttackrange(int attackrange) {
+        this.attackrange = attackrange;
+    }
+
+    public double getHpregen() {
+        return hpregen;
+    }
+
+    public void setHpregen(double hpregen) {
+        this.hpregen = hpregen;
     }
 
     public double getHpregenperlevel() {
@@ -225,30 +161,97 @@ public class Stats {
         this.hpregenperlevel = hpregenperlevel;
     }
 
+    public double getMpregen() {
+        return mpregen;
+    }
+
+    public void setMpregen(double mpregen) {
+        this.mpregen = mpregen;
+    }
+
+    public double getMpregenperlevel() {
+        return mpregenperlevel;
+    }
+
+    public void setMpregenperlevel(double mpregenperlevel) {
+        this.mpregenperlevel = mpregenperlevel;
+    }
+
+    public int getCrit() {
+        return crit;
+    }
+
+    public void setCrit(int crit) {
+        this.crit = crit;
+    }
+
+    public int getCritperlevel() {
+        return critperlevel;
+    }
+
+    public void setCritperlevel(int critperlevel) {
+        this.critperlevel = critperlevel;
+    }
+
+    public double getAttackdamage() {
+        return attackdamage;
+    }
+
+    public void setAttackdamage(double attackdamage) {
+        this.attackdamage = attackdamage;
+    }
+
+    public double getAttackdamageperlevel() {
+        return attackdamageperlevel;
+    }
+
+    public void setAttackdamageperlevel(double attackdamageperlevel) {
+        this.attackdamageperlevel = attackdamageperlevel;
+    }
+
+    public double getAttackspeedoffset() {
+        return attackspeedoffset;
+    }
+
+    public void setAttackspeedoffset(double attackspeedoffset) {
+        this.attackspeedoffset = attackspeedoffset;
+    }
+
+    public double getAttackspeedperlevel() {
+        return attackspeedperlevel;
+    }
+
+    public void setAttackspeedperlevel(double attackspeedperlevel) {
+        this.attackspeedperlevel = attackspeedperlevel;
+    }
+
     @Override
     public String toString() {
-        return
-                "Stats{" +
-                        "mpregen = '" + mpregen + '\'' +
-                        ",attackdamageperlevel = '" + attackdamageperlevel + '\'' +
-                        ",mp = '" + mp + '\'' +
-                        ",attackrange = '" + attackrange + '\'' +
-                        ",attackspeedoffset = '" + attackspeedoffset + '\'' +
-                        ",hpperlevel = '" + hpperlevel + '\'' +
-                        ",hp = '" + hp + '\'' +
-                        ",hpregen = '" + hpregen + '\'' +
-                        ",mpregenperlevel = '" + mpregenperlevel + '\'' +
-                        ",spellblock = '" + spellblock + '\'' +
-                        ",critperlevel = '" + critperlevel + '\'' +
-                        ",movespeed = '" + movespeed + '\'' +
-                        ",mpperlevel = '" + mpperlevel + '\'' +
-                        ",armor = '" + armor + '\'' +
-                        ",armorperlevel = '" + armorperlevel + '\'' +
-                        ",crit = '" + crit + '\'' +
-                        ",attackdamage = '" + attackdamage + '\'' +
-                        ",spellblockperlevel = '" + spellblockperlevel + '\'' +
-                        ",attackspeedperlevel = '" + attackspeedperlevel + '\'' +
-                        ",hpregenperlevel = '" + hpregenperlevel + '\'' +
-                        "}";
+        return "stats:{" +
+                "hp=" + hp +
+                ", hpperlevel=" + hpperlevel +
+                ", mp=" + mp +
+                ", mpperlevel=" + mpperlevel +
+                ", movespeed=" + movespeed +
+                ", armor=" + armor +
+                ", armorperlevel=" + armorperlevel +
+                ", spellblock=" + spellblock +
+                ", spellblockperlevel=" + spellblockperlevel +
+                ", attackrange=" + attackrange +
+                ", hpregen=" + hpregen +
+                ", hpregenperlevel=" + hpregenperlevel +
+                ", mpregen=" + mpregen +
+                ", mpregenperlevel=" + mpregenperlevel +
+                ", crit=" + crit +
+                ", critperlevel=" + critperlevel +
+                ", attackdamage=" + attackdamage +
+                ", attackdamageperlevel=" + attackdamageperlevel +
+                ", attackspeedoffset=" + attackspeedoffset +
+                ", attackspeedperlevel=" + attackspeedperlevel +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

@@ -1,4 +1,4 @@
-package data_dragon.endpoints.cdn.languages;
+package data_dragon.endpoints.api.versions;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,11 +12,11 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.net.URL;
 
-public class LanguagesMethods extends DataDragon {
+public class VersionsMethods extends DataDragon {
 
-    public static String[] GetLanguagesList() {
+    public static String[] GetVersionsList() {
 
-        String url = "https://ddragon.leagueoflegends.com/cdn/languages.json";
+        String url = "https://ddragon.leagueoflegends.com/api/versions.json";
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -29,37 +29,37 @@ public class LanguagesMethods extends DataDragon {
         return null;
     }
 
-    public static void GetLanguagesList(LanguagesListInterface languagesListInterface) {
+    public static void GetVersionsList(VersionsListInterface versionsListInterface) {
 
         String base_url = "https://ddragon.leagueoflegends.com/api/";
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
 
-        LanguagesMethodsInterface languagesMethodsInterface = retrofit.create(LanguagesMethodsInterface.class);
+        VersionsMethodsInterface versionMethodsInterface = retrofit.create(VersionsMethodsInterface.class);
 
-        Call<String[]> languageslistCall = languagesMethodsInterface.GetLanguagesList();
+        Call<String[]> versionsListCall = versionMethodsInterface.GetVersionsList();
 
-        languageslistCall.enqueue(new Callback<String[]>() {
+        versionsListCall.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {
                 if (response.code() == 200) {
-                    languagesListInterface.onSuccess(response.body());
+                    versionsListInterface.onSuccess(response.body());
                 } else {
-                    languagesListInterface.onError(response.code());
+                    versionsListInterface.onError(response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<String[]> call, Throwable t) {
-                languagesListInterface.onError(t);
+                versionsListInterface.onError(t);
             }
         });
     }
 
-    public interface LanguagesListInterface {
+    public interface VersionsListInterface {
 
-        void onSuccess(String[] languagesList);
+        void onSuccess(String[] versionsList);
 
         void onError(int code);
 

@@ -2,6 +2,7 @@ package data_dragon.endpoints.cdn.champion_short_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +24,12 @@ public class Data {
 
     @Override
     public String toString() {
-        return "Data{" +
+        return "data:{" +
                 "championShortMap=" + championShortMap +
                 '}';
     }
 
-
+    public String toJson() {
+        return new Gson().toJson(this);
+    }
 }

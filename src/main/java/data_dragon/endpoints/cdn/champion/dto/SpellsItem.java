@@ -229,7 +229,7 @@ public class SpellsItem {
 
     @Override
     public String toString() {
-        return "spells:{" +
+        return "spell:{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

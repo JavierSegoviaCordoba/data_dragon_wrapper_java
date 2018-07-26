@@ -7,6 +7,11 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -65,4 +70,82 @@ public class ChampionShortListMethods extends DataDragon {
         return null;
     }
 
+    //Asynchronous methods
+    public static void GetChampionShortList(Platform platform, ChampionShortListInterface championShortListInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
+                .create(ChampionShortListMethodsInterface.class);
+
+        Call<ChampionShortListDto> championShortCall = championShortListMethodsInterface.GetChampionShortList();
+
+        championShortCall.enqueue(new Callback<ChampionShortListDto>() {
+            @Override
+            public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        List<ChampionShort> championShortList = new ArrayList<>
+                                (response.body().getData().any().values());
+
+                        championShortListInterface.onSuccess(championShortList);
+                    }
+                } else {
+                    championShortListInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionShortListDto> call, Throwable t) {
+                championShortListInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampionShortList(Platform platform, Locale locale, String version,
+                                            ChampionShortListInterface championShortListInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
+                .create(ChampionShortListMethodsInterface.class);
+
+        Call<ChampionShortListDto> championShortCall = championShortListMethodsInterface.GetChampionShortList();
+
+        championShortCall.enqueue(new Callback<ChampionShortListDto>() {
+            @Override
+            public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        List<ChampionShort> championShortList = new ArrayList<>
+                                (response.body().getData().any().values());
+
+                        championShortListInterface.onSuccess(championShortList);
+                    }
+                } else {
+                    championShortListInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionShortListDto> call, Throwable t) {
+                championShortListInterface.onError(t);
+            }
+        });
+    }
+
+
+    //Interfaces
+    public interface ChampionShortListInterface {
+
+        void onSuccess(List<ChampionShort> championShortList);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
 }

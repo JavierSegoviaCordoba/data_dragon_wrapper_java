@@ -1,6 +1,7 @@
 package MethodsTest.api;
 
 import data_dragon.DataDragon;
+import data_dragon.endpoints.api.versions.VersionsMethods;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -16,15 +17,15 @@ public class VersionsMethodsTest {
         long endTime;
         final long[] endTimeAsync = new long[1];
 
-        String[] versionList = DataDragon.getVersionList();
-        System.out.println("\nversionList: \n" + Arrays.toString(versionList));
+        String[] versionsList = DataDragon.getVersionsList();
+        System.out.println("\nversionsList: \n" + Arrays.toString(versionsList));
 
         CompletableFuture<String> future = new CompletableFuture<>();
 
-        DataDragon.getVersionList(new DataDragon.VersionListInterface() {
+        DataDragon.getVersionsList(new VersionsMethods.VersionsListInterface() {
             @Override
-            public void onSuccess(String[] versionList) {
-                System.out.println("\nversionListAsync: \n" + Arrays.toString(versionList));
+            public void onSuccess(String[] versionsList) {
+                System.out.println("\nversionsListAsync: \n" + Arrays.toString(versionsList));
 
                 future.complete("Async complete execution time: ");
 

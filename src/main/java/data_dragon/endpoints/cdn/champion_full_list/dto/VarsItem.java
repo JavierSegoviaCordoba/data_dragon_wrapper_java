@@ -1,4 +1,4 @@
-package data_dragon.endpoints.cdn.champion.dto;
+package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

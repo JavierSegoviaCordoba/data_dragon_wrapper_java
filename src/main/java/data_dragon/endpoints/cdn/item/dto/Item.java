@@ -1,28 +1,11 @@
 package data_dragon.endpoints.cdn.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 public class Item {
-
-    @JsonProperty("colloq")
-    private String colloq;
-
-    @JsonProperty("gold")
-    private Gold gold;
-
-    @JsonProperty("into")
-    private List<String> into;
-
-    @JsonProperty("image")
-    private Image image;
-
-    @JsonProperty("maps")
-    private Maps maps;
-
-    @JsonProperty("stats")
-    private Stats stats;
 
     @JsonProperty("name")
     private String name;
@@ -30,11 +13,45 @@ public class Item {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("colloq")
+    private String colloq;
+
     @JsonProperty("plaintext")
     private String plaintext;
 
+    @JsonProperty("into")
+    private List<String> into;
+
+    @JsonProperty("image")
+    private Image image;
+
+    @JsonProperty("gold")
+    private Gold gold;
+
     @JsonProperty("tags")
     private List<String> tags;
+
+    @JsonProperty("maps")
+    private Maps maps;
+
+    @JsonProperty("stats")
+    private Stats stats;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getColloq() {
         return colloq;
@@ -44,12 +61,12 @@ public class Item {
         this.colloq = colloq;
     }
 
-    public Gold getGold() {
-        return gold;
+    public String getPlaintext() {
+        return plaintext;
     }
 
-    public void setGold(Gold gold) {
-        this.gold = gold;
+    public void setPlaintext(String plaintext) {
+        this.plaintext = plaintext;
     }
 
     public List<String> getInto() {
@@ -68,6 +85,22 @@ public class Item {
         this.image = image;
     }
 
+    public Gold getGold() {
+        return gold;
+    }
+
+    public void setGold(Gold gold) {
+        this.gold = gold;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public Maps getMaps() {
         return maps;
     }
@@ -84,52 +117,23 @@ public class Item {
         this.stats = stats;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPlaintext() {
-        return plaintext;
-    }
-
-    public void setPlaintext(String plaintext) {
-        this.plaintext = plaintext;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
     @Override
     public String toString() {
-        return
-                "Item{" +
-                        "colloq = '" + colloq + '\'' +
-                        ",gold = '" + gold + '\'' +
-                        ",into = '" + into + '\'' +
-                        ",image = '" + image + '\'' +
-                        ",maps = '" + maps + '\'' +
-                        ",stats = '" + stats + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",description = '" + description + '\'' +
-                        ",plaintext = '" + plaintext + '\'' +
-                        ",tags = '" + tags + '\'' +
-                        "}";
+        return "item:{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", colloq='" + colloq + '\'' +
+                ", plaintext='" + plaintext + '\'' +
+                ", into=" + into +
+                ", image=" + image +
+                ", gold=" + gold +
+                ", tags=" + tags +
+                ", maps=" + maps +
+                ", stats=" + stats +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

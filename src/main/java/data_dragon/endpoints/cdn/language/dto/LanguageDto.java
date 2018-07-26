@@ -5,33 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LanguageDto {
 
-    @JsonProperty("data")
-    private Language language;
-
-    @JsonProperty("tree")
-    private Tree tree;
-
     @JsonProperty("type")
     private String type;
 
     @JsonProperty("version")
     private String version;
 
-    public Language getLanguage() {
-        return language;
-    }
+    @JsonProperty("data")
+    private Language language;
 
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Tree getTree() {
-        return tree;
-    }
-
-    public void setTree(Tree tree) {
-        this.tree = tree;
-    }
+    @JsonProperty("tree")
+    private Tree tree;
 
     public String getType() {
         return type;
@@ -49,14 +33,29 @@ public class LanguageDto {
         this.version = version;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public Tree getTree() {
+        return tree;
+    }
+
+    public void setTree(Tree tree) {
+        this.tree = tree;
+    }
+
     @Override
     public String toString() {
-        return
-                "LanguageDto{" +
-                        "language = '" + language + '\'' +
-                        ",tree = '" + tree + '\'' +
-                        ",type = '" + type + '\'' +
-                        ",version = '" + version + '\'' +
-                        "}";
+        return "{" +
+                "type='" + type + '\'' +
+                ", version='" + version + '\'' +
+                ", language=" + language +
+                ", tree=" + tree +
+                '}';
     }
 }

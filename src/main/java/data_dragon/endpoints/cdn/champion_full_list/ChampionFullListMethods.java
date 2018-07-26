@@ -7,6 +7,11 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -65,4 +70,82 @@ public class ChampionFullListMethods extends DataDragon {
         return null;
     }
 
+    //Asynchronous methods
+    public static void GetChampionFullList(Platform platform, ChampionFullListInterface championFullListInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
+
+        championFullCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        List<ChampionFull> championFullList = new ArrayList<>
+                                (response.body().getData().any().values());
+
+                        championFullListInterface.onSuccess(championFullList);
+                    }
+                } else {
+                    championFullListInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championFullListInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetChampionFullList(Platform platform, Locale locale, String version,
+                                           ChampionFullListInterface championFullListInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
+
+        championFullCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        List<ChampionFull> championFullList = new ArrayList<>
+                                (response.body().getData().any().values());
+
+                        championFullListInterface.onSuccess(championFullList);
+                    }
+                } else {
+                    championFullListInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championFullListInterface.onError(t);
+            }
+        });
+    }
+
+
+    //Interfaces
+    public interface ChampionFullListInterface {
+
+        void onSuccess(List<ChampionFull> championFullList);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
 }

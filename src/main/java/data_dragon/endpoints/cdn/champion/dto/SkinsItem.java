@@ -51,7 +51,7 @@ public class SkinsItem {
 
     @Override
     public String toString() {
-        return "skins{" +
+        return "skin{" +
                 "id='" + id + '\'' +
                 ", num=" + num +
                 ", name='" + name + '\'' +

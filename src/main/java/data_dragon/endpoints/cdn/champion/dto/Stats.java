@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 
 public class Stats {
 
-
     @JsonProperty("hp")
     private int hp;
 

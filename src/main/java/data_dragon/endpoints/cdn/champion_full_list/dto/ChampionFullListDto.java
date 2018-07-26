@@ -1,9 +1,19 @@
 package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 
 public class ChampionFullListDto {
+
+    @JsonProperty("type")
+    private String type;
+
+    @JsonProperty("format")
+    private String format;
+
+    @JsonProperty("version")
+    private String version;
 
     @JsonProperty("data")
     private Data data;
@@ -11,14 +21,29 @@ public class ChampionFullListDto {
     @JsonProperty("keys")
     private Key key;
 
-    @JsonProperty("format")
-    private String format;
+    public String getType() {
+        return type;
+    }
 
-    @JsonProperty("type")
-    private String type;
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    @JsonProperty("version")
-    private String version;
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public Data getData() {
         return data;
@@ -36,38 +61,18 @@ public class ChampionFullListDto {
         this.key = key;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
     @Override
     public String toString() {
-        return "ChampionFullListDto{" +
-                "data=" + data +
-                ", key=" + key +
+        return "{" +
+                "type='" + type + '\'' +
                 ", format='" + format + '\'' +
-                ", type='" + type + '\'' +
                 ", version='" + version + '\'' +
+                ", data=" + data +
+                ", key=" + key +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

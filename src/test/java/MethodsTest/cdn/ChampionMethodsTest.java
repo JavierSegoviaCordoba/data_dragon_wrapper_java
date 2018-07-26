@@ -29,7 +29,7 @@ public class ChampionMethodsTest {
         Champion champion163Spanish = DataDragon.getChampion(Platform.NA, Locale.ES_ES, Platform.EUW.getVersion(), 163);
         System.out.println("\nchampion163: \n" + champion163Spanish.toJson());
 
-        String championKey86 = DataDragon.getChampionId(Platform.NA, 86);
+        int championKey86 = DataDragon.getChampionId(Platform.NA, 86);
         System.out.println("\nchampionKey86: \n" + championKey86);
 
         String championIdKaisa = DataDragon.getChampionKey(Platform.NA, "Kaisa");

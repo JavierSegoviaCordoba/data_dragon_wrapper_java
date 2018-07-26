@@ -6,47 +6,23 @@ import java.util.List;
 
 public class ItemDto {
 
-    @JsonProperty("data")
-    private Data data;
-
-    @JsonProperty("tree")
-    private List<TreeItem> tree;
-
-    @JsonProperty("groups")
-    private List<GroupsItem> groups;
-
     @JsonProperty("type")
     private String type;
-
-    @JsonProperty("basic")
-    private Basic basic;
 
     @JsonProperty("version")
     private String version;
 
-    public Data getData() {
-        return data;
-    }
+    @JsonProperty("basic")
+    private Basic basic;
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+    @JsonProperty("data")
+    private Data data;
 
-    public List<TreeItem> getTree() {
-        return tree;
-    }
+    @JsonProperty("groups")
+    private List<GroupsItem> groups;
 
-    public void setTree(List<TreeItem> tree) {
-        this.tree = tree;
-    }
-
-    public List<GroupsItem> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<GroupsItem> groups) {
-        this.groups = groups;
-    }
+    @JsonProperty("tree")
+    private List<TreeItem> tree;
 
     public String getType() {
         return type;
@@ -54,14 +30,6 @@ public class ItemDto {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Basic getBasic() {
-        return basic;
-    }
-
-    public void setBasic(Basic basic) {
-        this.basic = basic;
     }
 
     public String getVersion() {
@@ -72,15 +40,47 @@ public class ItemDto {
         this.version = version;
     }
 
+    public Basic getBasic() {
+        return basic;
+    }
+
+    public void setBasic(Basic basic) {
+        this.basic = basic;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public List<GroupsItem> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<GroupsItem> groups) {
+        this.groups = groups;
+    }
+
+    public List<TreeItem> getTree() {
+        return tree;
+    }
+
+    public void setTree(List<TreeItem> tree) {
+        this.tree = tree;
+    }
+
     @Override
     public String toString() {
-        return "ItemDto{" +
-                "data=" + data +
-                ", tree=" + tree +
-                ", groups=" + groups +
-                ", type='" + type + '\'' +
-                ", basic=" + basic +
+        return "{" +
+                "type='" + type + '\'' +
                 ", version='" + version + '\'' +
+                ", basic=" + basic +
+                ", data=" + data +
+                ", groups=" + groups +
+                ", tree=" + tree +
                 '}';
     }
 }

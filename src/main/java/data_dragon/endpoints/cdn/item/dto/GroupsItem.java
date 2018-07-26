@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class GroupsItem {
 
@@ -28,10 +29,13 @@ public class GroupsItem {
 
     @Override
     public String toString() {
-        return
-                "GroupsItem{" +
-                        "id = '" + id + '\'' +
-                        ",maxGroupOwnable = '" + maxGroupOwnable + '\'' +
-                        "}";
+        return "group{" +
+                "id='" + id + '\'' +
+                ", maxGroupOwnable='" + maxGroupOwnable + '\'' +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

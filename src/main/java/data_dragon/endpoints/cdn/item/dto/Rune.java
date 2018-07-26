@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class Rune {
 
@@ -39,11 +40,14 @@ public class Rune {
 
     @Override
     public String toString() {
-        return
-                "Rune{" +
-                        "isrune = '" + isrune + '\'' +
-                        ",tier = '" + tier + '\'' +
-                        ",type = '" + type + '\'' +
-                        "}";
+        return "rune:{" +
+                "isrune=" + isrune +
+                ", tier=" + tier +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.language.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -31,10 +32,13 @@ public class Tree {
 
     @Override
     public String toString() {
-        return
-                "Tree{" +
-                        "searchKeyIgnore = '" + searchKeyIgnore + '\'' +
-                        ",searchKeyRemap = '" + searchKeyRemap + '\'' +
-                        "}";
+        return "tree:{" +
+                "searchKeyIgnore='" + searchKeyIgnore + '\'' +
+                ", searchKeyRemap=" + searchKeyRemap +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

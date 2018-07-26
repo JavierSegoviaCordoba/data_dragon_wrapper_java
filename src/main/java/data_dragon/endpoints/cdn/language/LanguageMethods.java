@@ -7,6 +7,11 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.language.dto.Language;
 import data_dragon.endpoints.cdn.language.dto.LanguageDto;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,4 +49,77 @@ public class LanguageMethods extends DataDragon {
 
         return null;
     }
+
+    //Asynchronous methods
+    public static void GetLanguage(Platform platform, LanguageInterface languageInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        LanguageMethodsInterface languageMethodsInterface = retrofit
+                .create(LanguageMethodsInterface.class);
+
+        Call<LanguageDto> languageCall = languageMethodsInterface.GetLanguage();
+
+        languageCall.enqueue(new Callback<LanguageDto>() {
+            @Override
+            public void onResponse(Call<LanguageDto> call, Response<LanguageDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        languageInterface.onSuccess(response.body().getLanguage());
+                    }
+                } else {
+                    languageInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LanguageDto> call, Throwable t) {
+                languageInterface.onError(t);
+            }
+        });
+    }
+
+    public static void GetLanguage(Platform platform, Locale locale, String version,
+                                   LanguageInterface languageInterface) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create()).build();
+
+        LanguageMethodsInterface languageMethodsInterface = retrofit
+                .create(LanguageMethodsInterface.class);
+
+        Call<LanguageDto> languageCall = languageMethodsInterface.GetLanguage();
+
+        languageCall.enqueue(new Callback<LanguageDto>() {
+            @Override
+            public void onResponse(Call<LanguageDto> call, Response<LanguageDto> response) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+
+                        languageInterface.onSuccess(response.body().getLanguage());
+                    }
+                } else {
+                    languageInterface.onError(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LanguageDto> call, Throwable t) {
+                languageInterface.onError(t);
+            }
+        });
+    }
+
+    //Interfaces
+    public interface LanguageInterface {
+
+        void onSuccess(Language language);
+
+        void onError(int code);
+
+        void onError(Throwable t);
+    }
+
 }

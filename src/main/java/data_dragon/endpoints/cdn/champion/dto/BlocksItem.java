@@ -130,7 +130,7 @@ public class BlocksItem {
 
     @Override
     public String toString() {
-        return "blocks:{" +
+        return "block:{" +
                 "type='" + type + '\'' +
                 ", recMath=" + recMath +
                 ", recSteps=" + recSteps +

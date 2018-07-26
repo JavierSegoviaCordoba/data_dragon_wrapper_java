@@ -1,23 +1,33 @@
 package data_dragon.endpoints.cdn.champion_full_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 
 public class ChampionFull {
 
-    @JsonProperty("image")
-    private Image image;
+    @JsonProperty("id")
+    private String id;
 
-    @JsonProperty("lore")
-    private String lore;
+    @JsonProperty("key")
+    private String key;
 
-    @JsonProperty("partype")
-    private String partype;
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("title")
     private String title;
+
+    @JsonProperty("image")
+    private Image image;
+
+    @JsonProperty("skins")
+    private List<SkinsItem> skins;
+
+    @JsonProperty("lore")
+    private String lore;
 
     @JsonProperty("blurb")
     private String blurb;
@@ -25,38 +35,61 @@ public class ChampionFull {
     @JsonProperty("allytips")
     private List<String> allytips;
 
-    @JsonProperty("passive")
-    private Passive passive;
+    @JsonProperty("enemytips")
+    private List<String> enemytips;
 
     @JsonProperty("tags")
     private List<String> tags;
 
-    @JsonProperty("recommended")
-    private List<RecommendedItem> recommended;
+    @JsonProperty("partype")
+    private String partype;
 
-    @JsonProperty("skins")
-    private List<SkinsItem> skins;
+    @JsonProperty("info")
+    private Info info;
 
     @JsonProperty("stats")
     private Stats stats;
 
-    @JsonProperty("enemytips")
-    private List<String> enemytips;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("id")
-    private String id;
-
     @JsonProperty("spells")
     private List<SpellsItem> spells;
 
-    @JsonProperty("key")
-    private String key;
+    @JsonProperty("passive")
+    private Passive passive;
 
-    @JsonProperty("info")
-    private Info info;
+    @JsonProperty("recommended")
+    private List<RecommendedItem> recommended;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Image getImage() {
         return image;
@@ -66,28 +99,20 @@ public class ChampionFull {
         this.image = image;
     }
 
+    public List<SkinsItem> getSkins() {
+        return skins;
+    }
+
+    public void setSkins(List<SkinsItem> skins) {
+        this.skins = skins;
+    }
+
     public String getLore() {
         return lore;
     }
 
     public void setLore(String lore) {
         this.lore = lore;
-    }
-
-    public String getPartype() {
-        return partype;
-    }
-
-    public void setPartype(String partype) {
-        this.partype = partype;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getBlurb() {
@@ -106,12 +131,12 @@ public class ChampionFull {
         this.allytips = allytips;
     }
 
-    public Passive getPassive() {
-        return passive;
+    public List<String> getEnemytips() {
+        return enemytips;
     }
 
-    public void setPassive(Passive passive) {
-        this.passive = passive;
+    public void setEnemytips(List<String> enemytips) {
+        this.enemytips = enemytips;
     }
 
     public List<String> getTags() {
@@ -122,68 +147,12 @@ public class ChampionFull {
         this.tags = tags;
     }
 
-    public List<RecommendedItem> getRecommended() {
-        return recommended;
+    public String getPartype() {
+        return partype;
     }
 
-    public void setRecommended(List<RecommendedItem> recommended) {
-        this.recommended = recommended;
-    }
-
-    public List<SkinsItem> getSkins() {
-        return skins;
-    }
-
-    public void setSkins(List<SkinsItem> skins) {
-        this.skins = skins;
-    }
-
-    public Stats getStats() {
-        return stats;
-    }
-
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
-    public List<String> getEnemytips() {
-        return enemytips;
-    }
-
-    public void setEnemytips(List<String> enemytips) {
-        this.enemytips = enemytips;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<SpellsItem> getSpells() {
-        return spells;
-    }
-
-    public void setSpells(List<SpellsItem> spells) {
-        this.spells = spells;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
+    public void setPartype(String partype) {
+        this.partype = partype;
     }
 
     public Info getInfo() {
@@ -194,27 +163,62 @@ public class ChampionFull {
         this.info = info;
     }
 
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
+    public List<SpellsItem> getSpells() {
+        return spells;
+    }
+
+    public void setSpells(List<SpellsItem> spells) {
+        this.spells = spells;
+    }
+
+    public Passive getPassive() {
+        return passive;
+    }
+
+    public void setPassive(Passive passive) {
+        this.passive = passive;
+    }
+
+    public List<RecommendedItem> getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(List<RecommendedItem> recommended) {
+        this.recommended = recommended;
+    }
+
     @Override
     public String toString() {
-        return
-                "Aatrox{" +
-                        "image = '" + image + '\'' +
-                        ",lore = '" + lore + '\'' +
-                        ",partype = '" + partype + '\'' +
-                        ",title = '" + title + '\'' +
-                        ",blurb = '" + blurb + '\'' +
-                        ",allytips = '" + allytips + '\'' +
-                        ",passive = '" + passive + '\'' +
-                        ",tags = '" + tags + '\'' +
-                        ",recommended = '" + recommended + '\'' +
-                        ",skins = '" + skins + '\'' +
-                        ",stats = '" + stats + '\'' +
-                        ",enemytips = '" + enemytips + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",id = '" + id + '\'' +
-                        ",spells = '" + spells + '\'' +
-                        ",key = '" + key + '\'' +
-                        ",info = '" + info + '\'' +
-                        "}";
+        return "{" +
+                "id='" + id + '\'' +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", image=" + image +
+                ", skins=" + skins +
+                ", lore='" + lore + '\'' +
+                ", blurb='" + blurb + '\'' +
+                ", allytips=" + allytips +
+                ", enemytips=" + enemytips +
+                ", tags=" + tags +
+                ", partype='" + partype + '\'' +
+                ", info=" + info +
+                ", stats=" + stats +
+                ", spells=" + spells +
+                ", passive=" + passive +
+                ", recommended=" + recommended +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

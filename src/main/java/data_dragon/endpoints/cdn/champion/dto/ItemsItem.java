@@ -52,7 +52,7 @@ public class ItemsItem {
     @Override
     public String toString() {
 
-        return "items:{" +
+        return "item:{" +
                 "id='" + id + '\'' +
                 ", count=" + count +
                 ", hideCount=" + hideCount +

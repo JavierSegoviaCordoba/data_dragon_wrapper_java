@@ -1,26 +1,24 @@
 package data_dragon.endpoints.cdn.champion_short_list.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 
 public class ChampionShort {
 
-    @JsonProperty("image")
-    private Image image;
-
-    @JsonProperty("stats")
-    private Stats stats;
-
-    @JsonProperty("partype")
-    private String partype;
-
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("version")
+    private String version;
 
     @JsonProperty("id")
     private String id;
+
+    @JsonProperty("key")
+    private String key;
+
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("title")
     private String title;
@@ -28,48 +26,27 @@ public class ChampionShort {
     @JsonProperty("blurb")
     private String blurb;
 
-    @JsonProperty("version")
-    private String version;
-
-    @JsonProperty("key")
-    private String key;
-
     @JsonProperty("info")
     private Info info;
+
+    @JsonProperty("image")
+    private Image image;
 
     @JsonProperty("tags")
     private List<String> tags;
 
-    public Image getImage() {
-        return image;
+    @JsonProperty("partype")
+    private String partype;
+
+    @JsonProperty("stats")
+    private Stats stats;
+
+    public String getVersion() {
+        return version;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public Stats getStats() {
-        return stats;
-    }
-
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
-    public String getPartype() {
-        return partype;
-    }
-
-    public void setPartype(String partype) {
-        this.partype = partype;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public String getId() {
@@ -78,6 +55,22 @@ public class ChampionShort {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitle() {
@@ -96,28 +89,20 @@ public class ChampionShort {
         this.blurb = blurb;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     public Info getInfo() {
         return info;
     }
 
     public void setInfo(Info info) {
         this.info = info;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public List<String> getTags() {
@@ -128,21 +113,40 @@ public class ChampionShort {
         this.tags = tags;
     }
 
+    public String getPartype() {
+        return partype;
+    }
+
+    public void setPartype(String partype) {
+        this.partype = partype;
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
     @Override
     public String toString() {
-        return
-                "Aatrox{" +
-                        "image = '" + image + '\'' +
-                        ",stats = '" + stats + '\'' +
-                        ",partype = '" + partype + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",id = '" + id + '\'' +
-                        ",title = '" + title + '\'' +
-                        ",blurb = '" + blurb + '\'' +
-                        ",version = '" + version + '\'' +
-                        ",key = '" + key + '\'' +
-                        ",info = '" + info + '\'' +
-                        ",tags = '" + tags + '\'' +
-                        "}";
+        return id + ":{" +
+                "version='" + version + '\'' +
+                ", id='" + id + '\'' +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", blurb='" + blurb + '\'' +
+                ", info=" + info +
+                ", image=" + image +
+                ", tags=" + tags +
+                ", partype='" + partype + '\'' +
+                ", stats=" + stats +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

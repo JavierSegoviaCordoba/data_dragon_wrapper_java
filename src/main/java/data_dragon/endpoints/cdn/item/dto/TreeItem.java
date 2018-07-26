@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -30,10 +31,13 @@ public class TreeItem {
 
     @Override
     public String toString() {
-        return
-                "TreeItem{" +
-                        "header = '" + header + '\'' +
-                        ",tags = '" + tags + '\'' +
-                        "}";
+        return "tree:{" +
+                "header='" + header + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
