@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RunesReforgedMethods extends DataDragon {
+public class RunesReforgedMethods {
 
     public static List<RunesReforged> GetRunesReforgedList(Platform platform) {
 

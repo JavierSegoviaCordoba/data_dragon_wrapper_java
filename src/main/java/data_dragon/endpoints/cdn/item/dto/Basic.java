@@ -241,7 +241,7 @@ public class Basic {
 
     @Override
     public String toString() {
-        return "basic{" +
+        return "basic:{" +
                 "name='" + name + '\'' +
                 ", rune=" + rune +
                 ", gold=" + gold +

@@ -1,35 +1,35 @@
-package MethodsTest.api;
+package MethodsTest.cdn.languages;
 
 import data_dragon.DataDragon;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.api.versions.VersionsMethods;
+import data_dragon.endpoints.cdn.languages.LanguagesMethods;
 import data_dragon.utils.ErrorCode;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class VersionsMethodsTest {
+public class LanguagesMethodsTest {
 
     @Test
     public void main() {
 
         DataDragon dataDragon = new DataDragon(Platform.NA);
 
-        dataDragon.getVersionsList(new VersionsMethods.VersionsListInterface() {
+        dataDragon.getLanguagesList(new LanguagesMethods.LanguagesInterface() {
             @Override
-            public void onSuccess(String[] versionsList) {
-                System.out.println("\nversionsList: \n" + Arrays.toString(versionsList));
+            public void onSuccess(String[] languageList) {
+                System.out.println("\nlanguagesList\n" + Arrays.toString(languageList));
             }
 
             @Override
             public void onErrorCode(ErrorCode errorCode) {
-                System.out.println("\nerrorCode: \n" + errorCode.toJson());
+                System.out.println("\nlanguagesList_errorCode: \n" + errorCode.toString());
             }
 
             @Override
             public void onIOException(IOException e) {
-                System.out.println("\nIOException: \n" + e.getMessage());
+                System.out.println("\nlanguagesList_IOException: \n" + e.getMessage());
             }
         });
 

@@ -8,18 +8,30 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-public class VersionsMethodsTest {
+public class VersionsMethodsAsyncTest {
 
     @Test
     public void main() {
 
         DataDragon dataDragon = new DataDragon(Platform.NA);
 
-        dataDragon.getVersionsList(new VersionsMethods.VersionsListInterface() {
+        CompletableFuture<String[]> future = new CompletableFuture<>();
+
+        dataDragon.getVersionsListAsync(new VersionsMethods.VersionsListInterfaceAsync() {
             @Override
             public void onSuccess(String[] versionsList) {
-                System.out.println("\nversionsList: \n" + Arrays.toString(versionsList));
+
+                future.complete(versionsList);
+
+                try {
+                    System.out.println("\nversionsListAsync: \n" + Arrays.toString(future.get()));
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -28,8 +40,8 @@ public class VersionsMethodsTest {
             }
 
             @Override
-            public void onIOException(IOException e) {
-                System.out.println("\nIOException: \n" + e.getMessage());
+            public void onFailure(Throwable t) {
+                System.out.println("\nthrowable: \n" + t.getMessage());
             }
         });
 

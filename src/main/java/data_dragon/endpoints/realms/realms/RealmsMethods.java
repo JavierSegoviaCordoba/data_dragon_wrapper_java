@@ -9,7 +9,7 @@ import data_dragon.endpoints.realms.realms.dto.Realms;
 import java.io.IOException;
 import java.net.URL;
 
-public class RealmsMethods extends DataDragon {
+public class RealmsMethods {
 
     public static Realms GetRealms(Platform platform) {
 

@@ -11,7 +11,7 @@ import data_dragon.endpoints.cdn.map.dto.MapDto;
 import java.io.IOException;
 import java.net.URL;
 
-public class MapMethods extends DataDragon {
+public class MapMethods {
 
     public static Map GetMap(Platform platform, int map_id) {
 

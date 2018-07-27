@@ -1,4 +1,6 @@
-package data_dragon.endpoints.cdn.champion_full_list.dto;
+package data_dragon.endpoints.cdn.champion_short_list.dto;
+
+import com.google.gson.Gson;
 
 public class ChampionKeyId {
 
@@ -23,9 +25,13 @@ public class ChampionKeyId {
 
     @Override
     public String toString() {
-        return "ChampionKeyId{" +
+        return "championKeyId:{" +
                 "key=" + key +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

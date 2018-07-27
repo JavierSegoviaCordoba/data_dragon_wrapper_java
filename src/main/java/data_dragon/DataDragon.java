@@ -4,16 +4,10 @@ import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.api.versions.VersionsMethods;
 import data_dragon.endpoints.cdn.champion.ChampionMethods;
-import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion_full_list.ChampionFullListMethods;
-import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
-import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.ChampionShortListMethods;
-import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.item.ItemMethods;
-import data_dragon.endpoints.cdn.item.dto.Item;
 import data_dragon.endpoints.cdn.language.LanguageMethods;
-import data_dragon.endpoints.cdn.language.dto.Language;
 import data_dragon.endpoints.cdn.languages.LanguagesMethods;
 import data_dragon.endpoints.cdn.map.MapMethods;
 import data_dragon.endpoints.cdn.map.dto.Map;
@@ -33,373 +27,332 @@ import java.util.List;
 
 public class DataDragon {
 
-    public DataDragon() {
+    private Platform platform;
+
+    public DataDragon(Platform platform) {
+        this.platform = platform;
     }
 
     //api_______________________________________________________________________________________________________________
     //VersionMethods
-    public static String[] getVersionsList() {
+    public void getVersionsList(VersionsMethods.VersionsListInterface versionsListInterface) {
 
-        return VersionsMethods.GetVersionsList();
+        VersionsMethods.GetVersionsList(versionsListInterface);
     }
 
     //VersionMethodsAsync
-    public static void getVersionsList(VersionsMethods.VersionsListInterface versionsListInterface) {
+    public void getVersionsListAsync(VersionsMethods.VersionsListInterfaceAsync versionsListInterfaceAsync) {
 
-        VersionsMethods.GetVersionsList(versionsListInterface);
+        VersionsMethods.GetVersionsListAsync(versionsListInterfaceAsync);
     }
 
 
     //cdn_______________________________________________________________________________________________________________
     //ChampionMethods
-    public static Champion getChampion(Platform platform, String champion_name) {
+    public void getChampion(String champion_name, ChampionMethods.ChampionInterface championInterface) {
 
-        Champion champion = ChampionMethods.GetChampion(platform, champion_name);
+        ChampionMethods.GetChampion(champion_name, platform, championInterface);
+    }
 
-        if (champion != null) return champion;
-        else return null;
+    public void getChampion(String champion_name, Locale locale, String version,
+                            ChampionMethods.ChampionInterface championInterface) {
+
+        ChampionMethods.GetChampion(champion_name, platform, locale, version, championInterface);
+    }
+
+    public void getChampion(int champion_key, ChampionMethods.ChampionInterface championInterface) {
+
+        ChampionMethods.GetChampion(champion_key, platform, championInterface);
 
     }
 
-    public static Champion getChampion(Platform platform, Locale locale, String version, String champion_name) {
+    public void getChampion(int champion_key, Locale locale, String version,
+                            ChampionMethods.ChampionInterface championInterface) {
 
-        Champion champion = ChampionMethods.GetChampion(platform, locale, version, champion_name);
-
-        if (champion != null) return champion;
-        else return null;
+        ChampionMethods.GetChampion(champion_key, platform, locale, version, championInterface);
     }
 
-    public static Champion getChampion(Platform platform, int champion_key) {
+    public void getChampionKey(String champion_id, ChampionMethods.ChampionKeyInterface championKeyInterface) {
 
-        Champion champion = ChampionMethods.GetChampion(platform, champion_key);
-
-        if (champion != null) return champion;
-        else return null;
+        ChampionMethods.GetChampionKey(champion_id, platform, championKeyInterface);
     }
 
-    public static Champion getChampion(Platform platform, Locale locale, String version, int champion_key) {
+    public void getChampionId(int champion_key, ChampionMethods.ChampionIdInterface championIdInterface) {
 
-        Champion champion = ChampionMethods.GetChampion(platform, locale, version, champion_key);
-
-        if (champion != null) return champion;
-        else return null;
+        ChampionMethods.GetChampionId(champion_key, platform, championIdInterface);
     }
 
-    public static String getChampionKey(Platform platform, String champion_id) {
-
-        String champion_key = ChampionMethods.GetChampionKey(platform, champion_id);
-
-        if (champion_key != null) return champion_key;
-        else return null;
-    }
-
-    public static Integer getChampionId(Platform platform, int champion_key) {
-
-        String champion_id = ChampionMethods.GetChampionId(platform, champion_key);
-
-        if (champion_id != null) return Integer.valueOf(champion_id);
-        else return null;
-    }
-
-    public static List<ChampionKeyId> getChampionKeyIdList(Platform platform) {
-
-        List<ChampionKeyId> championKeyIdList = ChampionMethods.GetChampionKeyIdList(platform);
-
-        if (championKeyIdList != null) return championKeyIdList;
-        else return null;
-    }
-
-    //ChampionMethodsAsync
-    public static void getChampion(Platform platform, String champion_name,
-                                   ChampionMethods.ChampionInterface championInterface) {
-
-        ChampionMethods.GetChampion(platform, champion_name, championInterface);
-    }
-
-    public static void getChampion(Platform platform, Locale locale, String version, String champion_name,
-                                   ChampionMethods.ChampionInterface championInterface) {
-
-        ChampionMethods.GetChampion(platform, locale, version, champion_name, championInterface);
-    }
-
-    public static void getChampion(Platform platform, int champion_key,
-                                   ChampionMethods.ChampionInterface championInterface) {
-
-        ChampionMethods.GetChampion(platform, champion_key, championInterface);
-    }
-
-    public static void getChampion(Platform platform, Locale locale, String version, int champion_key,
-                                   ChampionMethods.ChampionInterface championInterface) {
-
-        ChampionMethods.GetChampion(platform, locale, version, champion_key, championInterface);
-    }
-
-    public static void getChampionKey(Platform platform, String champion_id,
-                                      ChampionMethods.ChampionKeyInterface championKeyIdInterface) {
-
-        ChampionMethods.GetChampionKey(platform, champion_id, championKeyIdInterface);
-    }
-
-    public static void getChampionId(Platform platform, int champion_key,
-                                     ChampionMethods.ChampionIdInterface championKeyIdInterface) {
-
-        ChampionMethods.GetChampionId(platform, champion_key, championKeyIdInterface);
-    }
-
-    public static void getChampionKeyIdList(Platform platform,
-                                            ChampionMethods.ChampionKeyIdListInterface championKeyIdListInterface) {
+    public void getChampionKeyIdList(ChampionMethods.ChampionKeyIdListInterface championKeyIdListInterface) {
 
         ChampionMethods.GetChampionKeyIdList(platform, championKeyIdListInterface);
     }
 
+    //ChampionMethodsAsync
+    public void getChampionAsync(String champion_name,
+                                 ChampionMethods.ChampionInterfaceAsync championInterfaceAsync) {
+
+        ChampionMethods.GetChampionAsync(champion_name, platform, championInterfaceAsync);
+    }
+
+    public void getChampionAsync(String champion_name, Locale locale, String version,
+                                 ChampionMethods.ChampionInterfaceAsync championInterfaceAsync) {
+
+        ChampionMethods.GetChampionAsync(champion_name, platform, locale, version, championInterfaceAsync);
+    }
+
+    public void getChampionAsync(int champion_key,
+                                 ChampionMethods.ChampionInterfaceAsync championInterfaceAsync) {
+
+        ChampionMethods.GetChampionAsync(champion_key, platform, championInterfaceAsync);
+    }
+
+    public void getChampionAsync(int champion_key, Locale locale, String version,
+                                 ChampionMethods.ChampionInterfaceAsync championInterfaceAsync) {
+
+        ChampionMethods.GetChampionAsync(champion_key, platform, locale, version, championInterfaceAsync);
+    }
+
+    public void getChampionKeyAsync(String champion_id,
+                                    ChampionMethods.ChampionKeyInterfaceAsync championKeyIdInterface) {
+
+        ChampionMethods.GetChampionKeyAsync(champion_id, platform, championKeyIdInterface);
+    }
+
+    public void getChampionIdAsync(int champion_key,
+                                   ChampionMethods.ChampionIdInterfaceAsync championKeyIdInterface) {
+
+        ChampionMethods.GetChampionIdAsync(champion_key, platform, championKeyIdInterface);
+    }
+
+    public void getChampionKeyIdListAsync(
+            ChampionMethods.ChampionKeyIdListInterfaceAsync championKeyIdListInterfaceAsync) {
+
+        ChampionMethods.GetChampionKeyIdListAsync(platform, championKeyIdListInterfaceAsync);
+    }
+
+
     //ChampionFullListMethods
-    public static List<ChampionFull> getChampionFullList(Platform platform) {
-
-        List<ChampionFull> championFullList = ChampionFullListMethods.GetChampionFullList(platform);
-
-        if (championFullList != null) return championFullList;
-        else return null;
-    }
-
-    public static List<ChampionFull> getChampionFullList(Platform platform, Locale locale, String version) {
-
-        List<ChampionFull> championFullList = ChampionFullListMethods.GetChampionFullList(platform, locale, version);
-
-        if (championFullList != null) return championFullList;
-        else return null;
-    }
-
-    //ChampionFullListMethodsAsync
-    public static void getChampionFullList(Platform platform,
-                                           ChampionFullListMethods.ChampionFullListInterface
-                                                   championFullListInterface) {
+    public void getChampionFullList(ChampionFullListMethods.ChampionFullListInterface championFullListInterface) {
 
         ChampionFullListMethods.GetChampionFullList(platform, championFullListInterface);
     }
 
-    public static void getChampionFullList(Platform platform, Locale locale, String version,
-                                           ChampionFullListMethods.ChampionFullListInterface
-                                                   championFullListInterface) {
+    public void getChampionFullList(Locale locale, String version,
+                                    ChampionFullListMethods.ChampionFullListInterface championFullListInterface) {
 
         ChampionFullListMethods.GetChampionFullList(platform, locale, version, championFullListInterface);
     }
 
+    //ChampionFullListMethodsAsync
+    public void getChampionFullListAsync(
+            ChampionFullListMethods.ChampionFullListInterfaceAsync
+                    championFullListInterfaceAsync) {
+
+        ChampionFullListMethods.GetChampionFullListAsync(platform, championFullListInterfaceAsync);
+    }
+
+    public void getChampionFullListAsync(Locale locale, String version,
+                                         ChampionFullListMethods.ChampionFullListInterfaceAsync
+                                                 championFullListInterfaceAsync) {
+
+        ChampionFullListMethods.GetChampionFullListAsync(platform, locale, version, championFullListInterfaceAsync);
+    }
+
+
     //ChampionShortListMethods
-    public static List<ChampionShort> getChampionShortList(Platform platform) {
-
-        List<ChampionShort> championShortList = ChampionShortListMethods.GetChampionShortList(platform);
-
-        if (championShortList != null) return championShortList;
-        else return null;
-    }
-
-    public static List<ChampionShort> getChampionShortList(Platform platform, Locale locale, String version) {
-
-        List<ChampionShort> championShortList = ChampionShortListMethods.GetChampionShortList(platform, locale, version);
-
-        if (championShortList != null) return championShortList;
-        else return null;
-    }
-
-    //ChampionShortListMethodsAsync
-    public static void getChampionShortList(Platform platform,
-                                            ChampionShortListMethods.ChampionShortListInterface
-                                                    championShortListInterface) {
+    public void getChampionShortList(ChampionShortListMethods.ChampionShortListInterface championShortListInterface) {
 
         ChampionShortListMethods.GetChampionShortList(platform, championShortListInterface);
     }
 
-    public static void getChampionShortList(Platform platform, Locale locale, String version,
-                                            ChampionShortListMethods.ChampionShortListInterface
-                                                    championShortListInterface) {
+    public void getChampionShortList(Locale locale, String version,
+                                     ChampionShortListMethods.ChampionShortListInterface
+                                             championShortListInterface) {
 
         ChampionShortListMethods.GetChampionShortList(platform, locale, version, championShortListInterface);
     }
 
+    //ChampionShortListMethodsAsync
+    public void getChampionShortListAsync(ChampionShortListMethods.ChampionShortListInterfaceAsync
+                                                  championShortListInterfaceAsync) {
+
+        ChampionShortListMethods.GetChampionShortListAsync(platform, championShortListInterfaceAsync);
+    }
+
+    public void getChampionShortListAsync(Locale locale, String version,
+                                          ChampionShortListMethods.ChampionShortListInterfaceAsync
+                                                  championShortListInterfaceAsync) {
+
+        ChampionShortListMethods.GetChampionShortListAsync(platform, locale, version, championShortListInterfaceAsync);
+    }
+
+
     //ItemMethods
-    public static Item getItem(Platform platform, int item_id) {
+    public void getItem(int item_id, ItemMethods.ItemInterface itemInterface) {
 
-        Item item = ItemMethods.GetItem(platform, item_id);
-        if (item != null) return item;
-        else return null;
+        ItemMethods.GetItem(item_id, platform, itemInterface);
     }
 
-    public static Item getItem(Platform platform, Locale locale, String version, int item_id) {
+    public void getItem(int item_id, Locale locale, String version, ItemMethods.ItemInterface itemInterface) {
 
-        Item item = ItemMethods.GetItem(platform, locale, version, item_id);
-
-        if (item != null) return item;
-        else return null;
+        ItemMethods.GetItem(item_id, platform, locale, version, itemInterface);
     }
 
-    public static List<Item> getItemList(Platform platform) {
-
-        List<Item> itemList = ItemMethods.GetItemList(platform);
-
-        if (itemList != null) return itemList;
-        else return null;
-    }
-
-    public static List<Item> getItemList(Platform platform, Locale locale, String version) {
-
-        List<Item> itemList = ItemMethods.GetItemList(platform, locale, version);
-
-        if (itemList != null) return itemList;
-        else return null;
-    }
-
-    //ItemMethodsAsync
-    public static void getItem(Platform platform, int item_id, ItemMethods.ItemInterface itemInterface) {
-
-        ItemMethods.GetItem(platform, item_id, itemInterface);
-    }
-
-    public static void getItem(Platform platform, Locale locale, String version, int item_id,
-                               ItemMethods.ItemInterface itemInterface) {
-
-        ItemMethods.GetItem(platform, locale, version, item_id, itemInterface);
-    }
-
-    public static void getItemList(Platform platform, ItemMethods.ItemListInterface itemListInterface) {
+    public void getItemList(ItemMethods.ItemListInterface itemListInterface) {
 
         ItemMethods.GetItemList(platform, itemListInterface);
     }
 
-    public static void getItemList(Platform platform, Locale locale, String version,
-                                   ItemMethods.ItemListInterface itemListInterface) {
+    public void getItemList(Locale locale, String version, ItemMethods.ItemListInterface itemListInterface) {
 
         ItemMethods.GetItemList(platform, locale, version, itemListInterface);
     }
 
+    //ItemMethodsAsync
+    public void getItemAsync(int item_id, ItemMethods.ItemInterfaceAsync itemInterfaceAsync) {
+
+        ItemMethods.GetItemAsync(item_id, platform, itemInterfaceAsync);
+    }
+
+    public void getItemAsync(int item_id, Locale locale, String version, ItemMethods.ItemInterfaceAsync itemInterfaceAsync) {
+
+        ItemMethods.GetItemAsync(item_id, platform, locale, version, itemInterfaceAsync);
+    }
+
+    public void getItemListAsync(ItemMethods.ItemListInterfaceAsync itemListInterfaceAsync) {
+
+        ItemMethods.GetItemListAsync(platform, itemListInterfaceAsync);
+    }
+
+    public void getItemListAsync(Locale locale, String version,
+                                 ItemMethods.ItemListInterfaceAsync itemListInterfaceAsync) {
+
+        ItemMethods.GetItemListAsync(platform, locale, version, itemListInterfaceAsync);
+    }
+
+
     //LanguageMethods
-    public static Language getLanguage(Platform platform) {
-
-        Language language = LanguageMethods.GetLanguage(platform);
-
-        if (language != null) return language;
-        else return null;
-    }
-
-    public static Language getLanguage(Platform platform, Locale locale, String version) {
-
-        Language language = LanguageMethods.GetLanguage(platform, locale, version);
-        if (language != null) return language;
-        else return null;
-    }
-
-    //LanguageMethodsAsync
-    public static void getLanguage(Platform platform, LanguageMethods.LanguageInterface languageInterface) {
+    public void getLanguage(LanguageMethods.LanguageInterface languageInterface) {
 
         LanguageMethods.GetLanguage(platform, languageInterface);
     }
 
-    public static void getLanguage(Platform platform, Locale locale, String version, LanguageMethods.LanguageInterface languageInterface) {
+    public void getLanguage(Locale locale, String version, LanguageMethods.LanguageInterface languageInterface) {
 
         LanguageMethods.GetLanguage(platform, locale, version, languageInterface);
     }
 
+    //LanguageMethodsAsync
+    public void getLanguageAsync(LanguageMethods.LanguageInterfaceAsync languageInterfaceAsync) {
+
+        LanguageMethods.GetLanguageAsync(platform, languageInterfaceAsync);
+    }
+
+    public void getLanguageAsync(Locale locale, String version,
+                                 LanguageMethods.LanguageInterfaceAsync languageInterfaceAsync) {
+
+        LanguageMethods.GetLanguageAsync(platform, locale, version, languageInterfaceAsync);
+    }
+
 
     //LanguagesMethods
-    public static String[] getLanguageList() {
+    public void getLanguagesList(LanguagesMethods.LanguagesInterface languagesInterface) {
 
-        String[] languageList = LanguagesMethods.GetLanguagesList();
-
-        if (languageList != null) return languageList;
-        else return null;
+        LanguagesMethods.GetLanguagesList(languagesInterface);
     }
 
     //LanguageMethosAsync
-    public static void getLanguagesList(LanguagesMethods.LanguagesListInterface languagesListInterface) {
+    public void getLanguagesListAsync(LanguagesMethods.LanguagesInterfaceAsync languagesInterfaceAsync) {
 
-        LanguagesMethods.GetLanguagesList(languagesListInterface);
+        LanguagesMethods.GetLanguagesListAsync(languagesInterfaceAsync);
     }
 
 
     //MapMethods
-    public static Map getMap(Platform platform, int map_id) {
+    public Map getMap(int map_id) {
 
         return MapMethods.GetMap(platform, map_id);
     }
 
-    public static Map getMap(Platform platform, Locale locale, String version, int map_id) {
+    public Map getMap(Locale locale, String version, int map_id) {
 
         return MapMethods.GetMap(platform, locale, version, map_id);
     }
 
 
     //ProfileIconMethods
-    public static ProfileIcon getProfileIcon(Platform platform, int profile_icon_id) {
+    public ProfileIcon getProfileIcon(int profile_icon_id) {
 
         return ProfileIconMethods.GetProfileIcon(platform, profile_icon_id);
     }
 
-    public static ProfileIcon getProfileIcon(Platform platform, Locale locale, String version, int profile_icon_id) {
+    public ProfileIcon getProfileIcon(Locale locale, String version, int profile_icon_id) {
 
         return ProfileIconMethods.GetProfileIcon(platform, locale, version, profile_icon_id);
     }
 
 
     //RunesReforgedMethods
-    public static List<RunesReforged> getRunesReforged(Platform platform) {
+    public List<RunesReforged> getRunesReforged() {
 
         return RunesReforgedMethods.GetRunesReforgedList(platform);
     }
 
-    public static List<RunesReforged> getRunesReforged(Platform platform, Locale locale, String version) {
+    public List<RunesReforged> getRunesReforged(Locale locale, String version) {
 
         return RunesReforgedMethods.GetRunesReforgedList(platform, locale, version);
     }
 
-    public static Rune getRune(Platform platform, int rune_id) {
+    public Rune getRune(int rune_id) {
 
         return RunesReforgedMethods.GetRune(platform, rune_id);
     }
 
-    public static Rune getRune(Platform platform, Locale locale, String version, int rune_id) {
+    public Rune getRune(Locale locale, String version, int rune_id) {
 
         return RunesReforgedMethods.GetRune(platform, locale, version, rune_id);
     }
 
 
     //StickerMethods
-    public static List<Sticker> getStickerList(Platform platform) {
+    public List<Sticker> getStickerList() {
 
         return StickerMethods.GetStickerList(platform);
     }
 
-    public static List<Sticker> getStickerList(Platform platform, Locale locale, String version) {
+    public List<Sticker> getStickerList(Locale locale, String version) {
 
         return StickerMethods.GetStickerList(platform, locale, version);
     }
 
-    public static Sticker getSticker(Platform platform, String sticker_name) {
+    public Sticker getSticker(String sticker_name) {
 
         return StickerMethods.GetSticker(platform, sticker_name);
     }
 
-    public static Sticker getSticker(Platform platform, Locale locale, String version, String sticker_name) {
+    public Sticker getSticker(Locale locale, String version, String sticker_name) {
 
         return StickerMethods.GetSticker(platform, locale, version, sticker_name);
     }
 
-    public static List<SummonerSpell> getSummonerSpellList(Platform platform) {
+    public List<SummonerSpell> getSummonerSpellList() {
 
         return SummonerSpellMethods.GetSummonerSpellList(platform);
     }
 
-    public static List<SummonerSpell> getSummonerSpellList(Platform platform, Locale locale, String version) {
+    public List<SummonerSpell> getSummonerSpellList(Locale locale, String version) {
 
         return SummonerSpellMethods.GetSummonerSpellList(platform, locale, version);
     }
 
 
     //SummonerSpellMethods
-    public static SummonerSpell getSummonerSpell(Platform platform, String summoner_spell_id) {
+    public SummonerSpell getSummonerSpell(String summoner_spell_id) {
 
         return SummonerSpellMethods.GetSummonerSpell(platform, summoner_spell_id);
     }
 
-    public static SummonerSpell getSummonerSpell(Platform platform, Locale locale, String version, String summoner_spell_id) {
+    public SummonerSpell getSummonerSpell(Locale locale, String version, String summoner_spell_id) {
 
         return SummonerSpellMethods.GetSummonerSpell(platform, locale, version, summoner_spell_id);
     }
@@ -407,7 +360,7 @@ public class DataDragon {
 
     //Realms____________________________________________________________________________________________________________
     //RealmsMethods
-    public static Realms getRealms(Platform platform) {
+    public Realms getRealms() {
 
         return RealmsMethods.GetRealms(platform);
     }

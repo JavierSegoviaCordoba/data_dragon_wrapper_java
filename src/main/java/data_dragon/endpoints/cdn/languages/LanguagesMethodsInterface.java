@@ -6,5 +6,5 @@ import retrofit2.http.GET;
 public interface LanguagesMethodsInterface {
 
     @GET("languages.json")
-    Call<String[]> GetLanguagesList();
+    Call<String[]> GetLanguages();
 }

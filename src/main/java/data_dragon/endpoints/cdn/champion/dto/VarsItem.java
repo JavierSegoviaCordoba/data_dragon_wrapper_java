@@ -13,7 +13,7 @@ public class VarsItem {
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty("coeff")
-    private List<Double> coeff = null;
+    private List<Double> coeff;
 
     @JsonProperty("key")
     private String key;

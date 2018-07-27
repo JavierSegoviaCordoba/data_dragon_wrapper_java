@@ -19,8 +19,35 @@ public class Item {
     @JsonProperty("plaintext")
     private String plaintext;
 
+    @JsonProperty("stacks")
+    private int stacks;
+
+    @JsonProperty("from")
+    private List<Object> from = null;
+
     @JsonProperty("into")
     private List<String> into;
+
+    @JsonProperty("specialRecipe")
+    private int specialRecipe;
+
+    @JsonProperty("consumed")
+    private boolean consumed;
+
+    @JsonProperty("consumeOnFull")
+    private boolean consumeOnFull;
+
+    @JsonProperty("inStore")
+    private boolean inStore;
+
+    @JsonProperty("requiredChampion")
+    private String requiredChampion;
+
+    @JsonProperty("hideFromAll")
+    private boolean hideFromAll;
+
+    @JsonProperty("requiredAlly")
+    private String requiredAlly;
 
     @JsonProperty("image")
     private Image image;
@@ -36,6 +63,12 @@ public class Item {
 
     @JsonProperty("stats")
     private Stats stats;
+
+    @JsonProperty("effect")
+    private Effect effect;
+
+    @JsonProperty("depth")
+    private int depth;
 
     public String getName() {
         return name;
@@ -69,12 +102,84 @@ public class Item {
         this.plaintext = plaintext;
     }
 
+    public int getStacks() {
+        return stacks;
+    }
+
+    public void setStacks(int stacks) {
+        this.stacks = stacks;
+    }
+
+    public List<Object> getFrom() {
+        return from;
+    }
+
+    public void setFrom(List<Object> from) {
+        this.from = from;
+    }
+
     public List<String> getInto() {
         return into;
     }
 
     public void setInto(List<String> into) {
         this.into = into;
+    }
+
+    public int getSpecialRecipe() {
+        return specialRecipe;
+    }
+
+    public void setSpecialRecipe(int specialRecipe) {
+        this.specialRecipe = specialRecipe;
+    }
+
+    public boolean isConsumed() {
+        return consumed;
+    }
+
+    public void setConsumed(boolean consumed) {
+        this.consumed = consumed;
+    }
+
+    public boolean isConsumeOnFull() {
+        return consumeOnFull;
+    }
+
+    public void setConsumeOnFull(boolean consumeOnFull) {
+        this.consumeOnFull = consumeOnFull;
+    }
+
+    public boolean isInStore() {
+        return inStore;
+    }
+
+    public void setInStore(boolean inStore) {
+        this.inStore = inStore;
+    }
+
+    public String getRequiredChampion() {
+        return requiredChampion;
+    }
+
+    public void setRequiredChampion(String requiredChampion) {
+        this.requiredChampion = requiredChampion;
+    }
+
+    public boolean isHideFromAll() {
+        return hideFromAll;
+    }
+
+    public void setHideFromAll(boolean hideFromAll) {
+        this.hideFromAll = hideFromAll;
+    }
+
+    public String getRequiredAlly() {
+        return requiredAlly;
+    }
+
+    public void setRequiredAlly(String requiredAlly) {
+        this.requiredAlly = requiredAlly;
     }
 
     public Image getImage() {
@@ -117,6 +222,22 @@ public class Item {
         this.stats = stats;
     }
 
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
     @Override
     public String toString() {
         return "item:{" +
@@ -124,12 +245,23 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", colloq='" + colloq + '\'' +
                 ", plaintext='" + plaintext + '\'' +
+                ", stacks=" + stacks +
+                ", from=" + from +
                 ", into=" + into +
+                ", specialRecipe=" + specialRecipe +
+                ", consumed=" + consumed +
+                ", consumeOnFull=" + consumeOnFull +
+                ", inStore=" + inStore +
+                ", requiredChampion='" + requiredChampion + '\'' +
+                ", hideFromAll=" + hideFromAll +
+                ", requiredAlly='" + requiredAlly + '\'' +
                 ", image=" + image +
                 ", gold=" + gold +
                 ", tags=" + tags +
                 ", maps=" + maps +
                 ", stats=" + stats +
+                ", effect=" + effect +
+                ", depth=" + depth +
                 '}';
     }
 

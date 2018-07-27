@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class SummonerSpellMethods extends DataDragon {
+public class SummonerSpellMethods {
 
     public static List<SummonerSpell> GetSummonerSpellList(Platform platform) {
 

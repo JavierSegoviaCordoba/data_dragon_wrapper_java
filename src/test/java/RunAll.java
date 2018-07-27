@@ -1,4 +1,10 @@
 import MethodsTest.cdn.*;
+import MethodsTest.cdn.champion.ChampionMethodsTest;
+import MethodsTest.cdn.champion_full_list.ChampionFullListMethodsTest;
+import MethodsTest.cdn.champion_short_list.ChampionShortListMethodsTest;
+import MethodsTest.cdn.item.ItemMethodsTest;
+import MethodsTest.cdn.language.LanguageMethodsTest;
+import MethodsTest.cdn.languages.LanguagesMethodsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -11,10 +17,6 @@ import org.junit.runners.Suite;
                 ItemMethodsTest.class,
                 LanguageMethodsTest.class,
                 LanguagesMethodsTest.class,
-                MapMethodsTest.class,
-                ProfileIconMethodsTest.class,
-                RunesReforgedMethodsTest.class,
-                StickerMethodsTest.class,
         })
 
 public class RunAll {

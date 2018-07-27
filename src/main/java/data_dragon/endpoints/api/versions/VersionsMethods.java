@@ -1,8 +1,6 @@
 package data_dragon.endpoints.api.versions;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import data_dragon.DataDragon;
+import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -10,28 +8,58 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-import java.net.URL;
 
-public class VersionsMethods extends DataDragon {
+public class VersionsMethods {
 
-    public static String[] GetVersionsList() {
+    private static String base_url = "https://ddragon.leagueoflegends.com/api/";
 
-        String url = "https://ddragon.leagueoflegends.com/api/versions.json";
+    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
+            .addConverterFactory(JacksonConverterFactory.create()).build();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    private static VersionsMethodsInterface versionMethodsInterface = retrofit.create(VersionsMethodsInterface.class);
 
-        try {
-            return objectMapper.readValue(new URL(url), String[].class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+    //SyncMethods_______________________________________________________________________________________________________
+
+    public interface VersionsListInterface {
+
+        void onSuccess(String[] versionsList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
     }
 
     public static void GetVersionsList(VersionsListInterface versionsListInterface) {
 
-        String base_url = "https://ddragon.leagueoflegends.com/api/";
+        Call<String[]> versionsListCall = versionMethodsInterface.GetVersionsList();
+
+        try {
+            Response<String[]> versionListResponse = versionsListCall.execute();
+            if (versionListResponse.code() == 200) {
+                versionsListInterface.onSuccess(versionListResponse.body());
+            } else {
+                versionsListInterface.onErrorCode(new ErrorCode(versionListResponse.code(),
+                        versionListResponse.message()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            versionsListInterface.onIOException(e);
+        }
+    }
+
+    //AsyncMethods______________________________________________________________________________________________________
+
+    public interface VersionsListInterfaceAsync {
+
+        void onSuccess(String[] versionsList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public static void GetVersionsListAsync(VersionsListInterfaceAsync versionsListInterfaceAsync) {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
                 .addConverterFactory(JacksonConverterFactory.create()).build();
@@ -44,25 +72,16 @@ public class VersionsMethods extends DataDragon {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {
                 if (response.code() == 200) {
-                    versionsListInterface.onSuccess(response.body());
+                    versionsListInterfaceAsync.onSuccess(response.body());
                 } else {
-                    versionsListInterface.onError(response.code());
+                    versionsListInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<String[]> call, Throwable t) {
-                versionsListInterface.onError(t);
+                versionsListInterfaceAsync.onFailure(t);
             }
         });
-    }
-
-    public interface VersionsListInterface {
-
-        void onSuccess(String[] versionsList);
-
-        void onError(int code);
-
-        void onError(Throwable t);
     }
 }

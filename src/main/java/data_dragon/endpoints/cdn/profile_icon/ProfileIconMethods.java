@@ -11,7 +11,7 @@ import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIconDto;
 import java.io.IOException;
 import java.net.URL;
 
-public class ProfileIconMethods extends DataDragon {
+public class ProfileIconMethods {
 
     public static ProfileIcon GetProfileIcon(Platform platform, int map_id) {
 

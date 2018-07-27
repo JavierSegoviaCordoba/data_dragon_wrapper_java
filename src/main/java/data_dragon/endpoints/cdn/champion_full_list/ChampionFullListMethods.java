@@ -1,12 +1,12 @@
 package data_dragon.endpoints.cdn.champion_full_list;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import data_dragon.DataDragon;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
+import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,101 +14,115 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ChampionFullListMethods extends DataDragon {
+public class ChampionFullListMethods {
 
-    public static List<ChampionFull> GetChampionFullList(Platform platform) {
+    private static String base_url;
 
-        String url = platform.getHostCdn() + "/championFull.json";
+    private static Retrofit retrofit;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    private static ChampionFullListMethodsInterface championFullListMethodsInterface;
 
-        try {
-            ChampionFullListDto championFullListDto = objectMapper.readValue(new URL(url), ChampionFullListDto.class);
+    private static ObjectMapper objectMapper = new ObjectMapper()
+            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
-            Map<String, ChampionFull> championFullListMap = championFullListDto.getData().any();
 
-            List<ChampionFull> championFullList = new ArrayList<>(championFullListMap.values());
+    //SyncMethods_______________________________________________________________________________________________________
 
-            championFullList.sort(Comparator.comparing(ChampionFull::getId));
+    public interface ChampionFullListInterface {
 
-            return championFullList;
+        void onSuccess(List<ChampionFull> championFullList);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
     }
 
-    public static List<ChampionFull> GetChampionFullList(Platform platform, Locale locale, String version) {
-
-        String url = platform.getHostCdn(locale, version) + "/championFull.json";
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        try {
-            ChampionFullListDto championFullListDto = objectMapper.readValue(new URL(url), ChampionFullListDto.class);
-
-            Map<String, ChampionFull> championFullListMap = championFullListDto.getData().any();
-
-            List<ChampionFull> championFullList = new ArrayList<>(championFullListMap.values());
-
-            championFullList.sort(Comparator.comparing(ChampionFull::getId));
-
-            return championFullList;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    //Asynchronous methods
     public static void GetChampionFullList(Platform platform, ChampionFullListInterface championFullListInterface) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        base_url = platform.getHostCdn() + "/";
 
-        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
-                .create(ChampionFullListMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
 
-        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
+        championFullListMethodsInterface = retrofit.create(ChampionFullListMethodsInterface.class);
 
-        championFullCall.enqueue(new Callback<ChampionFullListDto>() {
-            @Override
-            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
-                if (response.code() == 200) {
-                    if (response.body() != null) {
+        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
 
-                        List<ChampionFull> championFullList = new ArrayList<>
-                                (response.body().getData().any().values());
+        try {
+            Response<ChampionFullListDto> championFullListDtoResponse = championFullListDtoCall.execute();
+            if (championFullListDtoResponse.code() == 200) {
+                Map<String, ChampionFull> championFullListMap = Objects
+                        .requireNonNull(championFullListDtoResponse.body()).getData().any();
 
-                        championFullListInterface.onSuccess(championFullList);
-                    }
-                } else {
-                    championFullListInterface.onError(response.code());
-                }
+                List<ChampionFull> championFullList = new ArrayList<>(championFullListMap.values());
+
+                championFullList.sort(Comparator.comparing(ChampionFull::getId));
+
+                championFullListInterface.onSuccess(championFullList);
+
+            } else {
+                championFullListInterface.onErrorCode(new ErrorCode(championFullListDtoResponse.code(),
+                        championFullListDtoResponse.message()));
             }
-
-            @Override
-            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
-                championFullListInterface.onError(t);
-            }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+            championFullListInterface.onIOException(e);
+        }
     }
 
     public static void GetChampionFullList(Platform platform, Locale locale, String version,
                                            ChampionFullListInterface championFullListInterface) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        base_url = platform.getHostCdn(locale, version) + "/";
+
+
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+
+        championFullListMethodsInterface = retrofit.create(ChampionFullListMethodsInterface.class);
+
+        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+
+        try {
+            Response<ChampionFullListDto> championFullListDtoResponse = championFullListDtoCall.execute();
+            if (championFullListDtoResponse.code() == 200) {
+                Map<String, ChampionFull> championFullListMap = Objects
+                        .requireNonNull(championFullListDtoResponse.body()).getData().any();
+
+                List<ChampionFull> championFullList = new ArrayList<>(championFullListMap.values());
+
+                championFullList.sort(Comparator.comparing(ChampionFull::getId));
+
+                championFullListInterface.onSuccess(championFullList);
+
+            } else {
+                championFullListInterface.onErrorCode(new ErrorCode(championFullListDtoResponse.code(),
+                        championFullListDtoResponse.message()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            championFullListInterface.onIOException(e);
+        }
+    }
+
+    //AsyncMethods______________________________________________________________________________________________________
+
+    public interface ChampionFullListInterfaceAsync {
+
+        void onSuccess(List<ChampionFull> championFullList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public static void GetChampionFullListAsync(Platform platform,
+                                                ChampionFullListInterfaceAsync championFullListInterfaceAsync) {
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
 
         ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
                 .create(ChampionFullListMethodsInterface.class);
@@ -124,28 +138,54 @@ public class ChampionFullListMethods extends DataDragon {
                         List<ChampionFull> championFullList = new ArrayList<>
                                 (response.body().getData().any().values());
 
-                        championFullListInterface.onSuccess(championFullList);
+                        championFullList.sort(Comparator.comparing(ChampionFull::getId));
+
+                        championFullListInterfaceAsync.onSuccess(championFullList);
                     }
                 } else {
-                    championFullListInterface.onError(response.code());
+                    championFullListInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
-                championFullListInterface.onError(t);
+                championFullListInterfaceAsync.onFailure(t);
             }
         });
     }
 
+    public static void GetChampionFullListAsync(Platform platform, Locale locale, String version,
+                                                ChampionFullListInterfaceAsync championFullListInterfaceAsync) {
 
-    //Interfaces
-    public interface ChampionFullListInterface {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
 
-        void onSuccess(List<ChampionFull> championFullList);
+        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
+                .create(ChampionFullListMethodsInterface.class);
 
-        void onError(int code);
+        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
 
-        void onError(Throwable t);
+        championFullCall.enqueue(new Callback<ChampionFullListDto>() {
+            @Override
+            public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
+                if (response.code() == 200) {
+
+                    List<ChampionFull> championFullList = new ArrayList<>
+                            (Objects.requireNonNull(response.body()).getData().any().values());
+
+                    championFullList.sort(Comparator.comparing(ChampionFull::getId));
+
+                    championFullListInterfaceAsync.onSuccess(championFullList);
+
+                } else {
+                    championFullListInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChampionFullListDto> call, Throwable t) {
+                championFullListInterfaceAsync.onFailure(t);
+            }
+        });
     }
 }

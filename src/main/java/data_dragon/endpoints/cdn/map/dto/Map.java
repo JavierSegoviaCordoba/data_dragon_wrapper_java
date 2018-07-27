@@ -1,12 +1,10 @@
 package data_dragon.endpoints.cdn.map.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 
 public class Map {
-
-    @JsonProperty("image")
-    private Image image;
 
     @JsonProperty("MapName")
     private String mapName;
@@ -14,13 +12,8 @@ public class Map {
     @JsonProperty("MapId")
     private String mapId;
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    @JsonProperty("image")
+    private Image image;
 
     public String getMapName() {
         return mapName;
@@ -38,12 +31,24 @@ public class Map {
         this.mapId = mapId;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "Map{" +
-                "image=" + image +
-                ", mapName='" + mapName + '\'' +
+        return "map:{" +
+                "mapName='" + mapName + '\'' +
                 ", mapId='" + mapId + '\'' +
+                ", image=" + image +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

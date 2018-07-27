@@ -20,14 +20,23 @@ public class RecommendedItem {
     @JsonProperty("mode")
     private String mode;
 
+    @JsonProperty("priority")
+    private boolean priority;
+
     @JsonProperty("type")
     private String type;
 
     @JsonProperty("customTag")
     private String customTag;
 
+    @JsonProperty("requiredPerk")
+    private String requiredPerk;
+
     @JsonProperty("sortrank")
     private int sortrank;
+
+    @JsonProperty("extenOrnnPage")
+    private boolean extenOrnnPage;
 
     @JsonProperty("extensionPage")
     private boolean extensionPage;
@@ -37,6 +46,12 @@ public class RecommendedItem {
 
     @JsonProperty("customPanel")
     private Object customPanel;
+
+    @JsonProperty("customPanelCurrencyType")
+    private Object customPanelCurrencyType;
+
+    @JsonProperty("customPanelBuffCurrencyName")
+    private Object customPanelBuffCurrencyName;
 
     @JsonProperty("blocks")
     private List<BlocksItem> blocks;
@@ -73,6 +88,14 @@ public class RecommendedItem {
         this.mode = mode;
     }
 
+    public boolean isPriority() {
+        return priority;
+    }
+
+    public void setPriority(boolean priority) {
+        this.priority = priority;
+    }
+
     public String getType() {
         return type;
     }
@@ -89,12 +112,28 @@ public class RecommendedItem {
         this.customTag = customTag;
     }
 
+    public String getRequiredPerk() {
+        return requiredPerk;
+    }
+
+    public void setRequiredPerk(String requiredPerk) {
+        this.requiredPerk = requiredPerk;
+    }
+
     public int getSortrank() {
         return sortrank;
     }
 
     public void setSortrank(int sortrank) {
         this.sortrank = sortrank;
+    }
+
+    public boolean isExtenOrnnPage() {
+        return extenOrnnPage;
+    }
+
+    public void setExtenOrnnPage(boolean extenOrnnPage) {
+        this.extenOrnnPage = extenOrnnPage;
     }
 
     public boolean isExtensionPage() {
@@ -121,6 +160,22 @@ public class RecommendedItem {
         this.customPanel = customPanel;
     }
 
+    public Object getCustomPanelCurrencyType() {
+        return customPanelCurrencyType;
+    }
+
+    public void setCustomPanelCurrencyType(Object customPanelCurrencyType) {
+        this.customPanelCurrencyType = customPanelCurrencyType;
+    }
+
+    public Object getCustomPanelBuffCurrencyName() {
+        return customPanelBuffCurrencyName;
+    }
+
+    public void setCustomPanelBuffCurrencyName(Object customPanelBuffCurrencyName) {
+        this.customPanelBuffCurrencyName = customPanelBuffCurrencyName;
+    }
+
     public List<BlocksItem> getBlocks() {
         return blocks;
     }
@@ -136,12 +191,17 @@ public class RecommendedItem {
                 ", title='" + title + '\'' +
                 ", map='" + map + '\'' +
                 ", mode='" + mode + '\'' +
+                ", priority=" + priority +
                 ", type='" + type + '\'' +
                 ", customTag='" + customTag + '\'' +
+                ", requiredPerk='" + requiredPerk + '\'' +
                 ", sortrank=" + sortrank +
+                ", extenOrnnPage=" + extenOrnnPage +
                 ", extensionPage=" + extensionPage +
                 ", useObviousCheckmark=" + useObviousCheckmark +
                 ", customPanel=" + customPanel +
+                ", customPanelCurrencyType=" + customPanelCurrencyType +
+                ", customPanelBuffCurrencyName=" + customPanelBuffCurrencyName +
                 ", blocks=" + blocks +
                 '}';
     }

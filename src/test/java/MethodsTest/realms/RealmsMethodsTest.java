@@ -12,7 +12,9 @@ public class RealmsMethodsTest {
 
         long startTime = System.currentTimeMillis();
 
-        Realms realms = DataDragon.getRealms(Platform.NA);
+        DataDragon dataDragon = new DataDragon(Platform.NA);
+
+        Realms realms = dataDragon.getRealms();
         System.out.println("\nrealms: \n" + realms);
 
         long endTime = System.currentTimeMillis();
