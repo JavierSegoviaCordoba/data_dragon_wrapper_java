@@ -1,11 +1,9 @@
 package data_dragon.endpoints.cdn.sticker.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class StickerDto {
-
-    @JsonProperty("data")
-    private Data data;
 
     @JsonProperty("type")
     private String type;
@@ -13,13 +11,8 @@ public class StickerDto {
     @JsonProperty("version")
     private String version;
 
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
+    @JsonProperty("data")
+    private Data data;
 
     public String getType() {
         return type;
@@ -37,13 +30,24 @@ public class StickerDto {
         this.version = version;
     }
 
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
-        return
-                "StickerDto{" +
-                        "data = '" + data + '\'' +
-                        ",type = '" + type + '\'' +
-                        ",version = '" + version + '\'' +
-                        "}";
+        return "{" +
+                "type='" + type + '\'' +
+                ", version='" + version + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

@@ -2,6 +2,7 @@ package data_dragon.endpoints.cdn.map.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,5 +27,9 @@ public class Data {
         return "Data{" +
                 "mapMap=" + mapMap +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

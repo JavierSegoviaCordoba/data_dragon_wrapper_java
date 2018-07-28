@@ -240,7 +240,10 @@ public class Item {
 
     @Override
     public String toString() {
-        return "item:{" +
+
+        String item_name = image.getFull().replace(".png", "");
+
+        return item_name + ":{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", colloq='" + colloq + '\'' +

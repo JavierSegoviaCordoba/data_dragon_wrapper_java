@@ -22,7 +22,6 @@ public class StickerMethods {
 
         String url = platform.getHostCdn() + "/sticker.json";
 
-
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

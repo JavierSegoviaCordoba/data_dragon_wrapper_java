@@ -41,7 +41,7 @@ public class Map {
 
     @Override
     public String toString() {
-        return "map:{" +
+        return mapId + ":{" +
                 "mapName='" + mapName + '\'' +
                 ", mapId='" + mapId + '\'' +
                 ", image=" + image +

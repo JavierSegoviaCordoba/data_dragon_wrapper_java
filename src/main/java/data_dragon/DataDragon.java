@@ -10,12 +10,8 @@ import data_dragon.endpoints.cdn.item.ItemMethods;
 import data_dragon.endpoints.cdn.language.LanguageMethods;
 import data_dragon.endpoints.cdn.languages.LanguagesMethods;
 import data_dragon.endpoints.cdn.map.MapMethods;
-import data_dragon.endpoints.cdn.map.dto.Map;
 import data_dragon.endpoints.cdn.profile_icon.ProfileIconMethods;
-import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIcon;
 import data_dragon.endpoints.cdn.runes_reforged.RunesReforgedMethods;
-import data_dragon.endpoints.cdn.runes_reforged.dto.Rune;
-import data_dragon.endpoints.cdn.runes_reforged.dto.RunesReforged;
 import data_dragon.endpoints.cdn.sticker.StickerMethods;
 import data_dragon.endpoints.cdn.sticker.dto.Sticker;
 import data_dragon.endpoints.cdn.summoner_spell.SummonerSpellMethods;
@@ -33,7 +29,8 @@ public class DataDragon {
         this.platform = platform;
     }
 
-    //api_______________________________________________________________________________________________________________
+//api___________________________________________________________________________________________________________________
+
     //VersionMethods
     public void getVersionsList(VersionsMethods.VersionsListInterface versionsListInterface) {
 
@@ -46,8 +43,8 @@ public class DataDragon {
         VersionsMethods.GetVersionsListAsync(versionsListInterfaceAsync);
     }
 
+//cdn___________________________________________________________________________________________________________________
 
-    //cdn_______________________________________________________________________________________________________________
     //ChampionMethods
     public void getChampion(String champion_name, ChampionMethods.ChampionInterface championInterface) {
 
@@ -269,50 +266,214 @@ public class DataDragon {
 
 
     //MapMethods
-    public Map getMap(int map_id) {
+    public void getMap(int map_id, MapMethods.MapInterface mapInterface) {
 
-        return MapMethods.GetMap(platform, map_id);
+        MapMethods.GetMap(map_id, platform, mapInterface);
     }
 
-    public Map getMap(Locale locale, String version, int map_id) {
+    public void getMap(int map_id, Locale locale, String version, MapMethods.MapInterface mapInterface) {
 
-        return MapMethods.GetMap(platform, locale, version, map_id);
+        MapMethods.GetMap(map_id, platform, locale, version, mapInterface);
+    }
+
+    public void getMapList(MapMethods.MapListInterface mapListInterface) {
+
+        MapMethods.GetMapList(platform, mapListInterface);
+    }
+
+    public void getMapList(Locale locale, String version, MapMethods.MapListInterface mapListInterface) {
+
+        MapMethods.GetMapList(platform, locale, version, mapListInterface);
+    }
+
+    //MapMethodsAsync
+    public void getMapAsync(int map_id, MapMethods.MapInterfaceAsync mapInterfaceAsync) {
+
+        MapMethods.GetMapAsync(map_id, platform, mapInterfaceAsync);
+    }
+
+    public void getMapAsync(int map_id, Locale locale, String version, MapMethods.MapInterfaceAsync mapInterfaceAsync) {
+
+        MapMethods.GetMapAsync(map_id, platform, locale, version, mapInterfaceAsync);
+    }
+
+    public void getMapListAsync(MapMethods.MapListInterfaceAsync mapListInterfaceAsync) {
+
+        MapMethods.GetMapListAsync(platform, mapListInterfaceAsync);
+    }
+
+    public void getMapListAsync(Locale locale, String version,
+                                MapMethods.MapListInterfaceAsync mapListInterfaceAsync) {
+
+        MapMethods.GetMapListAsync(platform, locale, version, mapListInterfaceAsync);
     }
 
 
     //ProfileIconMethods
-    public ProfileIcon getProfileIcon(int profile_icon_id) {
+    public void getProfileIcon(int profile_icon_id, ProfileIconMethods.ProfileIconInterface profileIconInterface) {
 
-        return ProfileIconMethods.GetProfileIcon(platform, profile_icon_id);
+        ProfileIconMethods.GetProfileIcon(profile_icon_id, platform, profileIconInterface);
     }
 
-    public ProfileIcon getProfileIcon(Locale locale, String version, int profile_icon_id) {
+    public void getProfileIcon(int profile_icon_id, Locale locale, String vesion,
+                               ProfileIconMethods.ProfileIconInterface profileIconInterface) {
 
-        return ProfileIconMethods.GetProfileIcon(platform, locale, version, profile_icon_id);
+        ProfileIconMethods.GetProfileIcon(profile_icon_id, platform, locale, vesion, profileIconInterface);
+    }
+
+    public void getProfileIconList(ProfileIconMethods.ProfileIconListInterface profileIconListInterface) {
+
+        ProfileIconMethods.GetProfileIconList(platform, profileIconListInterface);
+    }
+
+    public void getProfileIconList(Locale locale, String version,
+                                   ProfileIconMethods.ProfileIconListInterface profileIconListInterface) {
+
+        ProfileIconMethods.GetProfileIconList(platform, locale, version, profileIconListInterface);
+    }
+
+    //ProfileIconMethodsAsync
+    public void getProfileIconAsync(int profile_icon_id, ProfileIconMethods.ProfileIconInterfaceAsync profileIconInterfaceAsync) {
+
+        ProfileIconMethods.GetProfileIconAsync(profile_icon_id, platform, profileIconInterfaceAsync);
+    }
+
+    public void getProfileIconAsync(int profile_icon_id, Locale locale, String version,
+                                    ProfileIconMethods.ProfileIconInterfaceAsync profileIconInterfaceAsync) {
+
+        ProfileIconMethods.GetProfileIconAsync(profile_icon_id, platform, locale, version, profileIconInterfaceAsync);
+    }
+
+    public void getProfileIconListAsync(ProfileIconMethods.ProfileIconListInterfaceAsync profileIconListInterfaceAsyncr) {
+
+        ProfileIconMethods.GetProfileIconListAsync(platform, profileIconListInterfaceAsyncr);
+    }
+
+    public void getProfileIconListAsync(Locale locale, String version,
+                                        ProfileIconMethods.ProfileIconListInterfaceAsync profileIconListInterfaceAsyncr) {
+
+        ProfileIconMethods.GetProfileIconListAsync(platform, locale, version, profileIconListInterfaceAsyncr);
     }
 
 
     //RunesReforgedMethods
-    public List<RunesReforged> getRunesReforged() {
+    public void getRuneReforgedList(RunesReforgedMethods.RuneReforgedListInterface
+                                            runeReforgedListInterface) {
 
-        return RunesReforgedMethods.GetRunesReforgedList(platform);
+        RunesReforgedMethods.GetRuneReforgedList(platform, runeReforgedListInterface);
     }
 
-    public List<RunesReforged> getRunesReforged(Locale locale, String version) {
+    public void getRuneReforgedList(Locale locale, String version,
+                                    RunesReforgedMethods.RuneReforgedListInterface runeReforgedListInterface) {
 
-        return RunesReforgedMethods.GetRunesReforgedList(platform, locale, version);
+        RunesReforgedMethods.GetRuneReforgedList(platform, locale, version, runeReforgedListInterface);
     }
 
-    public Rune getRune(int rune_id) {
+    public void getRuneReforged(int rune_reforged_id,
+                                RunesReforgedMethods.RuneReforgedInterface runeReforgedInterface) {
 
-        return RunesReforgedMethods.GetRune(platform, rune_id);
+        RunesReforgedMethods.GetRuneReforged(rune_reforged_id, platform, runeReforgedInterface);
     }
 
-    public Rune getRune(Locale locale, String version, int rune_id) {
+    public void getRuneReforged(int rune_reforged_id, Locale locale, String version,
+                                RunesReforgedMethods.RuneReforgedInterface runeReforgedInterface) {
 
-        return RunesReforgedMethods.GetRune(platform, locale, version, rune_id);
+        RunesReforgedMethods.GetRuneReforged(rune_reforged_id, platform, locale, version, runeReforgedInterface);
     }
 
+    public void getRuneReforged(String rune_reforged_key,
+                                RunesReforgedMethods.RuneReforgedInterface runeReforgedInterface) {
+
+        RunesReforgedMethods.GetRuneReforged(rune_reforged_key, platform, runeReforgedInterface);
+    }
+
+    public void getRuneReforged(String rune_reforged_key, Locale locale, String version,
+                                RunesReforgedMethods.RuneReforgedInterface runeReforgedInterface) {
+
+        RunesReforgedMethods.GetRuneReforged(rune_reforged_key, platform, locale, version, runeReforgedInterface);
+    }
+
+    public void getRune(int rune_id, RunesReforgedMethods.RuneInterface runeInterface) {
+
+        RunesReforgedMethods.GetRune(rune_id, platform, runeInterface);
+    }
+
+    public void getRune(int rune_id, Locale locale, String version,
+                        RunesReforgedMethods.RuneInterface runeInterface) {
+
+        RunesReforgedMethods.GetRune(rune_id, platform, locale, version, runeInterface);
+    }
+
+    public void getRune(String rune_key, RunesReforgedMethods.RuneInterface runeInterface) {
+
+        RunesReforgedMethods.GetRune(rune_key, platform, runeInterface);
+    }
+
+    public void getRune(String rune_key, Locale locale, String version,
+                        RunesReforgedMethods.RuneInterface runeInterface) {
+
+        RunesReforgedMethods.GetRune(rune_key, platform, locale, version, runeInterface);
+    }
+
+    //RunesReforgedMethodsAsync
+
+    public void getRuneReforgedListAsync(RunesReforgedMethods.RuneReforgedListInterfaceAsync
+                                                 runeReforgedListInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedListAsync(platform, runeReforgedListInterfaceAsync);
+    }
+
+    public void getRuneReforgedListAsync(Locale locale, String version,
+                                         RunesReforgedMethods.RuneReforgedListInterfaceAsync runeReforgedListInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedListAsync(platform, locale, version, runeReforgedListInterfaceAsync);
+    }
+
+    public void getRuneReforgedAsync(int rune_reforged_id,
+                                     RunesReforgedMethods.RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedAsync(rune_reforged_id, platform, runeReforgedInterfaceAsync);
+    }
+
+    public void getRuneReforgedAsync(int rune_reforged_id, Locale locale, String version,
+                                     RunesReforgedMethods.RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedAsync(rune_reforged_id, platform, locale, version, runeReforgedInterfaceAsync);
+    }
+
+    public void getRuneReforgedAsync(String rune_reforged_key,
+                                     RunesReforgedMethods.RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedAsync(rune_reforged_key, platform, runeReforgedInterfaceAsync);
+    }
+
+    public void getRuneReforgedAsync(String rune_reforged_key, Locale locale, String version,
+                                     RunesReforgedMethods.RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneReforgedAsync(rune_reforged_key, platform, locale, version, runeReforgedInterfaceAsync);
+    }
+
+    public void getRuneAsync(int rune_id, RunesReforgedMethods.RuneInterfaceAsync runeInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneAsync(rune_id, platform, runeInterfaceAsync);
+    }
+
+    public void getRuneAsync(int rune_id, Locale locale, String version,
+                             RunesReforgedMethods.RuneInterfaceAsync runeInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneAsync(rune_id, platform, locale, version, runeInterfaceAsync);
+    }
+
+    public void getRuneAsync(String rune_key, RunesReforgedMethods.RuneInterfaceAsync runeInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneAsync(rune_key, platform, runeInterfaceAsync);
+    }
+
+    public void getRuneAsync(String rune_key, Locale locale, String version,
+                             RunesReforgedMethods.RuneInterfaceAsync runeInterfaceAsync) {
+
+        RunesReforgedMethods.GetRuneAsync(rune_key, platform, locale, version, runeInterfaceAsync);
+    }
 
     //StickerMethods
     public List<Sticker> getStickerList() {

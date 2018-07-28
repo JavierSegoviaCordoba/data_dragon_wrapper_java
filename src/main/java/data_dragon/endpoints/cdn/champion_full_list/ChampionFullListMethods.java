@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
+import data_dragon.endpoints.DataDragonService;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFull;
 import data_dragon.endpoints.cdn.champion_full_list.dto.ChampionFullListDto;
+import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,10 +24,7 @@ public class ChampionFullListMethods {
 
     private static Retrofit retrofit;
 
-    private static ChampionFullListMethodsInterface championFullListMethodsInterface;
-
-    private static ObjectMapper objectMapper = new ObjectMapper()
-            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+    private static DataDragonService dataDragonService;
 
 
     //SyncMethods_______________________________________________________________________________________________________
@@ -44,15 +43,15 @@ public class ChampionFullListMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championFullListMethodsInterface = retrofit.create(ChampionFullListMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+        Call<ChampionFullListDto> championFullListDtoCall = dataDragonService.GetChampionFullList();
 
         try {
             Response<ChampionFullListDto> championFullListDtoResponse = championFullListDtoCall.execute();
-            if (championFullListDtoResponse.code() == 200) {
+            if (championFullListDtoResponse.isSuccessful()) {
                 Map<String, ChampionFull> championFullListMap = Objects
                         .requireNonNull(championFullListDtoResponse.body()).getData().any();
 
@@ -79,15 +78,15 @@ public class ChampionFullListMethods {
 
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championFullListMethodsInterface = retrofit.create(ChampionFullListMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionFullListDto> championFullListDtoCall = championFullListMethodsInterface.GetChampionFullList();
+        Call<ChampionFullListDto> championFullListDtoCall = dataDragonService.GetChampionFullList();
 
         try {
             Response<ChampionFullListDto> championFullListDtoResponse = championFullListDtoCall.execute();
-            if (championFullListDtoResponse.code() == 200) {
+            if (championFullListDtoResponse.isSuccessful()) {
                 Map<String, ChampionFull> championFullListMap = Objects
                         .requireNonNull(championFullListDtoResponse.body()).getData().any();
 
@@ -121,18 +120,18 @@ public class ChampionFullListMethods {
     public static void GetChampionFullListAsync(Platform platform,
                                                 ChampionFullListInterfaceAsync championFullListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
-                .create(ChampionFullListMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
+        Call<ChampionFullListDto> championFullCall = dataDragonService.GetChampionFullList();
 
         championFullCall.enqueue(new Callback<ChampionFullListDto>() {
             @Override
             public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         List<ChampionFull> championFullList = new ArrayList<>
@@ -157,18 +156,18 @@ public class ChampionFullListMethods {
     public static void GetChampionFullListAsync(Platform platform, Locale locale, String version,
                                                 ChampionFullListInterfaceAsync championFullListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ChampionFullListMethodsInterface championFullListMethodsInterface = retrofit
-                .create(ChampionFullListMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ChampionFullListDto> championFullCall = championFullListMethodsInterface.GetChampionFullList();
+        Call<ChampionFullListDto> championFullCall = dataDragonService.GetChampionFullList();
 
         championFullCall.enqueue(new Callback<ChampionFullListDto>() {
             @Override
             public void onResponse(Call<ChampionFullListDto> call, Response<ChampionFullListDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
 
                     List<ChampionFull> championFullList = new ArrayList<>
                             (Objects.requireNonNull(response.body()).getData().any().values());

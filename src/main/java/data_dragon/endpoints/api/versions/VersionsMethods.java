@@ -1,5 +1,7 @@
 package data_dragon.endpoints.api.versions;
 
+import data_dragon.endpoints.DataDragonService;
+import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,11 +14,8 @@ import java.io.IOException;
 public class VersionsMethods {
 
     private static String base_url = "https://ddragon.leagueoflegends.com/api/";
-
-    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
-            .addConverterFactory(JacksonConverterFactory.create()).build();
-
-    private static VersionsMethodsInterface versionMethodsInterface = retrofit.create(VersionsMethodsInterface.class);
+    private static Retrofit retrofit;
+    private static DataDragonService dataDragonService;
 
 
     //SyncMethods_______________________________________________________________________________________________________
@@ -32,11 +31,16 @@ public class VersionsMethods {
 
     public static void GetVersionsList(VersionsListInterface versionsListInterface) {
 
-        Call<String[]> versionsListCall = versionMethodsInterface.GetVersionsList();
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
+
+        dataDragonService = retrofit.create(DataDragonService.class);
+
+        Call<String[]> versionsListCall = dataDragonService.GetVersionsList();
 
         try {
             Response<String[]> versionListResponse = versionsListCall.execute();
-            if (versionListResponse.code() == 200) {
+            if (versionListResponse.isSuccessful()) {
                 versionsListInterface.onSuccess(versionListResponse.body());
             } else {
                 versionsListInterface.onErrorCode(new ErrorCode(versionListResponse.code(),
@@ -61,17 +65,17 @@ public class VersionsMethods {
 
     public static void GetVersionsListAsync(VersionsListInterfaceAsync versionsListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        VersionsMethodsInterface versionMethodsInterface = retrofit.create(VersionsMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<String[]> versionsListCall = versionMethodsInterface.GetVersionsList();
+        Call<String[]> versionsListCall = dataDragonService.GetVersionsList();
 
         versionsListCall.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     versionsListInterfaceAsync.onSuccess(response.body());
                 } else {
                     versionsListInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));

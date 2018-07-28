@@ -1,5 +1,7 @@
 package data_dragon.endpoints.cdn.languages;
 
+import data_dragon.endpoints.DataDragonService;
+import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,10 +15,8 @@ import java.util.Objects;
 public class LanguagesMethods {
 
     private static String base_url;
-
     private static Retrofit retrofit;
-
-    private static LanguagesMethodsInterface languagesMethodsInterface;
+    private static DataDragonService dataDragonService;
 
     //SyncMethods_______________________________________________________________________________________________________
 
@@ -34,17 +34,17 @@ public class LanguagesMethods {
         base_url = "https://ddragon.leagueoflegends.com/cdn/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        languagesMethodsInterface = retrofit
-                .create(LanguagesMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<String[]> languageListCall = languagesMethodsInterface.GetLanguages();
+        Call<String[]> languageListCall = dataDragonService.GetLanguages();
 
         try {
             Response<String[]> languagesListResponse = languageListCall.execute();
 
-            if (languagesListResponse.code() == 200) {
+            if (languagesListResponse.isSuccessful()) {
                 languageInterface.onSuccess(Objects.requireNonNull(languagesListResponse.body()));
             } else {
                 languageInterface.onErrorCode(new ErrorCode(languagesListResponse.code(), languagesListResponse.message()));
@@ -71,17 +71,17 @@ public class LanguagesMethods {
         base_url = "https://ddragon.leagueoflegends.com/cdn/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        languagesMethodsInterface = retrofit
-                .create(LanguagesMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<String[]> languageListCall = languagesMethodsInterface.GetLanguages();
+        Call<String[]> languageListCall = dataDragonService.GetLanguages();
 
         languageListCall.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     languagesInterfaceAsync.onSuccess(response.body());
                 } else {
                     languagesInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
@@ -94,5 +94,4 @@ public class LanguagesMethods {
             }
         });
     }
-
 }

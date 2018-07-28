@@ -109,7 +109,7 @@ public class Examples {
         //List of Runes Reforged
         //Check the structure: https://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/runesReforged.json
         //Here we show Domination
-        List<RunesReforged> runesReforged = dataDragon.getRunesReforged();
+        List<RuneReforged> runesReforged = dataDragon.getRunesReforged();
         System.out.println("\nRunesReforgedKey: " + runesReforged.get(0).getKey());
 
         //Rune by Id (8120 = Ghost Poro)

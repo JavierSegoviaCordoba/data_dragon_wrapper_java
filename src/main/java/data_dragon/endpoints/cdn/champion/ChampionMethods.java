@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
+import data_dragon.endpoints.DataDragonService;
 import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion.dto.ChampionDto;
-import data_dragon.endpoints.cdn.champion_short_list.ChampionShortListMethodsInterface;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
+import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,14 +24,9 @@ import java.util.*;
 public class ChampionMethods {
 
     private static String base_url;
-
     private static Retrofit retrofit;
+    private static DataDragonService dataDragonService;
 
-    private static ChampionMethodsInterface championMethodsInterface;
-    private static ChampionShortListMethodsInterface championShortListMethodsInterface;
-
-    private static ObjectMapper objectMapper = new ObjectMapper()
-            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
     //SyncMethods_______________________________________________________________________________________________________
 
@@ -48,15 +44,15 @@ public class ChampionMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
 
         try {
             Response<ChampionDto> championDtoResponse = championCall.execute();
-            if (championDtoResponse.code() == 200) {
+            if (championDtoResponse.isSuccessful()) {
                 championInterface.onSuccess(Objects.requireNonNull(championDtoResponse.body()).getData().any()
                         .get(champion_name));
             } else {
@@ -74,15 +70,15 @@ public class ChampionMethods {
         base_url = platform.getHostCdn(locale, version) + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
 
         try {
             Response<ChampionDto> championDtoResponse = championCall.execute();
-            if (championDtoResponse.code() == 200) {
+            if (championDtoResponse.isSuccessful()) {
                 championInterface.onSuccess(Objects.requireNonNull(championDtoResponse.body()).getData().any()
                         .get(champion_name));
             } else {
@@ -99,16 +95,16 @@ public class ChampionMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championShortListMethodsInterface = retrofit.create(ChampionShortListMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
 
         try {
 
             Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.code() == 200) {
+            if (championShortListDtoResponse.isSuccessful()) {
                 ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
 
                 Map<String, ChampionShort> championNameMap = Objects.requireNonNull(championShortListDto).getData().any();
@@ -149,16 +145,16 @@ public class ChampionMethods {
         base_url = platform.getHostCdn(locale, version) + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championShortListMethodsInterface = retrofit.create(ChampionShortListMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
 
         try {
 
             Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.code() == 200) {
+            if (championShortListDtoResponse.isSuccessful()) {
                 ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
 
                 Map<String, ChampionShort> championNameMap = Objects.requireNonNull(championShortListDto).getData().any();
@@ -287,15 +283,15 @@ public class ChampionMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        championShortListMethodsInterface = retrofit.create(ChampionShortListMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
         try {
-            Response<ChampionShortListDto> championShortListDtoResponse = championShortListMethodsInterface
+            Response<ChampionShortListDto> championShortListDtoResponse = dataDragonService
                     .GetChampionShortList().execute();
 
-            if (championShortListDtoResponse.code() == 200) {
+            if (championShortListDtoResponse.isSuccessful()) {
 
                 ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
 
@@ -346,17 +342,19 @@ public class ChampionMethods {
     public static void GetChampionAsync(String champion_name, Platform platform,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        base_url = platform.getHostCdn() + "/";
 
-        ChampionMethodsInterface championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+        dataDragonService = retrofit.create(DataDragonService.class);
+
+        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
 
         championCall.enqueue(new Callback<ChampionDto>() {
             @Override
             public void onResponse(Call<ChampionDto> call, Response<ChampionDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
                         championInterfaceAsync.onSuccess(response.body().getData().any().get(champion_name));
                     }
@@ -375,17 +373,19 @@ public class ChampionMethods {
     public static void GetChampionAsync(String champion_name, Platform platform, Locale locale, String version,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        base_url = platform.getHostCdn(locale, version) + "/";
 
-        ChampionMethodsInterface championMethodsInterface = retrofit.create(ChampionMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        Call<ChampionDto> championCall = championMethodsInterface.GetChampion(champion_name);
+        dataDragonService = retrofit.create(DataDragonService.class);
+
+        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
 
         championCall.enqueue(new Callback<ChampionDto>() {
             @Override
             public void onResponse(Call<ChampionDto> call, Response<ChampionDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
                         championInterfaceAsync.onSuccess(response.body().getData().any().get(champion_name));
                     }
@@ -404,18 +404,20 @@ public class ChampionMethods {
     public static void GetChampionAsync(int champion_key, Platform platform,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        base_url = platform.getHostCdn() + "/";
 
-        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
-                .create(ChampionShortListMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
+
+        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
 
         championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Map<String, ChampionShort> championNameMap = response.body().getData().any();
@@ -457,18 +459,20 @@ public class ChampionMethods {
     public static void GetChampionAsync(int champion_key, Platform platform, Locale locale, String version,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        base_url = platform.getHostCdn(locale, version) + "/";
 
-        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
-                .create(ChampionShortListMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
+
+        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
 
         championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Map<String, ChampionShort> championNameMap = response.body().getData().any();
@@ -597,18 +601,20 @@ public class ChampionMethods {
     public static void GetChampionKeyIdListAsync(Platform platform,
                                                  ChampionKeyIdListInterfaceAsync championKeyIdListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(objectMapper)).build();
+        base_url = platform.getHostCdn() + "/";
 
-        ChampionShortListMethodsInterface championShortListMethodsInterface = retrofit
-                .create(ChampionShortListMethodsInterface.class);
+        retrofit = new Retrofit.Builder().baseUrl(base_url)
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        Call<ChampionShortListDto> championShortListDtoCall = championShortListMethodsInterface.GetChampionShortList();
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
+
+        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
 
         championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Map<String, ChampionShort> championShortMap = Objects.requireNonNull(response.body())
@@ -645,5 +651,4 @@ public class ChampionMethods {
             }
         });
     }
-
 }

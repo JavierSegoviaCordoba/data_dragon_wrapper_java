@@ -26,7 +26,7 @@ public class AllChampionMethodsTest {
                     dataDragon.getChampion(championKeyId.getId(), new ChampionMethods.ChampionInterface() {
                         @Override
                         public void onSuccess(Champion champion) {
-                            System.out.println("\n" + champion.getName() + "\n" + champion.toJson());
+                            System.out.println("\n" + champion.getName());
                         }
 
                         @Override

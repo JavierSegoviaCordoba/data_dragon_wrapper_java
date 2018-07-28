@@ -197,7 +197,7 @@ public class ChampionFull {
 
     @Override
     public String toString() {
-        return "{" +
+        return id + ":{" +
                 "id='" + id + '\'' +
                 ", key='" + key + '\'' +
                 ", name='" + name + '\'' +

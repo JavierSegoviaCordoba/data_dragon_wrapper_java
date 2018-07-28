@@ -119,13 +119,13 @@ System.out.println("\nProfileIconSprite: " + profileIcon0.getImage().getSprite()
 
 List of Runes Reforged.
 
-Check the structure: https://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/runesReforged.json
+Check the structure: https://ddragon.leagueoflegends.com/cdn/8.13.1/data/en_US/runeReforged.json
 
 Here we show Domination.
 
 ````
-List<RunesReforged> runesReforged = DataDragon.getRunesReforged(Platform.NA);
-System.out.println("\nRunesReforgedKey: " + runesReforged.get(0).getKey());
+List<RuneReforged> runeReforged = DataDragon.getRunesReforged(Platform.NA);
+System.out.println("\nRunesReforgedKey: " + runeReforged.get(0).getKey());
 ````
 
 Rune by Id (8120 = Ghost Poro).

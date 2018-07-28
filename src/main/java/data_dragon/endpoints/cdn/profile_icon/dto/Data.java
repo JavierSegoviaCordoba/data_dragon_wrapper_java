@@ -2,6 +2,7 @@ package data_dragon.endpoints.cdn.profile_icon.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
@@ -22,8 +23,12 @@ public class Data {
 
     @Override
     public String toString() {
-        return "Data{" +
+        return "data:{" +
                 "profileIconMap=" + profileIconMap +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

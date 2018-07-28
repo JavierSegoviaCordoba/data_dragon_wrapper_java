@@ -1,22 +1,15 @@
 package data_dragon.endpoints.cdn.sticker.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 public class Sticker {
-
-    @JsonProperty("image")
-    private Image image;
 
     @JsonProperty("id")
     private int id;
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    @JsonProperty("image")
+    private Image image;
 
     public int getId() {
         return id;
@@ -26,11 +19,26 @@ public class Sticker {
         this.id = id;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "Sticker{" +
-                "image=" + image +
-                ", id=" + id +
+
+        String sticker_name = image.getFull().replace(".png", "");
+
+        return sticker_name + ":{" +
+                "id=" + id +
+                ", image=" + image +
                 '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

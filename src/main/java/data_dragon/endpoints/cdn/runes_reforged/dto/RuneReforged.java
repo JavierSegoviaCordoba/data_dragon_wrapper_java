@@ -3,8 +3,10 @@ package data_dragon.endpoints.cdn.runes_reforged.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 
+import java.util.List;
 
-public class Rune {
+
+public class RuneReforged {
 
     @JsonProperty("id")
     private int id;
@@ -18,11 +20,8 @@ public class Rune {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("shortDesc")
-    private String shortDesc;
-
-    @JsonProperty("longDesc")
-    private String longDesc;
+    @JsonProperty("slots")
+    private List<Slots> slots;
 
     public int getId() {
         return id;
@@ -56,20 +55,12 @@ public class Rune {
         this.name = name;
     }
 
-    public String getShortDesc() {
-        return shortDesc;
+    public List<Slots> getSlots() {
+        return slots;
     }
 
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
-
-    public String getLongDesc() {
-        return longDesc;
-    }
-
-    public void setLongDesc(String longDesc) {
-        this.longDesc = longDesc;
+    public void setSlots(List<Slots> slots) {
+        this.slots = slots;
     }
 
     @Override
@@ -79,8 +70,7 @@ public class Rune {
                 ", key='" + key + '\'' +
                 ", icon='" + icon + '\'' +
                 ", name='" + name + '\'' +
-                ", shortDesc='" + shortDesc + '\'' +
-                ", longDesc='" + longDesc + '\'' +
+                ", slots=" + slots +
                 '}';
     }
 

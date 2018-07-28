@@ -2,8 +2,10 @@ package data_dragon.endpoints.cdn.item;
 
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
+import data_dragon.endpoints.DataDragonService;
 import data_dragon.endpoints.cdn.item.dto.Item;
 import data_dragon.endpoints.cdn.item.dto.ItemDto;
+import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,10 +19,8 @@ import java.util.*;
 public class ItemMethods {
 
     private static String base_url;
-
     private static Retrofit retrofit;
-
-    private static ItemMethodsInterface itemMethodsInterface;
+    private static DataDragonService dataDragonService;
 
     //SyncMethods_______________________________________________________________________________________________________
 
@@ -38,15 +38,15 @@ public class ItemMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        itemMethodsInterface = retrofit.create(ItemMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ItemDto> itemDtoCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
 
         try {
             Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.code() == 200) {
+            if (itemDtoResponse.isSuccessful()) {
                 itemInterface.onSuccess(Objects.requireNonNull(itemDtoResponse.body()).getData().any()
                         .get(String.valueOf(item_id)));
             } else {
@@ -64,15 +64,15 @@ public class ItemMethods {
         base_url = platform.getHostCdn(locale, version) + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        itemMethodsInterface = retrofit.create(ItemMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ItemDto> itemDtoCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
 
         try {
             Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.code() == 200) {
+            if (itemDtoResponse.isSuccessful()) {
                 itemInterface.onSuccess(Objects.requireNonNull(itemDtoResponse.body()).getData().any()
                         .get(String.valueOf(item_id)));
             } else {
@@ -98,15 +98,15 @@ public class ItemMethods {
         base_url = platform.getHostCdn() + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        itemMethodsInterface = retrofit.create(ItemMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ItemDto> itemDtoCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
 
         try {
             Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.code() == 200) {
+            if (itemDtoResponse.isSuccessful()) {
                 Map<String, Item> itemMap = Objects.requireNonNull(itemDtoResponse.body()).getData().any();
                 Map<String, Item> itemTreeMap = new TreeMap<>(itemMap);
 
@@ -127,15 +127,15 @@ public class ItemMethods {
         base_url = platform.getHostCdn(locale, version) + "/";
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        itemMethodsInterface = retrofit.create(ItemMethodsInterface.class);
+        dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<ItemDto> itemDtoCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
 
         try {
             Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.code() == 200) {
+            if (itemDtoResponse.isSuccessful()) {
                 Map<String, Item> itemMap = Objects.requireNonNull(itemDtoResponse.body()).getData().any();
                 Map<String, Item> itemTreeMap = new TreeMap<>(itemMap);
 
@@ -162,18 +162,18 @@ public class ItemMethods {
 
     public static void GetItemAsync(int item_id, Platform platform, ItemInterfaceAsync itemInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ItemMethodsInterface itemMethodsInterface = retrofit
-                .create(ItemMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ItemDto> championShortCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> championShortCall = dataDragonService.GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Item item = response.body().getData().any().get(String.valueOf(item_id));
@@ -195,18 +195,18 @@ public class ItemMethods {
     public static void GetItemAsync(int item_id, Platform platform, Locale locale, String version,
                                     ItemInterfaceAsync itemInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ItemMethodsInterface itemMethodsInterface = retrofit
-                .create(ItemMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ItemDto> championShortCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> championShortCall = dataDragonService.GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Item item = response.body().getData().any().get(String.valueOf(item_id));
@@ -236,18 +236,18 @@ public class ItemMethods {
 
     public static void GetItemListAsync(Platform platform, ItemListInterfaceAsync itemListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ItemMethodsInterface itemMethodsInterface = retrofit
-                .create(ItemMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ItemDto> championShortCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> championShortCall = dataDragonService.GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     if (response.body() != null) {
 
                         Map<String, Item> itemMap = response.body().getData().any();
@@ -272,18 +272,18 @@ public class ItemMethods {
     public static void GetItemListAsync(Platform platform, Locale locale, String version,
                                         ItemListInterfaceAsync itemListInterfaceAsync) {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
+                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
 
-        ItemMethodsInterface itemMethodsInterface = retrofit
-                .create(ItemMethodsInterface.class);
+        dataDragonService = retrofit
+                .create(DataDragonService.class);
 
-        Call<ItemDto> championShortCall = itemMethodsInterface.GetItem();
+        Call<ItemDto> championShortCall = dataDragonService.GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     Map<String, Item> itemMap = Objects.requireNonNull(response.body()).getData().any();
                     Map<String, Item> itemTreeMap = new TreeMap<>(itemMap);
 

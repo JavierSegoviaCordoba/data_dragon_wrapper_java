@@ -1,6 +1,7 @@
 package data_dragon.endpoints.cdn.runes_reforged.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -21,8 +22,12 @@ public class Slots {
     @Override
     public String toString() {
         return
-                "SlotsItem{" +
+                "slot:{" +
                         "runes = '" + runes + '\'' +
                         "}";
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }

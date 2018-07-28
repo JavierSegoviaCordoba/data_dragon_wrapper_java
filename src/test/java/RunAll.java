@@ -1,4 +1,3 @@
-import MethodsTest.cdn.*;
 import MethodsTest.cdn.champion.ChampionMethodsTest;
 import MethodsTest.cdn.champion_full_list.ChampionFullListMethodsTest;
 import MethodsTest.cdn.champion_short_list.ChampionShortListMethodsTest;

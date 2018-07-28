@@ -1,12 +1,10 @@
 package data_dragon.endpoints.cdn.summoner_spell.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
 
 
 public class SummonerSpellDto {
-
-    @JsonProperty("data")
-    private Data data;
 
     @JsonProperty("type")
     private String type;
@@ -14,13 +12,8 @@ public class SummonerSpellDto {
     @JsonProperty("version")
     private String version;
 
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
+    @JsonProperty("data")
+    private Data data;
 
     public String getType() {
         return type;
@@ -38,13 +31,24 @@ public class SummonerSpellDto {
         this.version = version;
     }
 
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
-        return
-                "SummonerSpellDto{" +
-                        "data = '" + data + '\'' +
-                        ",type = '" + type + '\'' +
-                        ",version = '" + version + '\'' +
-                        "}";
+        return "{" +
+                "type='" + type + '\'' +
+                ", version='" + version + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 }
