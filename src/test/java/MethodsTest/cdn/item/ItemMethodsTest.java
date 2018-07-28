@@ -31,6 +31,11 @@ public class ItemMethodsTest {
             }
 
             @Override
+            public void onNotFound() {
+                System.out.println("\nitem1001: item not found");
+            }
+
+            @Override
             public void onIOException(IOException e) {
                 System.out.println("\nitem1001: \n" + e.getMessage());
             }
@@ -45,6 +50,11 @@ public class ItemMethodsTest {
             @Override
             public void onErrorCode(ErrorCode errorCode) {
                 System.out.println("\nitem1001: \n" + errorCode.toJson());
+            }
+
+            @Override
+            public void onNotFound() {
+                System.out.println("\nitem1001: item not found");
             }
 
             @Override

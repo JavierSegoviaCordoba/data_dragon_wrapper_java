@@ -19,16 +19,6 @@ public class RunesReforgedMethods {
 
     //SyncMethods_______________________________________________________________________________________________________
 
-    public interface RuneReforgedListInterface {
-
-        void onSuccess(List<RuneReforged> runeReforgedList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
-
     public static void GetRuneReforgedList(Platform platform, RuneReforgedListInterface runeReforgedListInterface) {
 
         Call<List<RuneReforged>> call = DataDragonUtils.CreateDataDragonService(platform).GetRunesReforged();
@@ -44,8 +34,7 @@ public class RunesReforgedMethods {
 
                 runeReforgedListInterface.onSuccess(runeReforgedList);
             } else {
-                runeReforgedListInterface.onErrorCode(new ErrorCode(response.code(),
-                        response.message()));
+                runeReforgedListInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,17 +66,6 @@ public class RunesReforgedMethods {
             e.printStackTrace();
             runeReforgedListInterface.onIOException(e);
         }
-    }
-
-    public interface RuneReforgedInterface {
-
-        void onSuccess(RuneReforged runeReforged);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onNotFound();
-
-        void onIOException(IOException e);
     }
 
     public static void GetRuneReforged(int rune_reforged_id, Platform platform,
@@ -221,17 +199,6 @@ public class RunesReforgedMethods {
             e.printStackTrace();
             runeReforgedInterface.onIOException(e);
         }
-    }
-
-    public interface RuneInterface {
-
-        void onSuccess(Rune rune);
-
-        void onNotFound();
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
     }
 
     public static void GetRune(int rune_id, Platform platform, RuneInterface runeInterface) {
@@ -376,17 +343,6 @@ public class RunesReforgedMethods {
         });
     }
 
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface RuneReforgedListInterfaceAsync {
-
-        void onSuccess(List<RuneReforged> runeReforgedList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetRuneReforgedListAsync(Platform platform,
                                                 RuneReforgedListInterfaceAsync runeReforgedListInterfaceAsync) {
 
@@ -443,17 +399,6 @@ public class RunesReforgedMethods {
         });
     }
 
-    public interface RuneReforgedInterfaceAsync {
-
-        void onSuccess(RuneReforged runeReforged);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onNotFound();
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetRuneReforgedAsync(int rune_reforged_id, Platform platform,
                                             RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
 
@@ -469,9 +414,10 @@ public class RunesReforgedMethods {
 
                     for (int i = 0; i < Objects.requireNonNull(runeReforgedList).size(); i++) {
                         RuneReforged runeReforged = runeReforgedList.get(i);
-                        if (rune_reforged_id == runeReforged.getId())
+                        if (rune_reforged_id == runeReforged.getId()) {
                             runeReforgedFound = true;
-                        runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                            runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                        }
                     }
                     if (!runeReforgedFound) runeReforgedInterfaceAsync.onNotFound();
                 } else {
@@ -486,6 +432,8 @@ public class RunesReforgedMethods {
             }
         });
     }
+
+    //AsyncMethods______________________________________________________________________________________________________
 
     public static void GetRuneReforgedAsync(int rune_reforged_id, Platform platform, Locale locale, String version,
                                             RuneReforgedInterfaceAsync runeReforgedInterfaceAsync) {
@@ -503,9 +451,10 @@ public class RunesReforgedMethods {
 
                     for (int i = 0; i < Objects.requireNonNull(runeReforgedList).size(); i++) {
                         RuneReforged runeReforged = runeReforgedList.get(i);
-                        if (rune_reforged_id == runeReforged.getId())
+                        if (rune_reforged_id == runeReforged.getId()) {
                             runeReforgedFound = true;
-                        runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                            runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                        }
                     }
                     if (!runeReforgedFound) runeReforgedInterfaceAsync.onNotFound();
                 } else {
@@ -536,9 +485,10 @@ public class RunesReforgedMethods {
 
                     for (int i = 0; i < Objects.requireNonNull(runeReforgedList).size(); i++) {
                         RuneReforged runeReforged = runeReforgedList.get(i);
-                        if (rune_reforged_key.equals(runeReforged.getKey()))
+                        if (rune_reforged_key.equals(runeReforged.getKey())) {
                             runeReforgedFound = true;
-                        runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                            runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                        }
                     }
                     if (!runeReforgedFound) runeReforgedInterfaceAsync.onNotFound();
                 } else {
@@ -570,9 +520,10 @@ public class RunesReforgedMethods {
 
                     for (int i = 0; i < Objects.requireNonNull(runeReforgedList).size(); i++) {
                         RuneReforged runeReforged = runeReforgedList.get(i);
-                        if (rune_reforged_key.equals(runeReforged.getKey()))
+                        if (rune_reforged_key.equals(runeReforged.getKey())) {
                             runeReforgedFound = true;
-                        runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                            runeReforgedInterfaceAsync.onSuccess(runeReforged);
+                        }
                     }
                     if (!runeReforgedFound) runeReforgedInterfaceAsync.onNotFound();
                 } else {
@@ -588,18 +539,6 @@ public class RunesReforgedMethods {
         });
     }
 
-
-    public interface RuneInterfaceAsync {
-
-        void onSuccess(Rune rune);
-
-        void onNotFound();
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetRuneAsync(int rune_id, Platform platform, RuneInterfaceAsync runeInterfaceAsync) {
 
         GetRuneReforgedListAsync(platform, new RuneReforgedListInterfaceAsync() {
@@ -611,8 +550,8 @@ public class RunesReforgedMethods {
                 for (RuneReforged runeReforged : runeReforgedList) {
                     for (int i = 0; i < runeReforged.getSlots().size(); i++) {
                         for (int k = 0; k < runeReforged.getSlots().get(i).getRunes().size(); k++) {
-                            if (rune_id == runeReforged.getSlots().get(i).getRunes().get(k).getId()) {
-                                Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            if (rune_id == runeReforged.getId()) {
                                 runeFound = true;
                                 runeInterfaceAsync.onSuccess(rune);
                             }
@@ -648,8 +587,8 @@ public class RunesReforgedMethods {
                 for (RuneReforged runeReforged : runeReforgedList) {
                     for (int i = 0; i < runeReforged.getSlots().size(); i++) {
                         for (int k = 0; k < runeReforged.getSlots().get(i).getRunes().size(); k++) {
-                            if (rune_id == runeReforged.getSlots().get(i).getRunes().get(k).getId()) {
-                                Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            if (rune_id == runeReforged.getId()) {
                                 runeFound = true;
                                 runeInterfaceAsync.onSuccess(rune);
                             }
@@ -684,8 +623,8 @@ public class RunesReforgedMethods {
                 for (RuneReforged runeReforged : runeReforgedList) {
                     for (int i = 0; i < runeReforged.getSlots().size(); i++) {
                         for (int k = 0; k < runeReforged.getSlots().get(i).getRunes().size(); k++) {
-                            if (rune_key.equals(runeReforged.getSlots().get(i).getRunes().get(k).getKey())) {
-                                Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            if (rune_key.equals(rune.getKey())) {
                                 runeFound = true;
                                 runeInterfaceAsync.onSuccess(rune);
                             }
@@ -721,8 +660,8 @@ public class RunesReforgedMethods {
                 for (RuneReforged runeReforged : runeReforgedList) {
                     for (int i = 0; i < runeReforged.getSlots().size(); i++) {
                         for (int k = 0; k < runeReforged.getSlots().get(i).getRunes().size(); k++) {
-                            if (rune_key.equals(runeReforged.getSlots().get(i).getRunes().get(k).getKey())) {
-                                Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            Rune rune = runeReforged.getSlots().get(i).getRunes().get(k);
+                            if (rune_key.equals(rune.getKey())) {
                                 runeFound = true;
                                 runeInterfaceAsync.onSuccess(rune);
                             }
@@ -744,5 +683,68 @@ public class RunesReforgedMethods {
                 runeInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface RuneReforgedListInterface {
+
+        void onSuccess(List<RuneReforged> runeReforgedList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+
+    public interface RuneReforgedInterface {
+
+        void onSuccess(RuneReforged runeReforged);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onNotFound();
+
+        void onIOException(IOException e);
+    }
+
+    public interface RuneInterface {
+
+        void onSuccess(Rune rune);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onNotFound();
+
+        void onIOException(IOException e);
+    }
+
+    public interface RuneReforgedListInterfaceAsync {
+
+        void onSuccess(List<RuneReforged> runeReforgedList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface RuneReforgedInterfaceAsync {
+
+        void onSuccess(RuneReforged runeReforged);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onNotFound();
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface RuneInterfaceAsync {
+
+        void onSuccess(Rune rune);
+
+        void onNotFound();
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

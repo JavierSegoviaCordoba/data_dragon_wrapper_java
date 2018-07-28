@@ -35,6 +35,11 @@ public class ItemMethodsAsyncTest {
             }
 
             @Override
+            public void onNotFound() {
+
+            }
+
+            @Override
             public void onFailure(Throwable t) {
             }
         });
@@ -51,6 +56,11 @@ public class ItemMethodsAsyncTest {
 
                     @Override
                     public void onErrorCode(ErrorCode errorCode) {
+                    }
+
+                    @Override
+                    public void onNotFound() {
+
                     }
 
                     @Override

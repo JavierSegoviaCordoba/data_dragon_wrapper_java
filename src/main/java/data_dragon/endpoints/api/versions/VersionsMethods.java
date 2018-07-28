@@ -20,15 +20,6 @@ public class VersionsMethods {
 
     //SyncMethods_______________________________________________________________________________________________________
 
-    public interface VersionsListInterface {
-
-        void onSuccess(String[] versionsList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetVersionsList(VersionsListInterface versionsListInterface) {
 
         retrofit = new Retrofit.Builder().baseUrl(base_url)
@@ -36,31 +27,20 @@ public class VersionsMethods {
 
         dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<String[]> versionsListCall = dataDragonService.GetVersionsList();
+        Call<String[]> call = dataDragonService.GetVersionsList();
 
         try {
-            Response<String[]> versionListResponse = versionsListCall.execute();
-            if (versionListResponse.isSuccessful()) {
-                versionsListInterface.onSuccess(versionListResponse.body());
+            Response<String[]> response = call.execute();
+            if (response.isSuccessful()) {
+                versionsListInterface.onSuccess(response.body());
             } else {
-                versionsListInterface.onErrorCode(new ErrorCode(versionListResponse.code(),
-                        versionListResponse.message()));
+                versionsListInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
             versionsListInterface.onIOException(e);
         }
-    }
-
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface VersionsListInterfaceAsync {
-
-        void onSuccess(String[] versionsList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
     }
 
     public static void GetVersionsListAsync(VersionsListInterfaceAsync versionsListInterfaceAsync) {
@@ -70,9 +50,9 @@ public class VersionsMethods {
 
         dataDragonService = retrofit.create(DataDragonService.class);
 
-        Call<String[]> versionsListCall = dataDragonService.GetVersionsList();
+        Call<String[]> call = dataDragonService.GetVersionsList();
 
-        versionsListCall.enqueue(new Callback<String[]>() {
+        call.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {
                 if (response.isSuccessful()) {
@@ -87,5 +67,25 @@ public class VersionsMethods {
                 versionsListInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    //AsyncMethods______________________________________________________________________________________________________
+
+    public interface VersionsListInterface {
+
+        void onSuccess(String[] versionsList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface VersionsListInterfaceAsync {
+
+        void onSuccess(String[] versionsList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

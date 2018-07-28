@@ -2,57 +2,34 @@ package data_dragon.endpoints.cdn.profile_icon;
 
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.DataDragonService;
+import data_dragon.endpoints.DataDragonUtils;
 import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIcon;
 import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIconDto;
-import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 public class ProfileIconMethods {
 
-    private static String base_url;
-    private static Retrofit retrofit;
-    private static DataDragonService dataDragonService;
-
     //SyncMethods_______________________________________________________________________________________________________
-
-    public interface ProfileIconInterface {
-
-        void onSuccess(ProfileIcon profileIcon);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
 
     public static void GetProfileIcon(int icon_id, Platform platform, ProfileIconInterface profileIconInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform).GetProfileIcon();
 
         try {
-            Response<ProfileIconDto> profileIconDtoResponse = profileIconCall.execute();
+            Response<ProfileIconDto> response = call.execute();
 
-            if (profileIconDtoResponse.isSuccessful()) {
+            if (response.isSuccessful()) {
                 profileIconInterface.onSuccess(Objects
-                        .requireNonNull(profileIconDtoResponse.body()).getData().any().get(String.valueOf(icon_id)));
+                        .requireNonNull(response.body()).getData().any().get(String.valueOf(icon_id)));
             } else {
-                profileIconInterface.onErrorCode(new ErrorCode(profileIconDtoResponse.code(),
-                        profileIconDtoResponse.message()));
+                profileIconInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,24 +40,17 @@ public class ProfileIconMethods {
     public static void GetProfileIcon(int icon_id, Platform platform, Locale locale, String version,
                                       ProfileIconInterface profileIconInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetProfileIcon();
 
         try {
-            Response<ProfileIconDto> profileIconDtoResponse = profileIconCall.execute();
+            Response<ProfileIconDto> response = call.execute();
 
-            if (profileIconDtoResponse.isSuccessful()) {
+            if (response.isSuccessful()) {
                 profileIconInterface.onSuccess(Objects
-                        .requireNonNull(profileIconDtoResponse.body()).getData().any().get(String.valueOf(icon_id)));
+                        .requireNonNull(response.body()).getData().any().get(String.valueOf(icon_id)));
             } else {
-                profileIconInterface.onErrorCode(new ErrorCode(profileIconDtoResponse.code(),
-                        profileIconDtoResponse.message()));
+                profileIconInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,33 +58,17 @@ public class ProfileIconMethods {
         }
     }
 
-    public interface ProfileIconListInterface {
-
-        void onSuccess(List<ProfileIcon> profileIcon);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetProfileIconList(Platform platform, ProfileIconListInterface profileIconListInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform).GetProfileIcon();
 
         try {
-            Response<ProfileIconDto> profileIconDtoResponse = profileIconCall.execute();
+            Response<ProfileIconDto> response = call.execute();
 
-            if (profileIconDtoResponse.isSuccessful()) {
+            if (response.isSuccessful()) {
 
                 java.util.Map<String, ProfileIcon> profileIconMap =
-                        new HashMap<>(Objects.requireNonNull(profileIconDtoResponse.body()).getData().any());
+                        new HashMap<>(Objects.requireNonNull(response.body()).getData().any());
 
                 List<ProfileIcon> profileIconList = new ArrayList<>(profileIconMap.values());
 
@@ -122,8 +76,8 @@ public class ProfileIconMethods {
 
                 profileIconListInterface.onSuccess(profileIconList);
             } else {
-                profileIconListInterface.onErrorCode(new ErrorCode(profileIconDtoResponse.code(),
-                        profileIconDtoResponse.message()));
+                profileIconListInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,21 +88,14 @@ public class ProfileIconMethods {
     public static void GetProfileIconList(Platform platform, Locale locale, String version,
                                           ProfileIconListInterface profileIconListInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetProfileIcon();
 
         try {
-            Response<ProfileIconDto> profileIconDtoResponse = profileIconCall.execute();
+            Response<ProfileIconDto> response = call.execute();
 
-            if (profileIconDtoResponse.isSuccessful()) {
+            if (response.isSuccessful()) {
                 java.util.Map<String, ProfileIcon> profileIconMap =
-                        new HashMap<>(Objects.requireNonNull(profileIconDtoResponse.body()).getData().any());
+                        new HashMap<>(Objects.requireNonNull(response.body()).getData().any());
 
                 List<ProfileIcon> profileIconList = new ArrayList<>(profileIconMap.values());
 
@@ -156,8 +103,8 @@ public class ProfileIconMethods {
 
                 profileIconListInterface.onSuccess(profileIconList);
             } else {
-                profileIconListInterface.onErrorCode(new ErrorCode(profileIconDtoResponse.code(),
-                        profileIconDtoResponse.message()));
+                profileIconListInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,30 +112,12 @@ public class ProfileIconMethods {
         }
     }
 
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface ProfileIconInterfaceAsync {
-
-        void onSuccess(ProfileIcon profileIcon);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetProfileIconAsync(int icon_id, Platform platform,
                                            ProfileIconInterfaceAsync profileIconInterfaceAsync) {
 
-        base_url = platform.getHostCdn() + "/";
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform).GetProfileIcon();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
-
-        profileIconCall.enqueue(new Callback<ProfileIconDto>() {
+        call.enqueue(new Callback<ProfileIconDto>() {
             @Override
             public void onResponse(Call<ProfileIconDto> call, Response<ProfileIconDto> response) {
                 if (response.isSuccessful()) {
@@ -209,16 +138,9 @@ public class ProfileIconMethods {
     public static void GetProfileIconAsync(int icon_id, Platform platform, Locale locale, String version,
                                            ProfileIconInterfaceAsync profileIconInterfaceAsync) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetProfileIcon();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
-
-        profileIconCall.enqueue(new Callback<ProfileIconDto>() {
+        call.enqueue(new Callback<ProfileIconDto>() {
             @Override
             public void onResponse(Call<ProfileIconDto> call, Response<ProfileIconDto> response) {
                 if (response.isSuccessful()) {
@@ -236,28 +158,14 @@ public class ProfileIconMethods {
         });
     }
 
-    public interface ProfileIconListInterfaceAsync {
-
-        void onSuccess(List<ProfileIcon> profileIcon);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
+    //AsyncMethods______________________________________________________________________________________________________
 
     public static void GetProfileIconListAsync(Platform platform,
                                                ProfileIconListInterfaceAsync profileIconListInterfaceAsync) {
 
-        base_url = platform.getHostCdn() + "/";
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform).GetProfileIcon();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
-
-        profileIconCall.enqueue(new Callback<ProfileIconDto>() {
+        call.enqueue(new Callback<ProfileIconDto>() {
             @Override
             public void onResponse(Call<ProfileIconDto> call, Response<ProfileIconDto> response) {
                 if (response.isSuccessful()) {
@@ -285,16 +193,9 @@ public class ProfileIconMethods {
     public static void GetProfileIconListAsync(Platform platform, Locale locale, String version,
                                                ProfileIconListInterfaceAsync profileIconListInterfaceAsync) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
+        Call<ProfileIconDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetProfileIcon();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ProfileIconDto> profileIconCall = dataDragonService.GetProfileIcon();
-
-        profileIconCall.enqueue(new Callback<ProfileIconDto>() {
+        call.enqueue(new Callback<ProfileIconDto>() {
             @Override
             public void onResponse(Call<ProfileIconDto> call, Response<ProfileIconDto> response) {
                 if (response.isSuccessful()) {
@@ -317,5 +218,41 @@ public class ProfileIconMethods {
                 profileIconListInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface ProfileIconInterface {
+
+        void onSuccess(ProfileIcon profileIcon);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ProfileIconListInterface {
+
+        void onSuccess(List<ProfileIcon> profileIcon);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ProfileIconInterfaceAsync {
+
+        void onSuccess(ProfileIcon profileIcon);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface ProfileIconListInterfaceAsync {
+
+        void onSuccess(List<ProfileIcon> profileIcon);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

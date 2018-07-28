@@ -82,6 +82,19 @@ public class Image {
         H = h;
     }
 
+    @Override
+    public String toString() {
+        return "image:{" +
+                "full='" + full + '\'' +
+                ", sprite='" + sprite + '\'' +
+                ", group='" + group + '\'' +
+                ", X=" + X +
+                ", Y=" + Y +
+                ", W=" + W +
+                ", H=" + H +
+                '}';
+    }
+
     public String toJson() {
         return new Gson().toJson(this);
     }

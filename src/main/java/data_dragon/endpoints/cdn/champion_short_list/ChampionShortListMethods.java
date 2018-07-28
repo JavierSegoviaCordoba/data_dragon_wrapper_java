@@ -2,53 +2,30 @@ package data_dragon.endpoints.cdn.champion_short_list;
 
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.DataDragonService;
+import data_dragon.endpoints.DataDragonUtils;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
-import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 public class ChampionShortListMethods {
 
-    private static String base_url;
-    private static Retrofit retrofit;
-    private static DataDragonService dataDragonService;
-
     //SyncMethods_______________________________________________________________________________________________________
-
-    public interface ChampionShortListInterface {
-
-        void onSuccess(List<ChampionShort> championShortList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
 
     public static void GetChampionShortList(Platform platform, ChampionShortListInterface championShortListInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
+        Call<ChampionShortListDto> call = DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList();
 
         try {
-            Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.isSuccessful()) {
+            Response<ChampionShortListDto> response = call.execute();
+            if (response.isSuccessful()) {
                 Map<String, ChampionShort> championShortListMap = Objects
-                        .requireNonNull(championShortListDtoResponse.body()).getData().any();
+                        .requireNonNull(response.body()).getData().any();
 
                 List<ChampionShort> championShortList = new ArrayList<>(championShortListMap.values());
 
@@ -57,8 +34,7 @@ public class ChampionShortListMethods {
                 championShortListInterface.onSuccess(championShortList);
 
             } else {
-                championShortListInterface.onErrorCode(new ErrorCode(championShortListDtoResponse.code(),
-                        championShortListDtoResponse.message()));
+                championShortListInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,20 +45,14 @@ public class ChampionShortListMethods {
     public static void GetChampionShortList(Platform platform, Locale locale, String version,
                                             ChampionShortListInterface championShortListInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
+        Call<ChampionShortListDto> call =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampionShortList();
 
         try {
-            Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.isSuccessful()) {
+            Response<ChampionShortListDto> response = call.execute();
+            if (response.isSuccessful()) {
                 Map<String, ChampionShort> championShortListMap = Objects
-                        .requireNonNull(championShortListDtoResponse.body()).getData().any();
+                        .requireNonNull(response.body()).getData().any();
 
                 List<ChampionShort> championShortList = new ArrayList<>(championShortListMap.values());
 
@@ -91,8 +61,7 @@ public class ChampionShortListMethods {
                 championShortListInterface.onSuccess(championShortList);
 
             } else {
-                championShortListInterface.onErrorCode(new ErrorCode(championShortListDtoResponse.code(),
-                        championShortListDtoResponse.message()));
+                championShortListInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,29 +69,12 @@ public class ChampionShortListMethods {
         }
     }
 
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface ChampionShortListInterfaceAsync {
-
-        void onSuccess(List<ChampionShort> championShortList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetChampionShortListAsync(Platform platform,
                                                  ChampionShortListInterfaceAsync championShortListInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
+        Call<ChampionShortListDto> call = DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList();
 
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortCall = dataDragonService.GetChampionShortList();
-
-        championShortCall.enqueue(new Callback<ChampionShortListDto>() {
+        call.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
                 if (response.isSuccessful()) {
@@ -145,18 +97,15 @@ public class ChampionShortListMethods {
         });
     }
 
+    //AsyncMethods______________________________________________________________________________________________________
+
     public static void GetChampionShortListAsync(Platform platform, Locale locale, String version,
                                                  ChampionShortListInterfaceAsync championShortListInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
+        Call<ChampionShortListDto> call =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampionShortList();
 
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortCall = dataDragonService.GetChampionShortList();
-
-        championShortCall.enqueue(new Callback<ChampionShortListDto>() {
+        call.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
                 if (response.isSuccessful()) {
@@ -179,5 +128,23 @@ public class ChampionShortListMethods {
                 championShortListInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface ChampionShortListInterface {
+
+        void onSuccess(List<ChampionShort> championShortList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ChampionShortListInterfaceAsync {
+
+        void onSuccess(List<ChampionShort> championShortList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

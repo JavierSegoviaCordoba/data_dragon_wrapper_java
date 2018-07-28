@@ -1,62 +1,36 @@
 package data_dragon.endpoints.cdn.champion;
 
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.DataDragonService;
+import data_dragon.endpoints.DataDragonUtils;
 import data_dragon.endpoints.cdn.champion.dto.Champion;
 import data_dragon.endpoints.cdn.champion.dto.ChampionDto;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionKeyId;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShort;
 import data_dragon.endpoints.cdn.champion_short_list.dto.ChampionShortListDto;
-import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 public class ChampionMethods {
 
-    private static String base_url;
-    private static Retrofit retrofit;
-    private static DataDragonService dataDragonService;
-
-
     //SyncMethods_______________________________________________________________________________________________________
-
-    public interface ChampionInterface {
-
-        void onSuccess(Champion champion);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
 
     public static void GetChampion(String champion_name, Platform platform, ChampionInterface championInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
+        Call<ChampionDto> championCall = DataDragonUtils.CreateDataDragonService(platform).GetChampion(champion_name);
 
         try {
-            Response<ChampionDto> championDtoResponse = championCall.execute();
-            if (championDtoResponse.isSuccessful()) {
-                championInterface.onSuccess(Objects.requireNonNull(championDtoResponse.body()).getData().any()
-                        .get(champion_name));
+            Response<ChampionDto> response = championCall.execute();
+
+            if (response.isSuccessful()) {
+                championInterface.onSuccess(Objects.requireNonNull(response.body()).getData().any().get(champion_name));
             } else {
-                championInterface.onErrorCode(new ErrorCode(championDtoResponse.code(), championDtoResponse.message()));
+                championInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,22 +41,15 @@ public class ChampionMethods {
     public static void GetChampion(String champion_name, Platform platform, Locale locale, String version,
                                    ChampionInterface championInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
+        Call<ChampionDto> championCall =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampion(champion_name);
 
         try {
-            Response<ChampionDto> championDtoResponse = championCall.execute();
-            if (championDtoResponse.isSuccessful()) {
-                championInterface.onSuccess(Objects.requireNonNull(championDtoResponse.body()).getData().any()
-                        .get(champion_name));
+            Response<ChampionDto> response = championCall.execute();
+            if (response.isSuccessful()) {
+                championInterface.onSuccess(Objects.requireNonNull(response.body()).getData().any().get(champion_name));
             } else {
-                championInterface.onErrorCode(new ErrorCode(championDtoResponse.code(), championDtoResponse.message()));
+                championInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,22 +59,16 @@ public class ChampionMethods {
 
     public static void GetChampion(int champion_key, Platform platform, ChampionInterface championInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
+        Call<ChampionShortListDto> call = DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList();
 
         try {
+            Response<ChampionShortListDto> response = call.execute();
 
-            Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.isSuccessful()) {
-                ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
+            if (response.isSuccessful()) {
+                ChampionShortListDto championShortListDto = response.body();
 
-                Map<String, ChampionShort> championNameMap = Objects.requireNonNull(championShortListDto).getData().any();
+                Map<String, ChampionShort> championNameMap =
+                        Objects.requireNonNull(championShortListDto).getData().any();
 
                 for (String key : championNameMap.keySet()) {
                     if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
@@ -130,8 +91,7 @@ public class ChampionMethods {
                     }
                 }
             } else {
-                championInterface.onErrorCode(new ErrorCode(championShortListDtoResponse.code(),
-                        championShortListDtoResponse.message()));
+                championInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,22 +102,17 @@ public class ChampionMethods {
     public static void GetChampion(int champion_key, Platform platform, Locale locale, String version,
                                    ChampionInterface championInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
+        Call<ChampionShortListDto> call =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampionShortList();
 
         try {
 
-            Response<ChampionShortListDto> championShortListDtoResponse = championShortListDtoCall.execute();
-            if (championShortListDtoResponse.isSuccessful()) {
-                ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
+            Response<ChampionShortListDto> response = call.execute();
+            if (response.isSuccessful()) {
+                ChampionShortListDto championShortListDto = response.body();
 
-                Map<String, ChampionShort> championNameMap = Objects.requireNonNull(championShortListDto).getData().any();
+                Map<String, ChampionShort> championNameMap =
+                        Objects.requireNonNull(championShortListDto).getData().any();
 
                 for (String key : championNameMap.keySet()) {
                     if (championNameMap.get(key).getKey().equals(String.valueOf(champion_key))) {
@@ -180,8 +135,8 @@ public class ChampionMethods {
                     }
                 }
             } else {
-                championInterface.onErrorCode(new ErrorCode(championShortListDtoResponse.code(),
-                        championShortListDtoResponse.message()));
+                championInterface.onErrorCode(new ErrorCode(response.code(),
+                        response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,16 +144,8 @@ public class ChampionMethods {
         }
     }
 
-    public interface ChampionKeyInterface {
-
-        void onSuccess(int champion_key);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
-    public static void GetChampionKey(String champion_id, Platform platform, ChampionKeyInterface championKeyInterface) {
+    public static void GetChampionKey(String champion_id, Platform platform,
+                                      ChampionKeyInterface championKeyInterface) {
 
         GetChampionKeyIdList(platform, new ChampionKeyIdListInterface() {
             @Override
@@ -226,16 +173,6 @@ public class ChampionMethods {
                 championKeyInterface.onIOException(e);
             }
         });
-    }
-
-
-    public interface ChampionIdInterface {
-
-        void onSuccess(String champion_id);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
     }
 
     public static void GetChampionId(int champion_key, Platform platform, ChampionIdInterface championIdInterface) {
@@ -268,34 +205,18 @@ public class ChampionMethods {
         });
     }
 
-
-    public interface ChampionKeyIdListInterface {
-
-        void onSuccess(List<ChampionKeyId> championKeyIdList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetChampionKeyIdList(Platform platform, ChampionKeyIdListInterface championKeyIdInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
         try {
-            Response<ChampionShortListDto> championShortListDtoResponse = dataDragonService
-                    .GetChampionShortList().execute();
+            Response<ChampionShortListDto> response =
+                    DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList().execute();
 
-            if (championShortListDtoResponse.isSuccessful()) {
+            if (response.isSuccessful()) {
 
-                ChampionShortListDto championShortListDto = championShortListDtoResponse.body();
+                ChampionShortListDto championShortListDto = response.body();
 
-                Map<String, ChampionShort> championShortMap = Objects.requireNonNull(championShortListDto).getData().any();
+                Map<String, ChampionShort> championShortMap =
+                        Objects.requireNonNull(championShortListDto).getData().any();
 
                 List<ChampionKeyId> championKeyIdList = new ArrayList<>();
 
@@ -318,8 +239,7 @@ public class ChampionMethods {
                 championKeyIdInterface.onSuccess(championKeyIdList);
 
             } else {
-                championKeyIdInterface.onErrorCode(new ErrorCode(championShortListDtoResponse.code(),
-                        championShortListDtoResponse.message()));
+                championKeyIdInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -327,29 +247,10 @@ public class ChampionMethods {
         }
     }
 
-
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface ChampionInterfaceAsync {
-
-        void onSuccess(Champion champion);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetChampionAsync(String champion_name, Platform platform,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
+        Call<ChampionDto> championCall = DataDragonUtils.CreateDataDragonService(platform).GetChampion(champion_name);
 
         championCall.enqueue(new Callback<ChampionDto>() {
             @Override
@@ -373,14 +274,8 @@ public class ChampionMethods {
     public static void GetChampionAsync(String champion_name, Platform platform, Locale locale, String version,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ChampionDto> championCall = dataDragonService.GetChampion(champion_name);
+        Call<ChampionDto> championCall =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampion(champion_name);
 
         championCall.enqueue(new Callback<ChampionDto>() {
             @Override
@@ -404,17 +299,9 @@ public class ChampionMethods {
     public static void GetChampionAsync(int champion_key, Platform platform,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        base_url = platform.getHostCdn() + "/";
+        Call<ChampionShortListDto> call = DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
-
-        championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
+        call.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
                 if (response.isSuccessful()) {
@@ -459,17 +346,10 @@ public class ChampionMethods {
     public static void GetChampionAsync(int champion_key, Platform platform, Locale locale, String version,
                                         ChampionInterfaceAsync championInterfaceAsync) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
+        Call<ChampionShortListDto> call =
+                DataDragonUtils.CreateDataDragonService(platform, locale, version).GetChampionShortList();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
-
-        championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
+        call.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
                 if (response.isSuccessful()) {
@@ -511,13 +391,8 @@ public class ChampionMethods {
         });
     }
 
-    public interface ChampionKeyInterfaceAsync {
-        void onSuccess(int champion_key);
 
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
+    //AsyncMethods______________________________________________________________________________________________________
 
     public static void GetChampionKeyAsync(String champion_id, Platform platform,
                                            ChampionKeyInterfaceAsync championKeyInterfaceAsync) {
@@ -535,7 +410,8 @@ public class ChampionMethods {
                         break;
                     }
                 }
-                if (!hasChampionKey) championKeyInterfaceAsync.onErrorCode(new ErrorCode(403, "Forbidden"));
+                if (!hasChampionKey)
+                    championKeyInterfaceAsync.onErrorCode(new ErrorCode(403, "Forbidden"));
             }
 
             @Override
@@ -548,14 +424,6 @@ public class ChampionMethods {
                 championKeyInterfaceAsync.onFailure(t);
             }
         });
-    }
-
-    public interface ChampionIdInterfaceAsync {
-        void onSuccess(String champion_id);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
     }
 
     public static void GetChampionIdAsync(int champion_key, Platform platform,
@@ -590,28 +458,12 @@ public class ChampionMethods {
 
     }
 
-    public interface ChampionKeyIdListInterfaceAsync {
-        void onSuccess(List<ChampionKeyId> championKeyIdList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetChampionKeyIdListAsync(Platform platform,
                                                  ChampionKeyIdListInterfaceAsync championKeyIdListInterfaceAsync) {
 
-        base_url = platform.getHostCdn() + "/";
+        Call<ChampionShortListDto> call = DataDragonUtils.CreateDataDragonService(platform).GetChampionShortList();
 
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ChampionShortListDto> championShortListDtoCall = dataDragonService.GetChampionShortList();
-
-        championShortListDtoCall.enqueue(new Callback<ChampionShortListDto>() {
+        call.enqueue(new Callback<ChampionShortListDto>() {
             @Override
             public void onResponse(Call<ChampionShortListDto> call, Response<ChampionShortListDto> response) {
                 if (response.isSuccessful()) {
@@ -650,5 +502,74 @@ public class ChampionMethods {
                 championKeyIdListInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface ChampionInterface {
+
+        void onSuccess(Champion champion);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ChampionKeyInterface {
+
+        void onSuccess(int champion_key);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ChampionIdInterface {
+
+        void onSuccess(String champion_id);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ChampionKeyIdListInterface {
+
+        void onSuccess(List<ChampionKeyId> championKeyIdList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ChampionInterfaceAsync {
+
+        void onSuccess(Champion champion);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface ChampionKeyInterfaceAsync {
+        void onSuccess(int champion_key);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface ChampionIdInterfaceAsync {
+        void onSuccess(String champion_id);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface ChampionKeyIdListInterfaceAsync {
+        void onSuccess(List<ChampionKeyId> championKeyIdList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

@@ -6,7 +6,6 @@ import data_dragon.endpoints.api.versions.VersionsMethods;
 import data_dragon.utils.ErrorCode;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

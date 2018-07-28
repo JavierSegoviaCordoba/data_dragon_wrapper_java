@@ -13,13 +13,8 @@ import data_dragon.endpoints.cdn.map.MapMethods;
 import data_dragon.endpoints.cdn.profile_icon.ProfileIconMethods;
 import data_dragon.endpoints.cdn.runes_reforged.RunesReforgedMethods;
 import data_dragon.endpoints.cdn.sticker.StickerMethods;
-import data_dragon.endpoints.cdn.sticker.dto.Sticker;
 import data_dragon.endpoints.cdn.summoner_spell.SummonerSpellMethods;
-import data_dragon.endpoints.cdn.summoner_spell.dto.SummonerSpell;
 import data_dragon.endpoints.realms.realms.RealmsMethods;
-import data_dragon.endpoints.realms.realms.dto.Realms;
-
-import java.util.List;
 
 public class DataDragon {
 
@@ -476,53 +471,115 @@ public class DataDragon {
     }
 
     //StickerMethods
-    public List<Sticker> getStickerList() {
+    public void getStickerList(StickerMethods.StickerListInterface stickerListInterface) {
 
-        return StickerMethods.GetStickerList(platform);
+        StickerMethods.GetStickerList(platform, stickerListInterface);
     }
 
-    public List<Sticker> getStickerList(Locale locale, String version) {
+    public void getStickerList(Locale locale, String version,
+                               StickerMethods.StickerListInterface stickerListInterface) {
 
-        return StickerMethods.GetStickerList(platform, locale, version);
+        StickerMethods.GetStickerList(platform, locale, version, stickerListInterface);
     }
 
-    public Sticker getSticker(String sticker_name) {
+    public void getSticker(String sticker_name, StickerMethods.StickerInterface stickerInterface) {
 
-        return StickerMethods.GetSticker(platform, sticker_name);
+        StickerMethods.GetSticker(sticker_name, platform, stickerInterface);
     }
 
-    public Sticker getSticker(Locale locale, String version, String sticker_name) {
+    public void getSticker(String sticker_name, Locale locale, String version,
+                           StickerMethods.StickerInterface stickerInterface) {
 
-        return StickerMethods.GetSticker(platform, locale, version, sticker_name);
+        StickerMethods.GetSticker(sticker_name, platform, locale, version, stickerInterface);
     }
 
-    public List<SummonerSpell> getSummonerSpellList() {
+    //StickerMethods
+    public void getStickerListAsync(StickerMethods.StickerListInterfaceAsync stickerListInterfaceAsync) {
 
-        return SummonerSpellMethods.GetSummonerSpellList(platform);
+        StickerMethods.GetStickerListAsync(platform, stickerListInterfaceAsync);
     }
 
-    public List<SummonerSpell> getSummonerSpellList(Locale locale, String version) {
+    public void getStickerListAsync(Locale locale, String version,
+                                    StickerMethods.StickerListInterfaceAsync stickerListInterfaceAsync) {
 
-        return SummonerSpellMethods.GetSummonerSpellList(platform, locale, version);
+        StickerMethods.GetStickerListAsync(platform, locale, version, stickerListInterfaceAsync);
+    }
+
+    public void getStickerAsync(String sticker_name, StickerMethods.StickerInterfaceAsync stickerInterfaceAsync) {
+
+        StickerMethods.GetStickerAsync(sticker_name, platform, stickerInterfaceAsync);
+    }
+
+    public void getStickerAsync(String sticker_name, Locale locale, String version,
+                                StickerMethods.StickerInterfaceAsync stickerInterfaceAsync) {
+
+        StickerMethods.GetStickerAsync(sticker_name, platform, locale, version, stickerInterfaceAsync);
     }
 
 
     //SummonerSpellMethods
-    public SummonerSpell getSummonerSpell(String summoner_spell_id) {
+    public void getSummonerSpellList(SummonerSpellMethods.SummonerSpellListInterface summonerSpellListInterface) {
 
-        return SummonerSpellMethods.GetSummonerSpell(platform, summoner_spell_id);
+        SummonerSpellMethods.GetSummonerSpellList(platform, summonerSpellListInterface);
     }
 
-    public SummonerSpell getSummonerSpell(Locale locale, String version, String summoner_spell_id) {
+    public void getSummonerSpellList(Locale locale, String version,
+                                     SummonerSpellMethods.SummonerSpellListInterface summonerSpellListInterface) {
 
-        return SummonerSpellMethods.GetSummonerSpell(platform, locale, version, summoner_spell_id);
+        SummonerSpellMethods.GetSummonerSpellList(platform, locale, version, summonerSpellListInterface);
+    }
+
+    public void getSummonerSpell(String summoner_spell_id,
+                                 SummonerSpellMethods.SummonerSpellInterface summonerSpellInterface) {
+
+        SummonerSpellMethods.GetSummonerSpell(summoner_spell_id, platform, summonerSpellInterface);
+    }
+
+    public void getSummonerSpell(String summoner_spell_id, Locale locale, String version,
+                                 SummonerSpellMethods.SummonerSpellInterface summonerSpellInterface) {
+
+        SummonerSpellMethods.GetSummonerSpell(summoner_spell_id, platform, locale, version, summonerSpellInterface);
+    }
+
+    //SummonerSpellMethodsAsync
+    public void getSummonerSpellListAsync(
+            SummonerSpellMethods.SummonerSpellListInterfaceAsync summonerSpellListInterfaceAsync) {
+
+        SummonerSpellMethods.GetSummonerSpellListAsync(platform, summonerSpellListInterfaceAsync);
+    }
+
+    public void getSummonerSpellListAsync(
+            Locale locale, String version,
+            SummonerSpellMethods.SummonerSpellListInterfaceAsync summonerSpellListInterfaceAsync) {
+
+        SummonerSpellMethods.GetSummonerSpellListAsync(platform, locale, version, summonerSpellListInterfaceAsync);
+    }
+
+    public void getSummonerSpellAsync(String summoner_spell_id,
+                                      SummonerSpellMethods.SummonerSpellInterfaceAsync summonerSpellInterfaceAsync) {
+
+        SummonerSpellMethods.GetSummonerSpellAsync(summoner_spell_id, platform, summonerSpellInterfaceAsync);
+    }
+
+    public void getSummonerSpellAsync(String summoner_spell_id, Locale locale, String version,
+                                      SummonerSpellMethods.SummonerSpellInterfaceAsync summonerSpellInterfaceAsync) {
+
+        SummonerSpellMethods
+                .GetSummonerSpellAsync(summoner_spell_id, platform, locale, version, summonerSpellInterfaceAsync);
     }
 
 
     //Realms____________________________________________________________________________________________________________
     //RealmsMethods
-    public Realms getRealms() {
+    public void getRealms(RealmsMethods.RealmsInterface realmsInterface) {
 
-        return RealmsMethods.GetRealms(platform);
+        RealmsMethods.GetRealms(platform, realmsInterface);
     }
+
+    //RealmsMethodsAsync
+    public void getRealmsAsync(RealmsMethods.RealmsInterfaceAsync realmsInterfaceAsync) {
+
+        RealmsMethods.GetRealmsAsync(platform, realmsInterfaceAsync);
+    }
+
 }

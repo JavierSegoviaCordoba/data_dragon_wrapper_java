@@ -20,15 +20,6 @@ public class LanguagesMethods {
 
     //SyncMethods_______________________________________________________________________________________________________
 
-    public interface LanguagesInterface {
-
-        void onSuccess(String[] languagesList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetLanguagesList(LanguagesInterface languageInterface) {
 
         base_url = "https://ddragon.leagueoflegends.com/cdn/";
@@ -53,17 +44,6 @@ public class LanguagesMethods {
             e.printStackTrace();
             languageInterface.onIOException(e);
         }
-    }
-
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface LanguagesInterfaceAsync {
-
-        void onSuccess(String[] languagesList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
     }
 
     public static void GetLanguagesListAsync(LanguagesInterfaceAsync languagesInterfaceAsync) {
@@ -93,5 +73,25 @@ public class LanguagesMethods {
                 languagesInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    //AsyncMethods______________________________________________________________________________________________________
+
+    public interface LanguagesInterface {
+
+        void onSuccess(String[] languagesList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface LanguagesInterfaceAsync {
+
+        void onSuccess(String[] languagesList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

@@ -2,55 +2,36 @@ package data_dragon.endpoints.cdn.item;
 
 import data_dragon.constant.Locale;
 import data_dragon.constant.Platform;
-import data_dragon.endpoints.DataDragonService;
+import data_dragon.endpoints.DataDragonUtils;
 import data_dragon.endpoints.cdn.item.dto.Item;
 import data_dragon.endpoints.cdn.item.dto.ItemDto;
-import data_dragon.utils.DebugMode;
 import data_dragon.utils.ErrorCode;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 public class ItemMethods {
 
-    private static String base_url;
-    private static Retrofit retrofit;
-    private static DataDragonService dataDragonService;
-
     //SyncMethods_______________________________________________________________________________________________________
-
-    public interface ItemInterface {
-
-        void onSuccess(Item item);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
 
     public static void GetItem(int item_id, Platform platform, ItemInterface itemInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
+        Call<ItemDto> call = DataDragonUtils.CreateDataDragonService(platform).GetItem();
 
         try {
-            Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.isSuccessful()) {
-                itemInterface.onSuccess(Objects.requireNonNull(itemDtoResponse.body()).getData().any()
-                        .get(String.valueOf(item_id)));
+            Response<ItemDto> response = call.execute();
+            if (response.isSuccessful()) {
+                Item item = Objects.requireNonNull(response.body()).getData().any().get(String.valueOf(item_id));
+                if (item != null) {
+                    itemInterface.onSuccess(item);
+                } else {
+                    itemInterface.onNotFound();
+                }
             } else {
-                itemInterface.onErrorCode(new ErrorCode(itemDtoResponse.code(), itemDtoResponse.message()));
+                itemInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,22 +42,19 @@ public class ItemMethods {
     public static void GetItem(int item_id, Platform platform, Locale locale, String version,
                                ItemInterface itemInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
+        Call<ItemDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetItem();
 
         try {
-            Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.isSuccessful()) {
-                itemInterface.onSuccess(Objects.requireNonNull(itemDtoResponse.body()).getData().any()
-                        .get(String.valueOf(item_id)));
+            Response<ItemDto> response = call.execute();
+            if (response.isSuccessful()) {
+                Item item = Objects.requireNonNull(response.body()).getData().any().get(String.valueOf(item_id));
+                if (item != null) {
+                    itemInterface.onSuccess(item);
+                } else {
+                    itemInterface.onNotFound();
+                }
             } else {
-                itemInterface.onErrorCode(new ErrorCode(itemDtoResponse.code(), itemDtoResponse.message()));
+                itemInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,36 +62,20 @@ public class ItemMethods {
         }
     }
 
-    public interface ItemListInterface {
-
-        void onSuccess(List<Item> itemList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetItemList(Platform platform, ItemListInterface itemListInterface) {
 
-        base_url = platform.getHostCdn() + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
+        Call<ItemDto> call = DataDragonUtils.CreateDataDragonService(platform).GetItem();
 
         try {
-            Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.isSuccessful()) {
-                Map<String, Item> itemMap = Objects.requireNonNull(itemDtoResponse.body()).getData().any();
+            Response<ItemDto> response = call.execute();
+            if (response.isSuccessful()) {
+                Map<String, Item> itemMap = Objects.requireNonNull(response.body()).getData().any();
                 Map<String, Item> itemTreeMap = new TreeMap<>(itemMap);
 
                 List<Item> itemList = new ArrayList<>(itemTreeMap.values());
                 itemListInterface.onSuccess(itemList);
             } else {
-                itemListInterface.onErrorCode(new ErrorCode(itemDtoResponse.code(), itemDtoResponse.message()));
+                itemListInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,61 +86,40 @@ public class ItemMethods {
     public static void GetItemList(Platform platform, Locale locale, String version,
                                    ItemListInterface itemListInterface) {
 
-        base_url = platform.getHostCdn(locale, version) + "/";
-
-        retrofit = new Retrofit.Builder().baseUrl(base_url)
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit.create(DataDragonService.class);
-
-        Call<ItemDto> itemDtoCall = dataDragonService.GetItem();
+        Call<ItemDto> call = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetItem();
 
         try {
-            Response<ItemDto> itemDtoResponse = itemDtoCall.execute();
-            if (itemDtoResponse.isSuccessful()) {
-                Map<String, Item> itemMap = Objects.requireNonNull(itemDtoResponse.body()).getData().any();
+            Response<ItemDto> response = call.execute();
+            if (response.isSuccessful()) {
+                Map<String, Item> itemMap = Objects.requireNonNull(response.body()).getData().any();
                 Map<String, Item> itemTreeMap = new TreeMap<>(itemMap);
 
                 List<Item> itemList = new ArrayList<>(itemTreeMap.values());
                 itemListInterface.onSuccess(itemList);
             } else {
-                itemListInterface.onErrorCode(new ErrorCode(itemDtoResponse.code(), itemDtoResponse.message()));
+                itemListInterface.onErrorCode(new ErrorCode(response.code(), response.message()));
             }
         } catch (IOException e) {
             e.printStackTrace();
             itemListInterface.onIOException(e);
         }
     }
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface ItemInterfaceAsync {
-
-        void onSuccess(Item item);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
 
     public static void GetItemAsync(int item_id, Platform platform, ItemInterfaceAsync itemInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ItemDto> championShortCall = dataDragonService.GetItem();
+        Call<ItemDto> championShortCall = DataDragonUtils.CreateDataDragonService(platform).GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-
-                        Item item = response.body().getData().any().get(String.valueOf(item_id));
-
-                        itemInterfaceAsync.onSuccess(item);
+                        Item item = Objects.requireNonNull(response.body()).getData().any().get(String.valueOf(item_id));
+                        if (item != null) {
+                            itemInterfaceAsync.onSuccess(item);
+                        } else {
+                            itemInterfaceAsync.onNotFound();
+                        }
                     }
                 } else {
                     itemInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
@@ -195,23 +136,17 @@ public class ItemMethods {
     public static void GetItemAsync(int item_id, Platform platform, Locale locale, String version,
                                     ItemInterfaceAsync itemInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ItemDto> championShortCall = dataDragonService.GetItem();
+        Call<ItemDto> championShortCall = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
             public void onResponse(Call<ItemDto> call, Response<ItemDto> response) {
                 if (response.isSuccessful()) {
-                    if (response.body() != null) {
-
-                        Item item = response.body().getData().any().get(String.valueOf(item_id));
-
+                    Item item = Objects.requireNonNull(response.body()).getData().any().get(String.valueOf(item_id));
+                    if (item != null) {
                         itemInterfaceAsync.onSuccess(item);
+                    } else {
+                        itemInterfaceAsync.onNotFound();
                     }
                 } else {
                     itemInterfaceAsync.onErrorCode(new ErrorCode(response.code(), response.message()));
@@ -224,25 +159,11 @@ public class ItemMethods {
             }
         });
     }
-
-    public interface ItemListInterfaceAsync {
-
-        void onSuccess(List<Item> itemList);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
+    //AsyncMethods______________________________________________________________________________________________________
 
     public static void GetItemListAsync(Platform platform, ItemListInterfaceAsync itemListInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn() + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ItemDto> championShortCall = dataDragonService.GetItem();
+        Call<ItemDto> championShortCall = DataDragonUtils.CreateDataDragonService(platform).GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
@@ -272,13 +193,7 @@ public class ItemMethods {
     public static void GetItemListAsync(Platform platform, Locale locale, String version,
                                         ItemListInterfaceAsync itemListInterfaceAsync) {
 
-        retrofit = new Retrofit.Builder().baseUrl(platform.getHostCdn(locale, version) + "/")
-                .addConverterFactory(JacksonConverterFactory.create(DebugMode.RunOrDebugObjectMapper())).build();
-
-        dataDragonService = retrofit
-                .create(DataDragonService.class);
-
-        Call<ItemDto> championShortCall = dataDragonService.GetItem();
+        Call<ItemDto> championShortCall = DataDragonUtils.CreateDataDragonService(platform, locale, version).GetItem();
 
         championShortCall.enqueue(new Callback<ItemDto>() {
             @Override
@@ -300,6 +215,46 @@ public class ItemMethods {
                 itemListInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface ItemInterface {
+
+        void onSuccess(Item item);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onNotFound();
+
+        void onIOException(IOException e);
+    }
+
+    public interface ItemListInterface {
+
+        void onSuccess(List<Item> itemList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface ItemInterfaceAsync {
+
+        void onSuccess(Item item);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onNotFound();
+
+        void onFailure(Throwable throwable);
+    }
+
+    public interface ItemListInterfaceAsync {
+
+        void onSuccess(List<Item> itemList);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 
 }

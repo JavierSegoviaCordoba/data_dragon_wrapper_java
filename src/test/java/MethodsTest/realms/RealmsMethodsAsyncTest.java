@@ -7,30 +7,33 @@ import data_dragon.endpoints.realms.realms.dto.Realms;
 import data_dragon.utils.ErrorCode;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-public class RealmsMethodsTest {
+public class RealmsMethodsAsyncTest {
 
     @Test
-    public void main() {
+    public void main() throws ExecutionException, InterruptedException {
 
         DataDragon dataDragon = new DataDragon(Platform.NA);
 
-        dataDragon.getRealms(new RealmsMethods.RealmsInterface() {
+        CompletableFuture<Realms> completableFuture = new CompletableFuture<>();
+
+        dataDragon.getRealmsAsync(new RealmsMethods.RealmsInterfaceAsync() {
             @Override
             public void onSuccess(Realms realms) {
-                System.out.println("\nrealms: \n" + realms.toString());
+                completableFuture.complete(realms);
             }
 
             @Override
             public void onErrorCode(ErrorCode errorCode) {
-                System.out.println("\nrealmsErrorCode: \n" + errorCode.toString());
             }
 
             @Override
-            public void onIOException(IOException e) {
-                System.out.println("\nrealmsIOException: \n" + e.toString());
+            public void onFailure(Throwable throwable) {
             }
         });
+
+        System.out.println("\nrealms: \n" + completableFuture.get().toString());
     }
 }

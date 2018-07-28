@@ -24,15 +24,6 @@ public class LanguageMethods {
 
     //SyncMethods_______________________________________________________________________________________________________
 
-    public interface LanguageInterface {
-
-        void onSuccess(Language language);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onIOException(IOException e);
-    }
-
     public static void GetLanguage(Platform platform, LanguageInterface languageInterface) {
 
         base_url = platform.getHostCdn() + "/";
@@ -85,17 +76,6 @@ public class LanguageMethods {
         }
     }
 
-    //AsyncMethods______________________________________________________________________________________________________
-
-    public interface LanguageInterfaceAsync {
-
-        void onSuccess(Language language);
-
-        void onErrorCode(ErrorCode errorCode);
-
-        void onFailure(Throwable throwable);
-    }
-
     public static void GetLanguageAsync(Platform platform, LanguageInterfaceAsync languageInterfaceAsync) {
 
         base_url = platform.getHostCdn() + "/";
@@ -125,6 +105,8 @@ public class LanguageMethods {
         });
     }
 
+    //AsyncMethods______________________________________________________________________________________________________
+
     public static void GetLanguageAsync(Platform platform, Locale locale, String version,
                                         LanguageInterfaceAsync languageInterfaceAsync) {
 
@@ -153,5 +135,23 @@ public class LanguageMethods {
                 languageInterfaceAsync.onFailure(t);
             }
         });
+    }
+
+    public interface LanguageInterface {
+
+        void onSuccess(Language language);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onIOException(IOException e);
+    }
+
+    public interface LanguageInterfaceAsync {
+
+        void onSuccess(Language language);
+
+        void onErrorCode(ErrorCode errorCode);
+
+        void onFailure(Throwable throwable);
     }
 }

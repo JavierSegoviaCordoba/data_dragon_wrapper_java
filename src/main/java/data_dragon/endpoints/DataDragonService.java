@@ -10,6 +10,7 @@ import data_dragon.endpoints.cdn.profile_icon.dto.ProfileIconDto;
 import data_dragon.endpoints.cdn.runes_reforged.dto.RuneReforged;
 import data_dragon.endpoints.cdn.sticker.dto.StickerDto;
 import data_dragon.endpoints.cdn.summoner_spell.dto.SummonerSpellDto;
+import data_dragon.endpoints.realms.realms.dto.Realms;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -56,5 +57,10 @@ public interface DataDragonService {
     Call<StickerDto> GetSticker();
 
     @GET("summoner.json")
-    Call<SummonerSpellDto> GetGetSummonerSpell();
+    Call<SummonerSpellDto> GetSummonerSpell();
+
+//Realms________________________________________________________________________________________________________________
+
+    @GET("{region}.json")
+    Call<Realms> GetRealms(@Path("region") String region);
 }
