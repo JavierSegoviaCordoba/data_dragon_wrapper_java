@@ -694,7 +694,6 @@ public class RunesReforgedMethods {
         void onIOException(IOException e);
     }
 
-
     public interface RuneReforgedInterface {
 
         void onSuccess(RuneReforged runeReforged);
