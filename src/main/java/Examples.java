@@ -19,7 +19,7 @@ public class Examples {
         dataDragon.getChampion("Graves", new ChampionMethods.ChampionInterface() {
             @Override
             public void onSuccess(Champion champion) {
-                System.out.println(champion.getName() + " " + champion.getLore());
+                System.out.println(champion.getName() + ": " + champion.getLore());
             }
 
             @Override
@@ -37,7 +37,7 @@ public class Examples {
         dataDragon.getChampionAsync("Yasuo", new ChampionMethods.ChampionInterfaceAsync() {
             @Override
             public void onSuccess(Champion champion) {
-                System.out.println(champion.getName() + " " + champion.getLore());
+                System.out.println(champion.getName() + ": " + champion.getLore());
             }
 
             @Override
